@@ -259,7 +259,7 @@ class Modele(QtCore.QObject):
         return new_concentrations
         
         
-        #Code desactivé mais gard& en sauvegarde
+        # Code desactivé mais gardé en sauvegarde
         new_concentrations += (c_droite < self.d_cellulose["c_min"]) * (
                 self.concentrations < self.d_cellulose["c_min"]) * (
                                       c_droite - self.concentrations)
