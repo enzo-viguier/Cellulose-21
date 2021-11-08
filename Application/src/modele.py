@@ -1,5 +1,7 @@
 import numpy as np
 from PyQt5 import QtCore
+
+
 # Consignes générales :
 # -> dimension de l'enceinte carrée : 1/2 longueur L = 40 µm de côté (en micron µ)
 # -> nombre de cases : n =  250 dans chaque direction, donc 250² cases en tout
@@ -22,20 +24,17 @@ class Modele(QtCore.QObject):
     # PYQT
     stateChangedSignal = QtCore.pyqtSignal()
 
-
-
-
     def __init__(self, view=None):
         """
         Crée le modèle contenant les concentrations. Les longueurs sont en micromètres.
         """
-        if(view==None): #surcharge pour maintenir les tests le temps de l'implementation finie de l'interface
+        if (view == None):  # surcharge pour maintenir les tests le temps de l'implementation finie de l'interface
             super(QtCore.QObject, self).__init__()
             self.init_d_cellulose()
             self.init_d_tore(0.01)
             self.concentrations = None
-        else: #Constructeur avec interface
-            #PYQT
+        else:  # Constructeur avec interface
+            # PYQT
             super(QtCore.QObject, self).__init__()
             self.view = view
             self.data = np.arange(2500).reshape((50, 50))
@@ -50,13 +49,9 @@ class Modele(QtCore.QObject):
             self.init_d_tore(0.01)
 
             self.concentrations = None
-            
-            #self.creer_concentrations(self.d_tore["nb_cellules"], self.d_cellulose["rayon_ini"])
+
+            # self.creer_concentrations(self.d_tore["nb_cellules"], self.d_cellulose["rayon_ini"])
             # On multiplie la matrice np chaque jour par la formule donnée
-
-
-
-
 
     def init_d_cellulose(self, c_ini=10, c_min=5, v_diff=0.02, rayon_ini=25):
         """
@@ -86,12 +81,10 @@ class Modele(QtCore.QObject):
             raise Exception("Erreur dans le pas de temps (delta est trop grand)")  # Lève une erreur
         self.d_tore["delta"] = delta
 
-
     def to_string(self):
         """
         Retourne un string contenant les différentes valeurs des constantes
         """
-        # return "test"
         return f"d_cellulose = :\n \
         cIni = {self.d_cellulose['c_ini']}\
         cMin = {self.d_cellulose['c_min']}\
@@ -115,9 +108,9 @@ class Modele(QtCore.QObject):
         :param nb_case_decalage_droite: (float) Nombre de cases de décalage sur axe abscisses
         :param nb_case_decalage_haut: (float) Nombre de cases de décalage sur axe ordonnées
         """
-        x, y= coord #depaquetage de la case demandé
-        x = (x+nb_case_decalage_droite)%(self.d_tore['longueur']/2)
-        y = (y+nb_case_decalage_haut)%(self.d_tore['longueur']/2)
+        x, y = coord  # depaquetage de la case demandée
+        x = (x + nb_case_decalage_droite) % (self.d_tore['longueur'] / 2)
+        y = (y + nb_case_decalage_haut) % (self.d_tore['longueur'] / 2)
 
         i, j = self.convert_coord_xy_to_ij((x, y))
 
@@ -133,12 +126,12 @@ class Modele(QtCore.QObject):
             (int, int): Coordonnées sur le tableau de concentration
         """
         x, y = coord
-        
-        j = ((x+self.d_tore['longueur']/2)/self.d_tore['largeur_case'])
-        i = ((-y+self.d_tore['longueur']/2)/self.d_tore['largeur_case'])
 
-        return (int(np.floor(i)), int(np.floor(j))) #Floor fait un arrondi à l'inferieur, on convertie ensuite la valeur en int
-    
+        j = ((x + self.d_tore['longueur'] / 2) / self.d_tore['largeur_case'])
+        i = ((-y + self.d_tore['longueur'] / 2) / self.d_tore['largeur_case'])
+
+        return (int(np.floor(i)), int(np.floor(j)))
+        # floor() fait un arrondi à l'inférieur, on convertit ensuite la valeur en entier.
 
     def set_concentration_par_coord(self, coord, c, nb_case_decalage_x=0, nb_case_decalage_y=0):
         """change la concentration d'une case, la case est trouvé par les coordonnées 
@@ -149,9 +142,9 @@ class Modele(QtCore.QObject):
         :param ny: (int) Nombre de cases de décalage sur axe ordonnées
         """
 
-        x, y= coord
-        x = x+nb_case_decalage_x%self.d_tore['longueur']
-        y = y+nb_case_decalage_y%self.d_tore['longueur']
+        x, y = coord
+        x = x + nb_case_decalage_x % self.d_tore['longueur']
+        y = y + nb_case_decalage_y % self.d_tore['longueur']
 
         i, j = self.convert_coord_xy_to_ij((x, y))
 
@@ -159,7 +152,6 @@ class Modele(QtCore.QObject):
 
     def set_concentration_by_ij(self, coords, c):
         self.concentrations[coords[0], coords[1]] = c
-    
 
     def __creer_substrat(self, nb_cellules_large, rayon_cercle_ini):
         # Créer un cercle de cases avec une concentration c_ini centré dans le repère de rayon rayon_cercle_ini
@@ -173,7 +165,8 @@ class Modele(QtCore.QObject):
         self.concentrations[cellulose] = self.d_cellulose["c_ini"]
 
     def creer_concentrations(self, nb_cellules_large, rayon_cercle_ini):
-        self.concentrations = np.zeros((nb_cellules_large, nb_cellules_large), dtype=np.float64)*self.d_cellulose['c_ini']
+        self.concentrations = np.zeros((nb_cellules_large, nb_cellules_large), dtype=np.float64) * self.d_cellulose[
+            'c_ini']
         # self.__creer_substrat(nb_cellules_large, rayon_cercle_ini)
 
     def afficher_concentrations(self):
@@ -225,32 +218,29 @@ class Modele(QtCore.QObject):
         # ((np.roll(concentrations, 1, axis=0))-concentrations) calcule la diffusion comme si la case est semi-liquide
         # En python, un boolean = False est equivalent à un int = 0 donc on peut en mettre dans les calculs
 
-
-        #creation des concentrations décallés d'une ligne ou d'une colone
+        # creation des concentrations décallés d'une ligne ou d'une colone
         c_haut = np.roll(self.concentrations, 1, axis=0)
         c_bas = np.roll(self.concentrations, -1, axis=0)
         c_droite = np.roll(self.concentrations, 1, axis=1)
-        c_gauche =np.roll(self.concentrations, -1, axis=1)
-        c_min = self.d_cellulose['c_min'] #sert juste à améliorer la lisibilité des calculs
+        c_gauche = np.roll(self.concentrations, -1, axis=1)
+        c_min = self.d_cellulose['c_min']  # sert juste à améliorer la lisibilité des calculs
 
         new_concentrations = np.copy(self.concentrations)
 
-        new_concentrations[self.concentrations <= c_min] =\
+        new_concentrations[self.concentrations <= c_min] = \
             c_haut[c_haut <= c_min] - self.concentrations[self.concentrations <= c_min]
 
-
-        new_concentrations[self.concentrations <= c_min] +=\
+        new_concentrations[self.concentrations <= c_min] += \
             c_bas[c_bas <= c_min] - self.concentrations[self.concentrations <= c_min]
 
-        new_concentrations[self.concentrations <= c_min] +=\
+        new_concentrations[self.concentrations <= c_min] += \
             c_droite[c_droite <= c_min] - self.concentrations[self.concentrations <= c_min]
 
-        new_concentrations[self.concentrations <= c_min] +=\
+        new_concentrations[self.concentrations <= c_min] += \
             c_gauche[c_gauche <= c_min] - self.concentrations[self.concentrations <= c_min]
 
         return new_concentrations
-        
-        
+
         # Code desactivé mais gardé en sauvegarde
         new_concentrations += (c_droite < self.d_cellulose["c_min"]) * (
                 self.concentrations < self.d_cellulose["c_min"]) * (
