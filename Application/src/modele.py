@@ -174,15 +174,7 @@ class Modele(QtCore.QObject):
 
     def creer_concentrations(self, nb_cellules_large, rayon_cercle_ini):
         self.concentrations = np.zeros((nb_cellules_large, nb_cellules_large), dtype=np.float64)*self.d_cellulose['c_ini']
-        #self.__creer_substrat(nb_cellules_large, rayon_cercle_ini)
-
-
-
-    def afficher_tore(self):
-        #print("Taille tore (par un imshow) :")
-        #np.imshow(self.tore)
-        print("afficher tore")
-        print(self.tore)
+        # self.__creer_substrat(nb_cellules_large, rayon_cercle_ini)
 
     def afficher_concentrations(self):
         print("afficher concentrations")
