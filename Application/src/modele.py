@@ -110,6 +110,9 @@ class Modele(QtCore.QObject):
 
         return self.concentrations[i, j]
 
+    def get_concentration_by_coord_ij(self, coords):
+        return self.concentrations[coords[0], coords[1]]
+
     def convert_coord_xy_to_ij(self, coord):
         """Permet de convertir des coordonnées x, y en coordonnées i, j. x et y doivent être entre -largeurTore/2 et largeurTore/2
 
@@ -141,6 +144,9 @@ class Modele(QtCore.QObject):
 
         self.concentrations[i, j] = c
 
+    def set_concentration_by_ij(self, coords, c){
+        self.concentrations[coords[0], coords[1]] = c
+    }
 
     def __creer_substrat(self, nb_cellules_large, rayon_cercle_ini):
         # Créer un cercle de cases avec une concentration c_ini centré dans le repère de rayon rayon_cercle_ini
