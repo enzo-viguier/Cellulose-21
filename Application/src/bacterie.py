@@ -19,7 +19,7 @@ class Bacterie:
         self.x = x
         self.y = y
         self.masse_act = masse_act
-        self.modele = modele
+        self.mon_modele = modele
         self.init_d_biomasse(masse_ini, v_absorb, v_deplacement)
 
     def init_d_biomasse(self, masse_ini, v_absorb, v_deplacement):
@@ -35,7 +35,7 @@ class Bacterie:
         Déplace la bactérie en fonction de la vitesse de déplacement
         à finir !
         """
-        delta = self.modele.d_cellulose["delta"]
+        delta = self.mon_modele.d_cellulose["delta"]
         vd_x, vd_y = self.__calcul_vitesse_deplacement()
         self.x = self.x + delta*vd_x + 1 * (np.sqrt(delta)*np.random.rand()) # np.random.rand() ∈ [0;1]
         self.y = self.y + delta*vd_y + 1 * (np.sqrt(delta) * np.random.rand())
@@ -43,7 +43,7 @@ class Bacterie:
 
     def manger(self):
         coord_case_xy = (self.x, self.y)
-        coords_ij_centre = self.modele.convert_coord_xy_to_ij(coord_case_xy)
+        coords_ij_centre = self.mon_modele.convert_coord_xy_to_ij(coord_case_xy)
         # On recupere les coordonnes de la case centrale (emplacement de la bactérie)
 
         # main_case = self.modele.get_concentration_by_coord_ij(coords_ij)
@@ -51,9 +51,9 @@ class Bacterie:
             for j in np.arange(-1, 2):
                 coords_ij = (coords_ij_centre[0]+i, coords_ij_centre[1]+j)
                 # On prend les cases autour du centre ainsi que le centre
-                case = self.modele.get_concentration_by_coord_ij(coords_ij)
-                conso = np.minimum(np.square(self.modele.d_tore["largeur_case"])*case , self.d_biomasse["v_absorb"]) #carre à verifier
-                self.modele.set_concentration_by_ij(coords_ij, case-(conso/np.square(self.modele.d_tore["largeur_case"])))
+                case = self.mon_modele.get_concentration_by_coord_ij(coords_ij)
+                conso = np.minimum(np.square(self.mon_modele.d_tore["largeur_case"]) * case, self.d_biomasse["v_absorb"]) #carre à verifier
+                self.mon_modele.set_concentration_by_ij(coords_ij, case - (conso / np.square(self.mon_modele.d_tore["largeur_case"])))
 
 
     def gain_masse(self, conso):
@@ -73,11 +73,11 @@ class Bacterie:
         et retourne la vitesse sur l'axe x et la vitesse sur l'axe y
         """
         vd = self.d_biomasse["vd"]
-        c_est = self.modele.get_concentration_par_coord((self.x, self.y), 1, 0)
-        c_ouest = self.modele.get_concentration_par_coord((self.x, self.y), -1, 0)
-        c_nord = self.modele.get_concentration_par_coord((self.x, self.y), 0, 1)
-        c_sud = self.modele.get_concentration_par_coord((self.x, self.y), 0, -1)
-        h = self.modele.d_cellulose["largeur_case"]
+        c_est = self.mon_modele.get_concentration_par_coord((self.x, self.y), 1, 0)
+        c_ouest = self.mon_modele.get_concentration_par_coord((self.x, self.y), -1, 0)
+        c_nord = self.mon_modele.get_concentration_par_coord((self.x, self.y), 0, 1)
+        c_sud = self.mon_modele.get_concentration_par_coord((self.x, self.y), 0, -1)
+        h = self.mon_modele.d_cellulose["largeur_case"]
         vd_x = vd*(c_est - c_ouest) / 2*h
         vd_y = vd*(c_nord - c_sud) / 2*h
         return vd_x, vd_y
