@@ -1,5 +1,5 @@
 import numpy as np
-
+from PyQt5 import QtCore
 # Consignes générales :
 # -> dimension de l'enceinte carrée : 1/2 longueur L = 40 µm de côté (en micron µ)
 # -> nombre de cases : n =  250 dans chaque direction, donc 250² cases en tout
@@ -13,17 +13,27 @@ import numpy as np
 # -> pas de temps pour l'algorithme : Delta = 20mn (0.3h)
 
 
-class Modele:
+class Modele(QtCore.QObject):
     # Variables statiques
     # Dictionnaire de constantes d'algo
     d_tore = {}
     # Dictionnaire de constantes relatives à la cellulose
     d_cellulose = {}
+    # PYQT
+    stateChangedSignal = QtCore.pyqtSignal()
 
-    def __init__(self):
+    def __init__(self, view):
         """
         Crée le modèle contenant les concentrations. Les longueurs sont en micromètres.
         """
+        #PYQT
+        super(QtCore.QObject, self).__init__()
+        self.view = view
+        self.data = np.arange(2500).reshape((50, 50))
+        self.timer = QtCore.QTimer()
+        self.timer.setInterval(10)
+        self.timer.timeout.connect(self.updateView)
+        self.timer.start()
         # Constructeur
         # Si vous voyez des variables de classes qui ne changent jamais, on peut les signaler
 
@@ -267,3 +277,13 @@ class Modele:
         """
         # TODO
         pass
+
+    # PYQT
+    def get_data(self):
+        return self.data
+
+    def update_view(self):
+        self.data = np.roll(self.data, 1)
+        self.view.data_ref.set_data(self.data)
+        self.view.draw()
+        # self.stateChangedSignal.emit()
