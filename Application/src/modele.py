@@ -83,55 +83,54 @@ class Modele:
     def get_concentrations(self):
         return self.concentrations
 
-    def get_concentration_par_coord(self, coord, nx=0, ny=0):
+    def get_concentration_by_coord_xy(self, coord, nb_case_decalage_droite=0, nb_case_decalage_haut=0):
         """
         Renvoie la concentration d'une case, la case est trouvée par les coordonnées
         coord décalées de nx case en horizontal et ny en vertical
-        !!! Changer la fonction pour qu'elle se base sur le tableau de coordonnées 'tore'
 
         :param coord: (tuple) Coordonnées de la case centrale
-        :param nx: (float) Nombre de cases de décalage sur axe abscisses
-        :param ny: (float) Nombre de cases de décalage sur axe ordonnées
+        :param nb_case_decalage_droite: (float) Nombre de cases de décalage sur axe abscisses
+        :param nb_case_decalage_haut: (float) Nombre de cases de décalage sur axe ordonnées
         """
-        
+        x, y= coord #depaquetage de la case demandé
+        x = (x+nb_case_decalage_droite)%(self.d_tore['longueur']/2)
+        y = (y+nb_case_decalage_haut)%(self.d_tore['longueur']/2)
 
-        #x, y= coord #depaquetage de la case demandé
-        i, j = self.convert_coord_to_case(coord)
+        i, j = self.convert_coord_xy_to_ij((x, y))
 
-        i = (i+nx)%len(self.concentrations)
-        j = (j+ny)%len(self.concentrations)
         return self.concentrations[i, j]
 
-    def convert_coord_to_case(self, coord):
-        """Permet de convertir des coordonnées x, y en coordonnées i, j
+    def convert_coord_xy_to_ij(self, coord):
+        """Permet de convertir des coordonnées x, y en coordonnées i, j. x et y doivent être entre -largeurTore/2 et largeurTore/2
 
         Returns:
             (int, int): Coordonnées sur le tableau de concentration
         """
         x, y = coord
         
-        i = ((x+self.d_tore['longueur']/2)/self.d_tore['largeur_case'])
-        j = ((y+self.d_tore['longueur']/2)/self.d_tore['largeur_case'])
-        i%=len(self.concentrations)
-        j%=len(self.concentrations)
+        j = ((x+self.d_tore['longueur']/2)/self.d_tore['largeur_case'])
+        i = ((-y+self.d_tore['longueur']/2)/self.d_tore['largeur_case'])
 
-        return (int(i), int(j))
+        return (int(np.floor(i)), int(np.floor(j))) #Floor fait un arrondi à l'inferieur, on convertie ensuite la valeur en int
     
 
-    def set_concentration_par_coord(self, coord, c, nx=0, ny=0):
+    def set_concentration_par_coord(self, coord, c, nb_case_decalage_x=0, nb_case_decalage_y=0):
         """change la concentration d'une case, la case est trouvé par les coordonnées 
         coord décalé de nx case en horizontal et ny en vertical
-        !!! Changer la fonction pour qu'elle se base sur le tableau de coordonnées 'tore'
 
         :param coord: (tuple) Coordonnées de la case centrale
         :param nx: (int) Nombre de cases de décalage sur axe abscisses
         :param ny: (int) Nombre de cases de décalage sur axe ordonnées
         """
-        i, j = self.convert_coord_to_case(coord)
 
-        i = (i+nx)%len(self.concentrations)
-        j = (j+ny)%len(self.concentrations)
+        x, y= coord
+        x = x+nb_case_decalage_x%self.d_tore['longueur']
+        y = y+nb_case_decalage_y%self.d_tore['longueur']
+
+        i, j = self.convert_coord_xy_to_ij((x, y))
+
         self.concentrations[i, j] = c
+
 
     def __creer_substrat(self, nb_cellules_large, rayon_cercle_ini):
         # Créer un cercle de cases avec une concentration c_ini centré dans le repère de rayon rayon_cercle_ini
@@ -145,7 +144,7 @@ class Modele:
         self.concentrations[cellulose] = self.d_cellulose["c_ini"]
 
     def creer_concentrations(self, nb_cellules_large, rayon_cercle_ini):
-        self.concentrations = np.zeros((nb_cellules_large, nb_cellules_large), dtype=np.float64)
+        self.concentrations = np.zeros((nb_cellules_large, nb_cellules_large), dtype=np.float64)*self.d_cellulose['c_ini']
         #self.__creer_substrat(nb_cellules_large, rayon_cercle_ini)
 
 
