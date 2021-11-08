@@ -279,10 +279,10 @@ class Modele(QtCore.QObject):
         pass
 
     # PYQT
-    def get_data(self):
+    def getData(self):
         return self.data
 
-    def update_view(self):
+    def updateView(self):
         self.data = np.roll(self.data, 1)
         self.view.data_ref.set_data(self.data)
         self.view.draw()
