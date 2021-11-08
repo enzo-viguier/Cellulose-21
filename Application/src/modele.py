@@ -30,6 +30,7 @@ class Modele(QtCore.QObject):
         Crée le modèle contenant les concentrations. Les longueurs sont en micromètres.
         """
         if(view==None): #surcharge pour maintenir les tests le temps de l'implementation finie de l'interface
+            super(QtCore.QObject, self).__init__()
             self.init_d_cellulose()
             self.init_d_tore(0.01)
             self.concentrations = None

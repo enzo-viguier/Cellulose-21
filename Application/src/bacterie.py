@@ -35,7 +35,7 @@ class Bacterie:
 
     def manger(self):
         coord_case_xy = (self.x, self.y)
-        coords_ij_centre = modele.convert_coord_xy_to_ij(coord_case_xy) #On recupere les coordonnes de la case centrale (emplacement de la bactérie)
+        coords_ij_centre = self.modele.convert_coord_xy_to_ij(coord_case_xy) #On recupere les coordonnes de la case centrale (emplacement de la bactérie)
 
         #main_case = self.modele.get_concentration_by_coord_ij(coords_ij)
         for i in np.arange(-1, 2):

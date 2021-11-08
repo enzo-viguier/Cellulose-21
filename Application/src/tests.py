@@ -34,21 +34,6 @@ class UneClasseDeTest(unittest.TestCase):
         modele.init_d_cellulose(rayon_ini=1)
         modele.creer_concentrations(modele.d_tore["nb_cellules"], modele.d_cellulose["rayon_ini"])
 
-        modele.set_concentration_par_coord((0, 0), 3)
-        conc = modele.get_concentration_by_coord_xy((0, 0))
-        print("concentration =", conc)
-        self.assertTrue(conc==3)
-        conc = modele.get_concentration_by_coord_xy((1, -1))
-        print("concentration =", conc)
-        self.assertTrue(conc==0)
-        conc = modele.get_concentration_by_coord_xy((3, -3))
-        print("concentration =", conc)
-        self.assertTrue(conc==0)
-        conc = modele.get_concentration_by_coord_xy((3, 2))
-        print("concentration =", conc)
-        self.assertTrue(conc==0)
-        conc = modele.get_concentration_by_coord_xy((1, -2))
-        self.assertTrue(conc==0)
 
 
     def test_set_concentration_by_coord(self):
@@ -63,7 +48,7 @@ class UneClasseDeTest(unittest.TestCase):
 
         for i in range(10000):
             modele.jour()
-        self.assertTrue(modele.get_concentration_par_coord((0, 0)) <1.0001 and modele.get_concentration_par_coord((0, 0)) > 0.99999 )
+        self.assertTrue(modele.get_concentration_by_coord_ij((0, 0)) <1.0001 and modele.get_concentration_by_coord_ij((0, 0)) > 0.99999 )
         
 
     def test_manger_bacterie(self):
@@ -75,16 +60,16 @@ class UneClasseDeTest(unittest.TestCase):
         bact = Bacterie(modele, 0, 0, 1, v_absorb=0.3)
 
         modele.set_concentration_par_coord((0, 0), 2)
-        print("Concentration avant manger", modele.get_concentration_par_coord((0, 0)))
+        print("Concentration avant manger", modele.get_concentration_by_coord_ij((0, 0)))
         for i in range(20):
             bact.manger()
 
-        print("Concentration après manger", modele.get_concentration_par_coord((0, 0)))
-        self.assertTrue(modele.get_concentration_par_coord((0, 0))==0)
+        print("Concentration après manger", modele.get_concentration_by_coord_ij((0, 0)))
+        self.assertTrue(modele.get_concentration_by_coord_ij((0, 0))==0)
 
 test = UneClasseDeTest()
 test.test_simple()
 test.main_test_diffusion()
-test.test_get_concentration_by_coord()
+#test.test_get_concentration_by_coord()
 test.test_set_concentration_by_coord()
 test.test_manger_bacterie()
