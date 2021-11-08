@@ -22,28 +22,40 @@ class Modele(QtCore.QObject):
     # PYQT
     stateChangedSignal = QtCore.pyqtSignal()
 
-    def __init__(self, view):
+
+
+
+    def __init__(self, view=None):
         """
         Crée le modèle contenant les concentrations. Les longueurs sont en micromètres.
         """
-        #PYQT
-        super(QtCore.QObject, self).__init__()
-        self.view = view
-        self.data = np.arange(2500).reshape((50, 50))
-        self.timer = QtCore.QTimer()
-        self.timer.setInterval(10)
-        self.timer.timeout.connect(self.updateView)
-        self.timer.start()
-        # Constructeur
-        # Si vous voyez des variables de classes qui ne changent jamais, on peut les signaler
+        if(view==None): #surcharge pour maintenir les tests le temps de l'implementation finie de l'interface
+            self.init_d_cellulose()
+            self.init_d_tore(0.01)
+            self.concentrations = None
+        else: #Constructeur avec interface
+            #PYQT
+            super(QtCore.QObject, self).__init__()
+            self.view = view
+            self.data = np.arange(2500).reshape((50, 50))
+            self.timer = QtCore.QTimer()
+            self.timer.setInterval(10)
+            self.timer.timeout.connect(self.updateView)
+            self.timer.start()
+            # Constructeur
+            # Si vous voyez des variables de classes qui ne changent jamais, on peut les signaler
 
-        self.init_d_cellulose()
-        self.init_d_tore(0.01)
+            self.init_d_cellulose()
+            self.init_d_tore(0.01)
 
-        self.concentrations = None
-        
-        #self.creer_concentrations(self.d_tore["nb_cellules"], self.d_cellulose["rayon_ini"])
-        # On multiplie la matrice np chaque jour par la formule donnée
+            self.concentrations = None
+            
+            #self.creer_concentrations(self.d_tore["nb_cellules"], self.d_cellulose["rayon_ini"])
+            # On multiplie la matrice np chaque jour par la formule donnée
+
+
+
+
 
     def init_d_cellulose(self, c_ini=10, c_min=5, v_diff=0.02, rayon_ini=25):
         """
@@ -144,9 +156,9 @@ class Modele(QtCore.QObject):
 
         self.concentrations[i, j] = c
 
-    def set_concentration_by_ij(self, coords, c){
+    def set_concentration_by_ij(self, coords, c):
         self.concentrations[coords[0], coords[1]] = c
-    }
+    
 
     def __creer_substrat(self, nb_cellules_large, rayon_cercle_ini):
         # Créer un cercle de cases avec une concentration c_ini centré dans le repère de rayon rayon_cercle_ini

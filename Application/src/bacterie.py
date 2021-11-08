@@ -32,6 +32,7 @@ class Bacterie:
         self.x = self.x + delta*vd_x + 1 * (np.sqrt(delta)*np.random.rand()) # np.random.rand() ∈ [0;1]
         self.y = self.y + delta*vd_y + 1 * (np.sqrt(delta) * np.random.rand())
 
+
     def manger(self):
         coord_case_xy = (self.x, self.y)
         coords_ij_centre = modele.convert_coord_xy_to_ij(coord_case_xy) #On recupere les coordonnes de la case centrale (emplacement de la bactérie)
@@ -42,8 +43,8 @@ class Bacterie:
                 coords_ij = (coords_ij_centre[0]+i, coords_ij_centre[1]+j) #On prend les cases autours du centre ainsi que le centre
                 case = self.modele.get_concentration_by_coord_ij(coords_ij)
                 conso = np.minimum(np.square(self.modele.d_tore["largeur_case"])*case , self.d_biomasse["v_absorb"]) #carre à verifier
-                self.modele.set_concentration_by_ij \
-                (coords_ij, case-(conso/np.square(self.modele.d_tore["largeur_case"]))
+                self.modele.set_concentration_by_ij(coords_ij, case-(conso/np.square(self.modele.d_tore["largeur_case"])))
+
 
     def gain_masse(self, conso):
         """augmente la masse de la bactérie en fonction de ce qu'elle a absoré
@@ -71,3 +72,7 @@ class Bacterie:
         vd_x = vd*(c_est - c_ouest) / 2*h
         vd_y = vd*(c_nord - c_sud) / 2*h
         return vd_x, vd_y
+
+
+
+
