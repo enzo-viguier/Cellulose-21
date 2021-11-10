@@ -83,6 +83,7 @@ class Bacterie:
         vd_y = vd*(c_nord - c_sud) / 2*h
         return vd_x, vd_y
 
-
+    def get_coord_xy(self):
+        return (self.x, self.y)
 
 
