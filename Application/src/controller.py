@@ -1,5 +1,5 @@
 from model import Model
-import simulation
+import Ui_Simulation
 from PyQt5.QtWidgets import QMainWindow
 
 

@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from mplwidget import Mplwidget
 
 
 class Ui_MainWindow(object):
@@ -169,4 +170,4 @@ class Ui_MainWindow(object):
         self.label_2.setText(_translate("MainWindow", "Titre"))
         self.label.setText(_translate("MainWindow", "Insérer le texte correspondant au graphe"))
         self.label_3.setText(_translate("MainWindow", "Insérer le texte correspondant au graphe"))
-from mplwidget import Mplwidget
+
