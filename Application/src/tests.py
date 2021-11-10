@@ -63,9 +63,8 @@ class UneClasseDeTest(unittest.TestCase):
         #On met la concentration du 0 xy à 2
         model.set_concentration_by_ij(model.convert_coord_xy_to_ij((0, 0)), 2)
         print("Concentration avant manger", model.get_concentration_by_coord_xy((0, 0)))
-        for i in range(20):
+        for i in range(7):
             bact.manger()
-            print("Concentration en mangeant", model.get_concentration_by_coord_xy((0, 0)))
 
 
         print("Concentration après manger", model.get_concentration_by_coord_xy((0, 0)))

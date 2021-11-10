@@ -23,35 +23,25 @@ class Model(QtCore.QObject):
     d_cellulose = {}
     # PYQT
     stateChangedSignal = QtCore.pyqtSignal()
+    # Stockage des bacteries
+    bacteries = []
 
     def __init__(self, view=None):
         """
         Crée le modèle contenant les concentrations. Les longueurs sont en micromètres.
         """
-        if (view == None):  # surcharge pour maintenir les tests le temps de l'implementation finie de l'interface
-            super(QtCore.QObject, self).__init__()
-            self.init_d_cellulose()
-            self.init_d_tore(0.01)
-            self.concentrations = None
-        else:  # Constructeur avec interface
-            # PYQT
-            super(QtCore.QObject, self).__init__()
+        self.init_d_cellulose()
+        self.init_d_tore(0.01)
+        self.concentrations = None
+
+        super(QtCore.QObject, self).__init__()
+        if(view != None): # Constructeur avec interface
             self.view = view
             self.data = np.arange(2500).reshape((50, 50))
             self.timer = QtCore.QTimer()
             self.timer.setInterval(10)
             self.timer.timeout.connect(self.updateView)
             self.timer.start()
-            # Constructeur
-            # Si vous voyez des variables de classes qui ne changent jamais, on peut les signaler
-
-            self.init_d_cellulose()
-            self.init_d_tore(0.01)
-
-            self.concentrations = None
-
-            # self.creer_concentrations(self.d_tore["nb_cellules"], self.d_cellulose["rayon_ini"])
-            # On multiplie la matrice np chaque jour par la formule donnée
 
     def init_d_cellulose(self, c_ini=10, c_min=5, v_diff=0.02, rayon_ini=25):
         """
