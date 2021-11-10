@@ -99,22 +99,16 @@ class Modele(QtCore.QObject):
     def get_concentrations(self):
         return self.concentrations
 
-    def get_concentration_by_coord_xy(self, coord, nb_case_decalage_droite=0, nb_case_decalage_haut=0):
+    def get_concentration_by_coord_xy(self, coord):
         """
         Renvoie la concentration d'une case, la case est trouvée par les coordonnées
         coord décalées de nx case en horizontal et ny en vertical
 
         :param coord: (tuple) Coordonnées de la case centrale
-        :param nb_case_decalage_droite: (float) Nombre de cases de décalage sur axe abscisses
-        :param nb_case_decalage_haut: (float) Nombre de cases de décalage sur axe ordonnées
         """
-        x, y = coord  # depaquetage de la case demandée
-        x = (x + nb_case_decalage_droite) % (self.d_tore['longueur'] / 2)
-        y = (y + nb_case_decalage_haut) % (self.d_tore['longueur'] / 2)
+        i, j = convert_coord_xy_to_ij(coord)
+        return get_concentration_by_coord_ij((i, j))
 
-        i, j = self.convert_coord_xy_to_ij((x, y))
-
-        return self.concentrations[i, j]
 
     def get_concentration_by_coord_ij(self, coords):
         return self.concentrations[coords[0], coords[1]]
@@ -132,23 +126,6 @@ class Modele(QtCore.QObject):
 
         return (int(np.floor(i)), int(np.floor(j)))
         # floor() fait un arrondi à l'inférieur, on convertit ensuite la valeur en entier.
-
-    def set_concentration_par_coord(self, coord, c, nb_case_decalage_x=0, nb_case_decalage_y=0):
-        """change la concentration d'une case, la case est trouvé par les coordonnées 
-        coord décalé de nx case en horizontal et ny en vertical
-
-        :param coord: (tuple) Coordonnées de la case centrale
-        :param nx: (int) Nombre de cases de décalage sur axe abscisses
-        :param ny: (int) Nombre de cases de décalage sur axe ordonnées
-        """
-
-        x, y = coord
-        x = x + nb_case_decalage_x % self.d_tore['longueur']
-        y = y + nb_case_decalage_y % self.d_tore['longueur']
-
-        i, j = self.convert_coord_xy_to_ij((x, y))
-
-        self.concentrations[i, j] = c
 
     def set_concentration_by_ij(self, coords, c):
         self.concentrations[coords[0], coords[1]] = c

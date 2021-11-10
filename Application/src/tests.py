@@ -14,8 +14,8 @@ class UneClasseDeTest(unittest.TestCase):
         #print(modele.to_string())
 
         modele.creer_concentrations(modele.d_tore["nb_cellules"], modele.d_cellulose["rayon_ini"])
-        modele.set_concentration_par_coord((0, 0), 0.2)
-        modele.set_concentration_par_coord((0, 1), 0.4)
+        modele.set_concentration_by_ij((0, 0), 0.2)
+        modele.set_concentration_by_ij((0, 1), 0.4)
 
         #modele.afficher_concentrations()
 
@@ -44,7 +44,7 @@ class UneClasseDeTest(unittest.TestCase):
         modele.creer_concentrations(modele.d_tore["nb_cellules"], modele.d_cellulose["rayon_ini"])
 
 
-        modele.set_concentration_par_coord((0, 0), 100)
+        modele.set_concentration_by_ij((0, 0), 100)
 
         for i in range(10000):
             modele.jour()
@@ -59,7 +59,7 @@ class UneClasseDeTest(unittest.TestCase):
 
         bact = Bacterie(modele, 0, 0, 1, v_absorb=0.3)
 
-        modele.set_concentration_par_coord((0, 0), 2)
+        modele.set_concentration_by_ij((0, 0), 2)
         print("Concentration avant manger", modele.get_concentration_by_coord_ij((0, 0)))
         for i in range(20):
             bact.manger()
