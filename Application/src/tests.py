@@ -22,6 +22,7 @@ class UneClasseDeTest(unittest.TestCase):
 
         for i in range(2000):
             model.jour()
+            #imshow
         for i in range(5):
             for j in range(5):
                 self.assertTrue(model.concentrations[i, j]<0.024001 and model.concentrations[i, j]>0.023999) #on a pas une concentration exacte
