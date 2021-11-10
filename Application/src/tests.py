@@ -58,13 +58,17 @@ class UneClasseDeTest(unittest.TestCase):
         modele.creer_concentrations(10, 1)
 
         bact = Bacterie(modele, 0, 0, 1, v_absorb=0.3)
+        print("coordonnées xy bactérie : ", bact.get_coord_xy())
 
-        modele.set_concentration_by_ij((0, 0), 2)
-        print("Concentration avant manger", modele.get_concentration_by_coord_ij((0, 0)))
+        #On met la concentration du 0 xy à 2
+        modele.set_concentration_by_ij(modele.convert_coord_xy_to_ij((0, 0)), 2)
+        print("Concentration avant manger", modele.get_concentration_by_coord_xy((0, 0)))
         for i in range(20):
             bact.manger()
+            print("Concentration en mangeant", modele.get_concentration_by_coord_xy((0, 0)))
 
-        print("Concentration après manger", modele.get_concentration_by_coord_ij((0, 0)))
+
+        print("Concentration après manger", modele.get_concentration_by_coord_xy((0, 0)))
         self.assertTrue(modele.get_concentration_by_coord_ij((0, 0))==0)
 
 test = UneClasseDeTest()

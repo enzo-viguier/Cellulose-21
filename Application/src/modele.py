@@ -106,8 +106,8 @@ class Modele(QtCore.QObject):
 
         :param coord: (tuple) Coordonnées de la case centrale
         """
-        i, j = convert_coord_xy_to_ij(coord)
-        return get_concentration_by_coord_ij((i, j))
+        i, j = self.convert_coord_xy_to_ij(coord)
+        return self.get_concentration_by_coord_ij((i, j))
 
 
     def get_concentration_by_coord_ij(self, coords):
