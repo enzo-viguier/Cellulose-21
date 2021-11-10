@@ -1,15 +1,12 @@
 from model import *
+import sys
+from PyQt5 import QtWidgets
+from controller import control
 
 
-model = Model()
 
-# Modifie 2 cases du tableau pour mettre des concentrations qui diffusent
-model.set_concentration_par_coord((0, 0), 0.2)
-model.set_concentration_par_coord((0, 1), 0.4)
-
-model.afficher_concentrations()
-# Test des diffusions
-for i in range(100):
-    model.jour()
-
-model.afficher_concentrations()
+if __name__ == "__main__":
+    app = QtWidgets.QApplication(sys.argv)
+    ctrl = control()
+    ctrl.show()
+    sys.exit(app.exec_())

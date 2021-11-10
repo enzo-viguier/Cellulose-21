@@ -35,15 +35,15 @@ from PyQt5.QtWidgets import QMainWindow
 class control(QMainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.ui = Ui_Simulation()
+        self.ui = Ui_Simulation.Ui_MainWindow()
         self.ui.setupUi(self)
 #      self.ui.updateButton.clicked.connect(self.update_view)
-        self.m = Model(self.ui.mplView)
+        self.m = Model(self.ui)
 #        self.m.stateChangedSignal.connect(self.update_view)
 
         
         
     def update_view(self):
-        self.ui.mplView.data_ref.set_data(self.m.getData())
-        self.ui.mplView.draw()
+        # self.ui.mplView.data_ref.set_data(self.m.getData())
+        # self.ui.mplView.draw()
         pass
