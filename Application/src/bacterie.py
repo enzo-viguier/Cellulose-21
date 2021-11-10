@@ -13,13 +13,13 @@ class Bacterie:
     # Dictionnaire de constantes de la biomasse
     d_biomasse = {}
 
-    def __init__(self, modele, x, y, masse_act, masse_ini=0.4, v_absorb=0.1, v_deplacement=0.1):
+    def __init__(self, model, x, y, masse_act, masse_ini=0.4, v_absorb=0.1, v_deplacement=0.1):
         # Valeurs pour l'instant arbitraires
         # Il ne faudrait pas une masse actuelle ?
         self.x = x
         self.y = y
         self.masse_act = masse_act
-        self.mon_modele = modele
+        self.model = model
         self.init_d_biomasse(masse_ini, v_absorb, v_deplacement)
 
     def init_d_biomasse(self, masse_ini, v_absorb, v_deplacement):
@@ -28,7 +28,7 @@ class Bacterie:
         self.d_biomasse["masse_ini"] = masse_ini
         self.d_biomasse["v_absorb"] = v_absorb
         self.d_biomasse["vd"] = v_deplacement
-        self.d_biomasse["b_diff"] = 1/np.sqrt(self.mon_modele.d_tore["largeur_case"])
+        self.d_biomasse["b_diff"] = 1/np.sqrt(self.model.d_tore["largeur_case"])
 
 
     def se_deplacer(self):
@@ -36,7 +36,7 @@ class Bacterie:
         Déplace la bactérie en fonction de la vitesse de déplacement
         à finir !
         """
-        delta = self.mon_modele.d_cellulose["delta"]
+        delta = self.model.d_cellulose["delta"]
         vd_x, vd_y = self.__calcul_vitesse_deplacement()
         self.x = self.x + delta*vd_x + self.d_biomasse["b_diff"] * (np.sqrt(delta)*np.random.rand()) # np.random.rand() ∈ [0;1]
         self.y = self.y + delta*vd_y + self.d_biomasse["b_diff"] * (np.sqrt(delta) * np.random.rand())
@@ -44,7 +44,7 @@ class Bacterie:
 
     def manger(self):
         coord_case_xy = (self.x, self.y)
-        coords_ij_centre = self.mon_modele.convert_coord_xy_to_ij(coord_case_xy)
+        coords_ij_centre = self.model.convert_coord_xy_to_ij(coord_case_xy)
         # On recupere les coordonnes de la case centrale (emplacement de la bactérie)
 
         # main_case = self.modele.get_concentration_by_coord_ij(coords_ij)
@@ -52,9 +52,9 @@ class Bacterie:
             for j in np.arange(-1, 2):
                 coords_ij = (coords_ij_centre[0]+i, coords_ij_centre[1]+j)
                 # On prend les cases autour du centre ainsi que le centre
-                case = self.mon_modele.get_concentration_by_coord_ij(coords_ij)
-                conso = np.minimum(np.square(self.mon_modele.d_tore["largeur_case"]) * case, self.d_biomasse["v_absorb"]) #carre à verifier
-                self.mon_modele.set_concentration_by_ij(coords_ij, case - (conso / np.square(self.mon_modele.d_tore["largeur_case"])))
+                case = self.model.get_concentration_by_coord_ij(coords_ij)
+                conso = np.minimum(np.square(self.model.d_tore["largeur_case"]) * case, self.d_biomasse["v_absorb"]) #carre à verifier
+                self.model.set_concentration_by_ij(coords_ij, case - (conso / np.square(self.model.d_tore["largeur_case"])))
 
 
     def gain_masse(self, conso):
@@ -74,11 +74,11 @@ class Bacterie:
         et retourne la vitesse sur l'axe x et la vitesse sur l'axe y
         """
         vd = self.d_biomasse["vd"]
-        c_est = self.mon_modele.get_concentration_par_coord((self.x, self.y), 1, 0)
-        c_ouest = self.mon_modele.get_concentration_par_coord((self.x, self.y), -1, 0)
-        c_nord = self.mon_modele.get_concentration_par_coord((self.x, self.y), 0, 1)
-        c_sud = self.mon_modele.get_concentration_par_coord((self.x, self.y), 0, -1)
-        h = self.mon_modele.d_tore["largeur_case"]
+        c_est = self.model.get_concentration_par_coord((self.x, self.y), 1, 0)
+        c_ouest = self.model.get_concentration_par_coord((self.x, self.y), -1, 0)
+        c_nord = self.model.get_concentration_par_coord((self.x, self.y), 0, 1)
+        c_sud = self.model.get_concentration_par_coord((self.x, self.y), 0, -1)
+        h = self.model.d_tore["largeur_case"]
         vd_x = vd*(c_est - c_ouest) / 2*h
         vd_y = vd*(c_nord - c_sud) / 2*h
         return vd_x, vd_y

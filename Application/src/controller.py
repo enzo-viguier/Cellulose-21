@@ -1,4 +1,4 @@
-from modele import Modele
+from model import Model
 import simulation
 from PyQt5.QtWidgets import QMainWindow
 
@@ -38,7 +38,7 @@ class control(QMainWindow):
         self.ui = Ui_Simulation()
         self.ui.setupUi(self)
 #      self.ui.updateButton.clicked.connect(self.update_view)
-        self.m = Modele(self.ui.mplView)
+        self.m = Model(self.ui.mplView)
 #        self.m.stateChangedSignal.connect(self.update_view)
 
         

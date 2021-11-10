@@ -15,7 +15,7 @@ from PyQt5 import QtCore
 # -> pas de temps pour l'algorithme : Delta = 20mn (0.3h)
 
 
-class Modele(QtCore.QObject):
+class Model(QtCore.QObject):
     # Variables statiques
     # Dictionnaire de constantes d'algo
     d_tore = {}
