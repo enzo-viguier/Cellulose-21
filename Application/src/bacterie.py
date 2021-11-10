@@ -3,7 +3,7 @@ import numpy as np
 # - masse initiale bactérie : m_ini = 0.4 pg
 # vitesse max des bactéries : 10 µm/h
 # - vitesse de dérive des bactéries : vd = 0.1 (µm^4/(pg h)
-# écart-type sur la vitesse de déplacement : b_diff = 1 µm/sqrt(h) (C'est lui b_diff)
+# - écart-type sur la vitesse de déplacement : b_diff = 1 µm/sqrt(h)
 # constante de conversion masse/biomass : k_conv = 0.2 (sans unité)
 # vitesse de consommation : v_cons = 0.2 pg/h
 # population initiale : 50
@@ -22,12 +22,13 @@ class Bacterie:
         self.mon_modele = modele
         self.init_d_biomasse(masse_ini, v_absorb, v_deplacement)
 
-    def init_d_biomasse(self, masse_ini, v_absorb, v_deplacement):
+    def init_d_biomasse(self, masse_ini, v_absorb, v_deplacement, b_diff):
         # print("d_biomasse['masse_ini']=", self.d_biomasse["masse_ini"])
         # print("type(d_biomasse['masse_ini'])=", type(self.d_biomasse["masse_ini"]))
         self.d_biomasse["masse_ini"] = masse_ini
         self.d_biomasse["v_absorb"] = v_absorb
         self.d_biomasse["vd"] = v_deplacement
+        self.d_biomasse["b_diff"] = 1/np.sqrt(self.mon_modele.d_tore["largeur_case"])
 
 
     def se_deplacer(self):
@@ -37,8 +38,8 @@ class Bacterie:
         """
         delta = self.mon_modele.d_cellulose["delta"]
         vd_x, vd_y = self.__calcul_vitesse_deplacement()
-        self.x = self.x + delta*vd_x + 1 * (np.sqrt(delta)*np.random.rand()) # np.random.rand() ∈ [0;1]
-        self.y = self.y + delta*vd_y + 1 * (np.sqrt(delta) * np.random.rand())
+        self.x = self.x + delta*vd_x + self.d_biomasse["b_diff"] * (np.sqrt(delta)*np.random.rand()) # np.random.rand() ∈ [0;1]
+        self.y = self.y + delta*vd_y + self.d_biomasse["b_diff"] * (np.sqrt(delta) * np.random.rand())
 
 
     def manger(self):
@@ -77,7 +78,7 @@ class Bacterie:
         c_ouest = self.mon_modele.get_concentration_par_coord((self.x, self.y), -1, 0)
         c_nord = self.mon_modele.get_concentration_par_coord((self.x, self.y), 0, 1)
         c_sud = self.mon_modele.get_concentration_par_coord((self.x, self.y), 0, -1)
-        h = self.mon_modele.d_cellulose["largeur_case"]
+        h = self.mon_modele.d_tore["largeur_case"]
         vd_x = vd*(c_est - c_ouest) / 2*h
         vd_y = vd*(c_nord - c_sud) / 2*h
         return vd_x, vd_y
