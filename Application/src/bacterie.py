@@ -22,7 +22,7 @@ class Bacterie:
         self.mon_modele = modele
         self.init_d_biomasse(masse_ini, v_absorb, v_deplacement)
 
-    def init_d_biomasse(self, masse_ini, v_absorb, v_deplacement, b_diff):
+    def init_d_biomasse(self, masse_ini, v_absorb, v_deplacement):
         # print("d_biomasse['masse_ini']=", self.d_biomasse["masse_ini"])
         # print("type(d_biomasse['masse_ini'])=", type(self.d_biomasse["masse_ini"]))
         self.d_biomasse["masse_ini"] = masse_ini
