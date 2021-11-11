@@ -8,10 +8,7 @@ class UneClasseDeTest(unittest.TestCase):
         self.assertTrue(True)
 
     def main_test_diffusion(self):
-        model = Model()
-        model.init_d_tore(1, 3, 5)
-        model.init_d_cellulose(rayon_ini=1)
-        #print(model.to_string())
+        model = Model(delta=1, longueur=3, nb_cellules=5, rayon_ini=1)
 
         model.creer_concentrations(model.d_tore["nb_cellules"], model.d_cellulose["rayon_ini"])
         model.set_concentration_by_ij((0, 0), 0.2)
@@ -30,17 +27,14 @@ class UneClasseDeTest(unittest.TestCase):
 
 
     def test_get_concentration_by_coord(self):
-        model = Model()
-        model.init_d_tore(1, 3, 5)
-        model.init_d_cellulose(rayon_ini=1)
+        model = Model(delta=1, longueur=3, nb_cellules=5, rayon_ini=1)
         model.creer_concentrations(model.d_tore["nb_cellules"], model.d_cellulose["rayon_ini"])
 
 
 
     def test_set_concentration_by_coord(self):
-        model = Model()
-        model.init_d_tore(1, 10, 10)
-        model.init_d_cellulose(c_min=110)
+        model = Model(delta=1, longueur=10, nb_cellules=10, c_min=110)
+        #model.init_d_tore(1, 10, 10)
 
         model.creer_concentrations(model.d_tore["nb_cellules"], model.d_cellulose["rayon_ini"])
 
@@ -53,9 +47,9 @@ class UneClasseDeTest(unittest.TestCase):
         
 
     def test_manger_bacterie(self):
-        model = Model()
-        model.init_d_tore(1, 10, 10)
-        model.init_d_cellulose(c_min=0, c_ini=2)
+        model = Model(delta=1, longueur=10, nb_cellules=10, c_min=0, c_ini=2)
+
+       
         model.creer_concentrations(10, 1)
 
         bact = Bacterie(model, 0, 0, 1, v_absorb=0.3)

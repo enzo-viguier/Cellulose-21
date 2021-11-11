@@ -26,12 +26,15 @@ class Model(QtCore.QObject):
     # Stockage des bacteries
     bacteries = []
 
-    def __init__(self, view=None):
+    def __init__(self, view=None, c_ini=10, c_min=5, v_diff=0.02, rayon_ini=25, delta=0.01, longueur=40, nb_cellules=250):
         """
         Crée le modèle contenant les concentrations. Les longueurs sont en micromètres.
         """
-        self.init_d_cellulose()
-        self.init_d_tore(0.01)
+        # vérifie que les données sont cohérentes
+        if (delta > longueur ** 2 / (4 * v_diff)):
+            raise Exception("Erreur dans le pas de temps (delta est trop grand)")  # Lève une erreur
+        self.init_d_cellulose(c_ini, c_min, v_diff, rayon_ini)
+        self.init_d_tore(delta, longueur, nb_cellules)
         self.concentrations = None
 
         super(QtCore.QObject, self).__init__()
@@ -43,7 +46,7 @@ class Model(QtCore.QObject):
             self.timer.timeout.connect(self.updateView)
             self.timer.start()
 
-    def init_d_cellulose(self, c_ini=10, c_min=5, v_diff=0.02, rayon_ini=25):
+    def init_d_cellulose(self, c_ini, c_min, v_diff, rayon_ini):
         """
         Les fonctions init servent à initialiser les différents dictionnaires.
         Les valeurs de base permettent de créer une simulation fonctionnelle, sans abération.
@@ -57,7 +60,7 @@ class Model(QtCore.QObject):
         self.d_cellulose["v_diff"] = v_diff
         self.d_cellulose["rayon_ini"] = rayon_ini
 
-    def init_d_tore(self, delta, longueur=40, nb_cellules=250):
+    def init_d_tore(self, delta, longueur, nb_cellules):
         """
         NECESSITE LES VALEURS DE d_cellulose INITIALISEES
         :param longueur: (int) Longueur et largeur du tore
@@ -66,9 +69,6 @@ class Model(QtCore.QObject):
         self.d_tore["longueur"] = longueur
         self.d_tore["nb_cellules"] = nb_cellules
         self.d_tore["largeur_case"] = longueur / nb_cellules
-        # vérifie que les données sont cohérentes
-        if (delta > self.d_tore["longueur"] ** 2 / (4 * self.d_cellulose["v_diff"])):
-            raise Exception("Erreur dans le pas de temps (delta est trop grand)")  # Lève une erreur
         self.d_tore["delta"] = delta
 
     def to_string(self):
