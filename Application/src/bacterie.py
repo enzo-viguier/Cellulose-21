@@ -6,10 +6,10 @@ class Bacterie:
     # Dictionnaire de constantes de la biomasse
     d_biomasse = {}
 
-    def __init__(self, model, x, y, masse_act):
+    def __init__(self, model, x, y, masse_ini):
         self.x = x
         self.y = y
-        self.masse_act = masse_act
+        self.masse_act = masse_ini
         self.model = model
 
     def se_deplacer(self):

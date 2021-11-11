@@ -1,7 +1,6 @@
 import numpy as np
 from PyQt5 import QtCore
-
-
+from bacterie import *
 # Consignes générales :
 #Toutes les durrées sont en heure, les longueurs en µm
 # -> dimension de l'enceinte carrée : 1/2 longueur L = 40 µm de côté (en micron µ)
@@ -36,7 +35,7 @@ class Model(QtCore.QObject):
 
     def __init__(self, view=None, c_ini=0.4, c_min=5, v_diff=0.02,
                  rayon_cell=25, delta=0.005, longueur=40, nb_cellules_large=250, Delta=0.3,
-                 masse_ini=0.4, v_absorb=0.1, v_deplacement=0.1):
+                 masse_ini=0.4, v_absorb=0.1, v_deplacement=0.1, nb_bact_ini=50):
         """Initialise le model avec le tore, les concentrations et les bactéries
 
         Args:
@@ -69,7 +68,8 @@ class Model(QtCore.QObject):
         # Création des concentrations
         self.creer_concentrations()
         
-
+        #Creation des bacteries
+        self.__creer_bacterie(nb_bact_ini)
         
         if(view != None): # Constructeur avec interface
             self.view = view
@@ -139,7 +139,7 @@ class Model(QtCore.QObject):
         for i in range(1,n+1):
             x = np.cos(i*interval)
             y = np.sin(i*interval)
-            
+            self.bacteries.append(Bacterie(self, x, y, self.d_biomasse["masse_ini"]))
 
     #---------------- Gestion du multicouche et utilitaires ------------------------
     def convert_coord_xy_to_ij(self, coord):
