@@ -15,6 +15,14 @@ from PyQt5 import QtCore
 # -> Temps de simulation : 30h
 # -> pas de temps pour l'algorithme : Delta = 0.3h
 
+# - masse initiale bactérie : m_ini = 0.4 pg
+# vitesse max des bactéries : 10 µm/h
+# - vitesse de dérive des bactéries : vd = 0.1 (µm^4/(pg h)
+# - écart-type sur la vitesse de déplacement : b_diff = 1 µm/sqrt(h)
+# constante de conversion masse/biomass : k_conv = 0.2 (sans unité)
+# vitesse de consommation : v_cons = 0.2 pg/h
+# population initiale : 50
+
 
 class Model(QtCore.QObject):
     # Dictionnaire de constantes d'algo
@@ -26,7 +34,9 @@ class Model(QtCore.QObject):
     # Stockage des bacteries
     bacteries = []
 
-    def __init__(self, view=None, c_ini=0.4 , c_min=5, v_diff=0.02, rayon_ini=25, delta=0.005, longueur=40, nb_cellules_large=250, Delta=0.3):
+    def __init__(self, view=None, c_ini=0.4, c_min=5, v_diff=0.02,
+                 rayon_cell=25, delta=0.005, longueur=40, nb_cellules_large=250, Delta=0.3,
+                 masse_ini=0.4, v_absorb=0.1, v_deplacement=0.1):
         """Initialise le model avec le tore, les concentrations et les bactéries
 
         Args:
@@ -34,12 +44,14 @@ class Model(QtCore.QObject):
             c_ini (float, optional): Concentration initiale. Defaults to 0.4 .
             c_min (float, optional): Concentration minimale à partir de laquelle le substrat diffuse. Defaults to 5.
             v_diff (float, optional): Vitesse de diffusion du substrat. Defaults to 0.02.
-            rayon_ini (int, optional): rayon du substrat (en nanometre). Defaults to 25.
+            rayon_cell (int, optional): rayon du substrat (en nanometre). Defaults to 25.
             delta (float, optional): Pas de temps entre chaque boucle de la simulation (voir fonction jour pour une boucle). Defaults to 0.005.
             longueur (int, optional): Longueur et largeur du tore. Defaults to 40.
             nb_cellules_large (int, optional): Nombre de cases en largeur et en longueur. Defaults to 250.
             Delta (float, optional) : Pas de temps utilisé pour les sorties de l'algorithme 
-
+            masse_ini (float, optional): Masse initiale des bactéries
+            v_absorb (float, optional): Vitesse d'absorption des bactéries
+            v_deplacement (float, optional): Vitesse de déplacement des bactéries
         Raises:
             Exception: Si delta trop grand, la simulation ne peut pas fonctionner
         """
@@ -48,8 +60,9 @@ class Model(QtCore.QObject):
             raise Exception("Erreur dans le pas de temps (delta est trop grand)")  # Lève une erreur
 
         #Initialisation des dictionnaires
-        self.init_d_cellulose(c_ini, c_min, v_diff, rayon_ini)
+        self.init_d_cellulose(c_ini, c_min, v_diff, rayon_cell)
         self.init_d_tore(delta, longueur, nb_cellules_large)
+        self.init_d_biomasse(masse_ini, v_absorb, v_deplacement)
         
         # Création des concentrations
         self.creer_concentrations()
@@ -66,13 +79,13 @@ class Model(QtCore.QObject):
 
     #---------------- Initialisation des différentes couches : le Tore, les concentrations et les bactéries---------
 
-    def init_d_cellulose(self, c_ini, c_min, v_diff, rayon_ini):
+    def init_d_cellulose(self, c_ini, c_min, v_diff, rayon_cell):
         """Initialise le dictionnaire de cellulose. Voir __init__ pour les attributs
         """
         self.d_cellulose["c_ini"] = c_ini
         self.d_cellulose["c_min"] = c_min
         self.d_cellulose["v_diff"] = v_diff
-        self.d_cellulose["rayon_ini"] = rayon_ini
+        self.d_cellulose["rayon_cell"] = rayon_cell
 
     def init_d_tore(self, delta, longueur, nb_cellules_large):
         """ Initialise le dictionnaire du tore. Voir __init__ pour les attributs
@@ -82,6 +95,11 @@ class Model(QtCore.QObject):
         self.d_tore["largeur_case"] = longueur / nb_cellules_large
         self.d_tore["delta"] = delta
 
+    def init_d_biomasse(self, masse_ini, v_absorb, v_deplacement):
+        self.d_biomasse["masse_ini"] = masse_ini
+        self.d_biomasse["v_absorb"] = v_absorb
+        self.d_biomasse["vd"] = v_deplacement
+        self.d_biomasse["b_diff"] = 1/np.sqrt(self.model.d_tore["largeur_case"])
 
     def creer_concentrations(self):
         """Creer la matrice de concentration et appelle la création du substrat
@@ -96,7 +114,7 @@ class Model(QtCore.QObject):
 
         # Met la concentration des cases centrales à c_ini
         nb_cel_large = self.d_tore["nb_cellules_large"]
-        rayon_cases_subst = self.d_cellulose["rayon_ini"]/(self.d_tore["longueur"]/nb_cel_large)
+        rayon_cases_subst = self.d_cellulose["rayon_cell"]/(self.d_tore["longueur"]/nb_cel_large)
 
         X, Y = np.meshgrid(np.linspace(-nb_cel_large/2, nb_cel_large/2, nb_cel_large),
                            np.linspace(nb_cel_large/2, -nb_cel_large/2, nb_cel_large),
@@ -255,7 +273,7 @@ class Model(QtCore.QObject):
         cIni = {self.d_cellulose['c_ini']}\
         cMin = {self.d_cellulose['c_min']}\
         v_diff = {self.d_cellulose['v_diff']}\
-        rayon_ini = {self.d_cellulose['rayon_ini']} \
+        rayon_cell = {self.d_cellulose['rayon_cell']} \
         \nd_tore = \n\
         longueur =  {self.d_tore['longueur']}\
         nb_cellules_large = {self.d_tore['nb_cellules_large']}\
@@ -277,4 +295,3 @@ class Model(QtCore.QObject):
         self.view.data_ref.set_data(self.data)
         self.view.draw()
         # self.stateChangedSignal.emit()
-
