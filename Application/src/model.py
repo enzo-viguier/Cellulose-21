@@ -27,15 +27,17 @@ class Model(QtCore.QObject):
     bacteries = []
 
     def __init__(self, view=None, c_ini=10, c_min=5, v_diff=0.02, rayon_ini=25, delta=0.005, longueur=40, nb_cellules_large=250):
-        """
-        Crée le modèle contenant les concentrations. Les longueurs sont en micromètres.
-        """
         # vérifie que les données sont cohérentes
         if (delta > longueur ** 2 / (4 * v_diff)):
             raise Exception("Erreur dans le pas de temps (delta est trop grand)")  # Lève une erreur
+
+        #Initialisation des dictionnaires
         self.init_d_cellulose(c_ini, c_min, v_diff, rayon_ini)
         self.init_d_tore(delta, longueur, nb_cellules_large)
-        self.concentrations = None
+        
+        # Création des concentrations
+        self.creer_concentrations()
+        
 
         super(QtCore.QObject, self).__init__()
         if(view != None): # Constructeur avec interface
@@ -45,6 +47,8 @@ class Model(QtCore.QObject):
             self.timer.setInterval(10)
             self.timer.timeout.connect(self.updateView)
             self.timer.start()
+
+    #---------------- Initialisation des différentes couches : le Tore, les concentrations et les bactéries---------
 
     def init_d_cellulose(self, c_ini, c_min, v_diff, rayon_ini):
         """
@@ -71,38 +75,34 @@ class Model(QtCore.QObject):
         self.d_tore["largeur_case"] = longueur / nb_cellules_large
         self.d_tore["delta"] = delta
 
-    def to_string(self):
+
+    def creer_concentrations(self):
+        self.concentrations = np.zeros((self.d_tore["nb_cellules_large"], self.d_tore["nb_cellules_large"]), dtype=np.float64)
+        self.__creer_substrat()
+
+
+    def __creer_substrat(self):
+        # Met la concentration des cases centrales à c_ini
+        nb_cel_large = self.d_tore["nb_cellules_large"]
+        X, Y = np.meshgrid(np.linspace(-nb_cel_large/2, nb_cel_large/2, nb_cel_large),
+                           np.linspace(nb_cel_large/2, -nb_cel_large/2, nb_cel_large),
+                           indexing='xy')
+
+        cellulose = ((X * X + Y * Y) <= (self.d_cellulose["rayon_ini"] * self.d_cellulose["rayon_ini"]))
+
+        self.concentrations[cellulose] = self.d_cellulose["c_ini"]
+
+
+    def __creer_bacterie(self, n):
         """
-        Retourne un string contenant les différentes valeurs des constantes
+        :param n: le nombre de bactéries du modèle
+        :return: void
+        Place des bactéries de manière regulière à une case plus loin que le rayon du substrat (pour être en contact)
         """
-        return f"d_cellulose = :\n \
-        cIni = {self.d_cellulose['c_ini']}\
-        cMin = {self.d_cellulose['c_min']}\
-        v_diff = {self.d_cellulose['v_diff']}\
-        rayon_ini = {self.d_cellulose['rayon_ini']} \
-        \nd_tore = \n\
-        longueur =  {self.d_tore['longueur']}\
-        nb_cellules_large = {self.d_tore['nb_cellules_large']}\
-        largeur_case = {self.d_tore['largeur_case']}\
-        delta = {self.d_tore['delta']}"
+        # TODO
+        pass
 
-    def get_concentrations(self):
-        return self.concentrations
-
-    def get_concentration_by_coord_xy(self, coord):
-        """
-        Renvoie la concentration d'une case, la case est trouvée par les coordonnées
-        coord décalées de nx case en horizontal et ny en vertical
-
-        :param coord: (tuple) Coordonnées de la case centrale
-        """
-        i, j = self.convert_coord_xy_to_ij(coord)
-        return self.get_concentration_by_coord_ij((i, j))
-
-
-    def get_concentration_by_coord_ij(self, coords):
-        return self.concentrations[coords[0], coords[1]]
-
+    #---------------- Gestion du multicouche et utilitaires ------------------------
     def convert_coord_xy_to_ij(self, coord):
         """Permet de convertir des coordonnées x, y en coordonnées i, j. x et y doivent être entre -largeurTore/2 et largeurTore/2
 
@@ -117,37 +117,26 @@ class Model(QtCore.QObject):
         return (int(np.floor(i)), int(np.floor(j)))
         # floor() fait un arrondi à l'inférieur, on convertit ensuite la valeur en entier.
 
+
+    # --------------- Gestion des concentrations-------------------------------------------
+
+    def get_concentrations(self):
+        return self.concentrations
+
+    def get_concentration_by_coord_xy(self, coord):
+        i, j = self.convert_coord_xy_to_ij(coord)
+        return self.get_concentration_by_coord_ij((i, j))
+
+
+    def get_concentration_by_coord_ij(self, coords):
+        return self.concentrations[coords[0], coords[1]]
+
+
     def set_concentration_by_ij(self, coords, c):
         self.concentrations[coords[0], coords[1]] = c
 
-    def __creer_substrat(self, rayon_cercle_ini):
-        # Créer un cercle de cases avec une concentration c_ini centré dans le repère de rayon rayon_cercle_ini
-        nb_cel_large = self.d_tore["nb_cellules_large"]
-        X, Y = np.meshgrid(np.linspace(-nb_cel_large/2, nb_cel_large/2, nb_cel_large),
-                           np.linspace(nb_cel_large/2, -nb_cel_large/2, nb_cel_large),
-                           indexing='xy')
 
-        cellulose = ((X * X + Y * Y) <= (self.d_cellulose["rayon_ini"] * self.d_cellulose["rayon_ini"]))
 
-        self.concentrations[cellulose] = self.d_cellulose["c_ini"]
-
-    def creer_concentrations(self, nb_cellules_large, rayon_cercle_ini):
-        self.concentrations = np.zeros((nb_cellules_large, nb_cellules_large), dtype=np.float64) * self.d_cellulose[
-            'c_ini']
-        # self.__creer_substrat(nb_cellules_large, rayon_cercle_ini)
-
-    def afficher_concentrations(self):
-        print("afficher concentrations")
-        print(self.concentrations)
-
-    def __creer_bacterie(self, n):
-        """
-        :param n: le nombre de bactéries du modèle
-        :return: void
-        Place des bactéries de manière regulière à une case plus loin que le rayon du substrat (pour être en contact)
-        """
-        # TODO
-        pass
 
     def jour(self):
         """
@@ -246,6 +235,31 @@ class Model(QtCore.QObject):
         # TODO
         pass
 
+
+
+    #-------------------------------- Affichages ----------------------------------
+
+    def to_string(self):
+        """
+        Retourne un string contenant les différentes valeurs des constantes
+        """
+        return f"d_cellulose = :\n \
+        cIni = {self.d_cellulose['c_ini']}\
+        cMin = {self.d_cellulose['c_min']}\
+        v_diff = {self.d_cellulose['v_diff']}\
+        rayon_ini = {self.d_cellulose['rayon_ini']} \
+        \nd_tore = \n\
+        longueur =  {self.d_tore['longueur']}\
+        nb_cellules_large = {self.d_tore['nb_cellules_large']}\
+        largeur_case = {self.d_tore['largeur_case']}\
+        delta = {self.d_tore['delta']}"
+
+    
+    def afficher_concentrations(self):
+        print("afficher concentrations")
+        print(self.concentrations)
+
+
     # PYQT
     def getData(self):
         return self.data
@@ -255,3 +269,4 @@ class Model(QtCore.QObject):
         self.view.data_ref.set_data(self.data)
         self.view.draw()
         # self.stateChangedSignal.emit()
+
