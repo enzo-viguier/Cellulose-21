@@ -74,10 +74,12 @@ class Bacterie:
         et retourne la vitesse sur l'axe x et la vitesse sur l'axe y
         """
         vd = self.d_biomasse["vd"]
-        c_est = self.model.get_concentration_par_coord((self.x, self.y), 1, 0)
-        c_ouest = self.model.get_concentration_par_coord((self.x, self.y), -1, 0)
-        c_nord = self.model.get_concentration_par_coord((self.x, self.y), 0, 1)
-        c_sud = self.model.get_concentration_par_coord((self.x, self.y), 0, -1)
+        # Convertir coordonnées x,y en i,j
+        (i, j) = self.model.convert_coord_xy_to_ij((self.x, self.y))
+        c_est = self.model.get_concentration_by_coord_ij((i+1, j))
+        c_ouest = self.model.get_concentration_by_coord_ij((i-1, j))
+        c_nord = self.model.get_concentration_by_coord_ij((i, j+1))
+        c_sud = self.model.get_concentration_by_coord_ij((i, j-1))
         h = self.model.d_tore["largeur_case"]
         vd_x = vd*(c_est - c_ouest) / 2*h
         vd_y = vd*(c_nord - c_sud) / 2*h
