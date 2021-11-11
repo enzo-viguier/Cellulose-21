@@ -113,8 +113,12 @@ class Model(QtCore.QObject):
         :return: void
         Place des bactéries de manière regulière à une case plus loin que le rayon du substrat (pour être en contact)
         """
-        # TODO
-        pass
+        interval = 2*np.pi / n
+        
+        for i in range(1,n+1):
+            x = np.cos(i*interval)
+            y = np.sin(i*interval)
+            
 
     #---------------- Gestion du multicouche et utilitaires ------------------------
     def convert_coord_xy_to_ij(self, coord):
