@@ -16,7 +16,6 @@ from PyQt5 import QtCore
 
 
 class Model(QtCore.QObject):
-    # Variables statiques
     # Dictionnaire de constantes d'algo
     d_tore = {}
     # Dictionnaire de constantes relatives à la cellulose
@@ -26,7 +25,22 @@ class Model(QtCore.QObject):
     # Stockage des bacteries
     bacteries = []
 
-    def __init__(self, view=None, c_ini=10, c_min=5, v_diff=0.02, rayon_ini=25, delta=0.005, longueur=40, nb_cellules_large=250):
+    def __init__(self, view=None, c_ini=10, c_min=5, v_diff=0.02, rayon_ini=25, delta=0.005, longueur=40, nb_cellules_large=250, Delta=20):
+        """Initialise le model avec le tore, les concentrations et les bactéries
+
+        Args:
+            view (MainWindow, optional): Contient la mainwindows pour l'interface. Si non remplis lance sans interface.
+            c_ini (int, optional): Concentration initiale. Defaults to 10.
+            c_min (int, optional): Concentration minimale à partir de laquelle le substrat diffuse. Defaults to 5.
+            v_diff (float, optional): Vitesse de diffusion du substrat. Defaults to 0.02.
+            rayon_ini (int, optional): rayon du substrat (en nombre de case). Defaults to 25.
+            delta (float, optional): Pas de temps entre chaque boucle de la simulation (voir fonction jour pour une boucle). Defaults to 0.005.
+            longueur (int, optional): Longueur et largeur du tore. Defaults to 40.
+            nb_cellules_large (int, optional): Nombre de cases en largeur et en longueur. Defaults to 250.
+
+        Raises:
+            Exception: Si delta trop grand, la simulation ne peut pas fonctionner
+        """
         # vérifie que les données sont cohérentes
         if (delta > longueur ** 2 / (4 * v_diff)):
             raise Exception("Erreur dans le pas de temps (delta est trop grand)")  # Lève une erreur
@@ -51,13 +65,7 @@ class Model(QtCore.QObject):
     #---------------- Initialisation des différentes couches : le Tore, les concentrations et les bactéries---------
 
     def init_d_cellulose(self, c_ini, c_min, v_diff, rayon_ini):
-        """
-        Les fonctions init servent à initialiser les différents dictionnaires.
-        Les valeurs de base permettent de créer une simulation fonctionnelle, sans abération.
-        :param c_ini: Concentration initiale des cases
-        :param c_min: Concentration minimale des cases
-        :param v_diff: vitesse de diffusion du liquide
-        :param rayon_ini: Rayon du cercle de substrat.
+        """Initialise le dictionnaire de cellulose. Voir __init__ pour les attributs
         """
         self.d_cellulose["c_ini"] = c_ini
         self.d_cellulose["c_min"] = c_min
@@ -65,10 +73,7 @@ class Model(QtCore.QObject):
         self.d_cellulose["rayon_ini"] = rayon_ini
 
     def init_d_tore(self, delta, longueur, nb_cellules_large):
-        """
-        NECESSITE LES VALEURS DE d_cellulose INITIALISEES
-        :param longueur: (int) Longueur et largeur du tore
-        :param nb_cellules_large: (int) Nombre de cellules initiales dans la simulation
+        """ Initialise le dictionnaire du tore. Voir __init__ pour les attributs
         """
         self.d_tore["longueur"] = longueur
         self.d_tore["nb_cellules_large"] = nb_cellules_large
@@ -77,11 +82,15 @@ class Model(QtCore.QObject):
 
 
     def creer_concentrations(self):
+        """Creer la matrice de concentration et appelle la création du substrat
+        """
         self.concentrations = np.zeros((self.d_tore["nb_cellules_large"], self.d_tore["nb_cellules_large"]), dtype=np.float64)
         self.__creer_substrat()
 
 
     def __creer_substrat(self):
+        """Creer le substrat, c'est à dire une zone centrale où les concentrations sont à c_ini
+        """
         # Met la concentration des cases centrales à c_ini
         nb_cel_large = self.d_tore["nb_cellules_large"]
         X, Y = np.meshgrid(np.linspace(-nb_cel_large/2, nb_cel_large/2, nb_cel_large),
@@ -136,12 +145,12 @@ class Model(QtCore.QObject):
         self.concentrations[coords[0], coords[1]] = c
 
 
-
+    # ------------- Boucle du programme ---------------
 
     def jour(self):
         """
         :return: void
-        La fonction jour lance les cinq étapes du cycle
+        La fonction jour lance les cinq étapes de la boucle
         """
         self.__diffuse()
         self.__mouvement_bacteries()
@@ -164,16 +173,10 @@ class Model(QtCore.QObject):
 
     def __somme_case_adj(self):
         """
-        Renvoie la somme des diffusions avec les cases voisines sans les constantes. 
+        Renvoie la somme des diffusions avec les cases voisines sans les constantes, FONCTION AUXILIAIRE DE __diffuse. 
         :return: la partie de la formule (Somme pour les 4 cases adj(c_actu − c_case_adj*etat_case)
-        Fait la somme des diffusions des cases adjacentes
+        
         """
-        # décomposition de (np.roll(concentrations, 1, axis=0)<self.cMin )*( concentrations<self.cMin)*((np.roll(concentrations, 1, axis=0))-concentrations)
-        # np.roll(concentrations, 1, axis=0)<self.cMin )*( concentrations<self.cMin)
-        # -> vérifie que les cases ne sont pas sous état solide
-        # ((np.roll(concentrations, 1, axis=0))-concentrations) calcule la diffusion comme si la case est semi-liquide
-        # En python, un boolean = False est equivalent à un int = 0 donc on peut en mettre dans les calculs
-
         # creation des concentrations décallés d'une ligne ou d'une colone
         c_haut = np.roll(self.concentrations, 1, axis=0)
         c_bas = np.roll(self.concentrations, -1, axis=0)
@@ -197,10 +200,6 @@ class Model(QtCore.QObject):
 
         return new_concentrations
 
-        # Code desactivé mais gardé en sauvegarde
-        new_concentrations += (c_droite < self.d_cellulose["c_min"]) * (
-                self.concentrations < self.d_cellulose["c_min"]) * (
-                                      c_droite - self.concentrations)
 
     def __mouvement_bacteries(self):
         """
