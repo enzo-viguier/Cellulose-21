@@ -26,7 +26,7 @@ class Model(QtCore.QObject):
     # Stockage des bacteries
     bacteries = []
 
-    def __init__(self, view=None, c_ini=10, c_min=5, v_diff=0.02, rayon_ini=25, delta=0.01, longueur=40, nb_cellules=250):
+    def __init__(self, view=None, c_ini=10, c_min=5, v_diff=0.02, rayon_ini=25, delta=0.005, longueur=40, nb_cellules_large=250):
         """
         Crée le modèle contenant les concentrations. Les longueurs sont en micromètres.
         """
@@ -34,7 +34,7 @@ class Model(QtCore.QObject):
         if (delta > longueur ** 2 / (4 * v_diff)):
             raise Exception("Erreur dans le pas de temps (delta est trop grand)")  # Lève une erreur
         self.init_d_cellulose(c_ini, c_min, v_diff, rayon_ini)
-        self.init_d_tore(delta, longueur, nb_cellules)
+        self.init_d_tore(delta, longueur, nb_cellules_large)
         self.concentrations = None
 
         super(QtCore.QObject, self).__init__()
@@ -60,15 +60,15 @@ class Model(QtCore.QObject):
         self.d_cellulose["v_diff"] = v_diff
         self.d_cellulose["rayon_ini"] = rayon_ini
 
-    def init_d_tore(self, delta, longueur, nb_cellules):
+    def init_d_tore(self, delta, longueur, nb_cellules_large):
         """
         NECESSITE LES VALEURS DE d_cellulose INITIALISEES
         :param longueur: (int) Longueur et largeur du tore
-        :param nb_cellules: (int) Nombre de cellules initiales dans la simulation
+        :param nb_cellules_large: (int) Nombre de cellules initiales dans la simulation
         """
         self.d_tore["longueur"] = longueur
-        self.d_tore["nb_cellules"] = nb_cellules
-        self.d_tore["largeur_case"] = longueur / nb_cellules
+        self.d_tore["nb_cellules_large"] = nb_cellules_large
+        self.d_tore["largeur_case"] = longueur / nb_cellules_large
         self.d_tore["delta"] = delta
 
     def to_string(self):
@@ -82,7 +82,7 @@ class Model(QtCore.QObject):
         rayon_ini = {self.d_cellulose['rayon_ini']} \
         \nd_tore = \n\
         longueur =  {self.d_tore['longueur']}\
-        nb_cellules = {self.d_tore['nb_cellules']}\
+        nb_cellules_large = {self.d_tore['nb_cellules_large']}\
         largeur_case = {self.d_tore['largeur_case']}\
         delta = {self.d_tore['delta']}"
 
@@ -120,14 +120,14 @@ class Model(QtCore.QObject):
     def set_concentration_by_ij(self, coords, c):
         self.concentrations[coords[0], coords[1]] = c
 
-    def __creer_substrat(self, nb_cellules_large, rayon_cercle_ini):
+    def __creer_substrat(self, rayon_cercle_ini):
         # Créer un cercle de cases avec une concentration c_ini centré dans le repère de rayon rayon_cercle_ini
-
-        X, Y = np.meshgrid(np.linspace(-125, 125, 250),
-                           np.linspace(125, -125, 250),
+        nb_cel_large = self.d_tore["nb_cellules_large"]
+        X, Y = np.meshgrid(np.linspace(-nb_cel_large/2, nb_cel_large/2, nb_cel_large),
+                           np.linspace(nb_cel_large/2, -nb_cel_large/2, nb_cel_large),
                            indexing='xy')
 
-        cellulose = ((X * X + Y * Y) <= (rayon_cercle_ini * rayon_cercle_ini))
+        cellulose = ((X * X + Y * Y) <= (self.d_cellulose["rayon_ini"] * self.d_cellulose["rayon_ini"]))
 
         self.concentrations[cellulose] = self.d_cellulose["c_ini"]
 
