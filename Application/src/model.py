@@ -55,6 +55,8 @@ class Model(QtCore.QObject):
         Raises:
             Exception: Si delta trop grand, la simulation ne peut pas fonctionner
         """
+
+        super(QtCore.QObject, self).__init__()
         # vérifie que les données sont cohérentes
         if (delta > longueur ** 2 / (4 * v_diff)):
             raise Exception("Erreur dans le pas de temps (delta est trop grand)")  # Lève une erreur
@@ -68,7 +70,7 @@ class Model(QtCore.QObject):
         self.creer_concentrations()
         
 
-        super(QtCore.QObject, self).__init__()
+        
         if(view != None): # Constructeur avec interface
             self.view = view
             self.data = np.arange(2500).reshape((50, 50))
@@ -96,10 +98,11 @@ class Model(QtCore.QObject):
         self.d_tore["delta"] = delta
 
     def init_d_biomasse(self, masse_ini, v_absorb, v_deplacement):
+        self.d_biomasse = {}
         self.d_biomasse["masse_ini"] = masse_ini
         self.d_biomasse["v_absorb"] = v_absorb
         self.d_biomasse["vd"] = v_deplacement
-        self.d_biomasse["b_diff"] = 1/np.sqrt(self.model.d_tore["largeur_case"])
+        self.d_biomasse["b_diff"] = 1/np.sqrt(self.d_tore["largeur_case"])
 
     def creer_concentrations(self):
         """Creer la matrice de concentration et appelle la création du substrat
