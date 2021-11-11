@@ -3,7 +3,7 @@ from PyQt5 import QtCore
 
 
 # Consignes générales :
-#Toutes les durrées sont en heure
+#Toutes les durrées sont en heure, les longueurs en µm
 # -> dimension de l'enceinte carrée : 1/2 longueur L = 40 µm de côté (en micron µ)
 # -> nombre de cases : n =  250 dans chaque direction, donc 250² cases en tout
 # -> concentration initiale : c_ini = 0.4 pg/µm² (picogrammes par micromètre carré)
@@ -93,13 +93,16 @@ class Model(QtCore.QObject):
     def __creer_substrat(self):
         """Creer le substrat, c'est à dire une zone centrale où les concentrations sont à c_ini
         """
+
         # Met la concentration des cases centrales à c_ini
         nb_cel_large = self.d_tore["nb_cellules_large"]
+        rayon_cases_subst = self.d_cellulose["rayon_ini"]/(self.d_tore["longueur"]/nb_cel_large)
+
         X, Y = np.meshgrid(np.linspace(-nb_cel_large/2, nb_cel_large/2, nb_cel_large),
                            np.linspace(nb_cel_large/2, -nb_cel_large/2, nb_cel_large),
                            indexing='xy')
 
-        cellulose = ((X * X + Y * Y) <= (self.d_cellulose["rayon_ini"] * self.d_cellulose["rayon_ini"]))
+        cellulose = ((X * X + Y * Y) <= (rayon_cases_subst * rayon_cases_subst))
 
         self.concentrations[cellulose] = self.d_cellulose["c_ini"]
 
