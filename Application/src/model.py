@@ -3,16 +3,17 @@ from PyQt5 import QtCore
 
 
 # Consignes générales :
+#Toutes les durrées sont en heure
 # -> dimension de l'enceinte carrée : 1/2 longueur L = 40 µm de côté (en micron µ)
 # -> nombre de cases : n =  250 dans chaque direction, donc 250² cases en tout
 # -> concentration initiale : c_ini = 0.4 pg/µm² (picogrammes par micromètre carré)
 # -> concentration pour diffuser : c_min = 0.3 pg/µm²
 # -> vitesse de diffusion : 5 µm²/h (micromètres carrés par heure)
-# -> pas de temps pour diffuser : delta = 0.005
+# -> pas de temps pour diffuser : delta = 0.005h
 
 # -> rayon du cercle initial de cellulose : R = 25 µm
 # -> Temps de simulation : 30h
-# -> pas de temps pour l'algorithme : Delta = 20mn (0.3h)
+# -> pas de temps pour l'algorithme : Delta = 0.3h
 
 
 class Model(QtCore.QObject):
@@ -25,18 +26,19 @@ class Model(QtCore.QObject):
     # Stockage des bacteries
     bacteries = []
 
-    def __init__(self, view=None, c_ini=10, c_min=5, v_diff=0.02, rayon_ini=25, delta=0.005, longueur=40, nb_cellules_large=250, Delta=20):
+    def __init__(self, view=None, c_ini=0.4 , c_min=5, v_diff=0.02, rayon_ini=25, delta=0.005, longueur=40, nb_cellules_large=250, Delta=0.3):
         """Initialise le model avec le tore, les concentrations et les bactéries
 
         Args:
             view (MainWindow, optional): Contient la mainwindows pour l'interface. Si non remplis lance sans interface.
-            c_ini (int, optional): Concentration initiale. Defaults to 10.
-            c_min (int, optional): Concentration minimale à partir de laquelle le substrat diffuse. Defaults to 5.
+            c_ini (float, optional): Concentration initiale. Defaults to 0.4 .
+            c_min (float, optional): Concentration minimale à partir de laquelle le substrat diffuse. Defaults to 5.
             v_diff (float, optional): Vitesse de diffusion du substrat. Defaults to 0.02.
-            rayon_ini (int, optional): rayon du substrat (en nombre de case). Defaults to 25.
+            rayon_ini (int, optional): rayon du substrat (en nanometre). Defaults to 25.
             delta (float, optional): Pas de temps entre chaque boucle de la simulation (voir fonction jour pour une boucle). Defaults to 0.005.
             longueur (int, optional): Longueur et largeur du tore. Defaults to 40.
             nb_cellules_large (int, optional): Nombre de cases en largeur et en longueur. Defaults to 250.
+            Delta (float, optional) : Pas de temps utilisé pour les sorties de l'algorithme 
 
         Raises:
             Exception: Si delta trop grand, la simulation ne peut pas fonctionner
