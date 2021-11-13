@@ -44,8 +44,8 @@ class control(QMainWindow):
         self.m.stateChangedSignal.connect(self.update_view)
 
     def update_view(self):
-        self.ui.animationBacteries.data_ref.set_data(self.m.getData())
-        self.ui.animationBacteries.draw()
+        self.ui.graph_1.data_ref.set_data(self.m.concentrations)
+        self.ui.graph_1.draw()
 
         #self.ui.animationBacteries.setData(self.npToMplForAnimation(self.m.afficher_concentrations()))
         #self.ui.animationSubstrat.setData(self.npToMplForAnimation(self.m.afficher_concentrations()))
