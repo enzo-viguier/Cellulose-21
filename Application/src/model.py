@@ -143,13 +143,13 @@ class Model(QtCore.QObject):
             self.bacteries.append(Bacterie(self, x, y, self.d_biomasse["masse_ini"]))
 
     # ---------------- Gestion du multicouche et utilitaires ------------------------
-    def convert_coord_xy_to_ij(self, coord):
+    def convert_coord_xy_to_ij(self, coords):
         """Permet de convertir des coordonnées x, y en coordonnées i, j. x et y doivent être entre -largeurTore/2 et largeurTore/2
 
         Returns:
             (int, int): Coordonnées sur le tableau de concentration
         """
-        x, y = coord
+        x, y = coords
 
         j = ((x + self.d_tore['longueur'] / 2) / self.d_tore['largeur_case'])
         i = ((-y + self.d_tore['longueur'] / 2) / self.d_tore['largeur_case'])
