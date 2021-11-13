@@ -10,8 +10,8 @@ class UneClasseDeTest(unittest.TestCase):
     def main_test_diffusion(self):
         model = Model(delta=1, longueur=3, nb_cellules_large=5, c_ini=0,rayon_cell=1)
 
-        model.set_concentration_by_ij((0, 0), 0.2)
-        model.set_concentration_by_ij((0, 1), 0.4)
+        model.set_concentration_by_coord_ij((0, 0), 0.2)
+        model.set_concentration_by_coord_ij((0, 1), 0.4)
         #model.afficher_concentrations()
 
         for i in range(800):
@@ -33,7 +33,7 @@ class UneClasseDeTest(unittest.TestCase):
     def test_set_concentration_by_coord(self):
         model = Model()
 
-        model.set_concentration_by_ij((0, 0), 100)
+        model.set_concentration_by_coord_ij((0, 0), 100)
 
         self.assertTrue(model.get_concentration_by_coord_ij((0, 0)) ==100)
         
@@ -47,7 +47,7 @@ class UneClasseDeTest(unittest.TestCase):
         print("coordonnées xy bactérie : ", bact.get_coord_xy())
 
         #On met la concentration du 0 xy à 2
-        model.set_concentration_by_ij(model.convert_coord_xy_to_ij((0, 0)), 2)
+        model.set_concentration_by_coord_ij(model.convert_coord_xy_to_ij((0, 0)), 2)
         print("Concentration avant manger", model.get_concentration_by_coord_xy((0, 0)))
         for i in range(7):
             bact.manger()

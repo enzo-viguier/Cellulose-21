@@ -35,7 +35,7 @@ class Bacterie:
                 # On prend les cases autour du centre ainsi que le centre
                 case = self.model.get_concentration_by_coord_ij(coords_ij)
                 conso = np.minimum(np.square(self.model.d_tore["largeur_case"]) * case, self.model.d_biomasse["v_absorb"]) #carre à verifier
-                self.model.set_concentration_by_ij(coords_ij, case - (conso / np.square(self.model.d_tore["largeur_case"])))
+                self.model.set_concentration_by_coord_ij(coords_ij, case - (conso / np.square(self.model.d_tore["largeur_case"])))
 
 
     def gain_masse(self, conso):

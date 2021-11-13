@@ -169,7 +169,7 @@ class Model(QtCore.QObject):
     def get_concentration_by_coord_ij(self, coords):
         return self.concentrations[coords[0], coords[1]]
 
-    def set_concentration_by_ij(self, coords, c):
+    def set_concentration_by_coord_ij(self, coords, c):
         self.concentrations[coords[0], coords[1]] = c
 
     # ------------- Boucle du programme ---------------
