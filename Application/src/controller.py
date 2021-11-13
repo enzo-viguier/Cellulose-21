@@ -1,3 +1,5 @@
+from matplotlib import pyplot as plt
+
 from model import Model
 import Ui_Simulation
 from PyQt5.QtWidgets import QMainWindow
@@ -41,9 +43,18 @@ class control(QMainWindow):
         self.m = Model(self.ui)
 #        self.m.stateChangedSignal.connect(self.update_view)
 
-        
+    def npToMplForAnimation(self, np_data):
+        pass
+
+    def npToMplForGraph(self, np_data):
+        pass
         
     def update_view(self):
-        # self.ui.mplView.data_ref.set_data(self.m.getData())
-        # self.ui.mplView.draw()
+        #self.ui.mplView.data_ref.set_data(self.m.getData())
+        #self.ui.mplView.draw()
+
+        #self.ui.animationBacteries.setData(self.npToMplForAnimation(self.m.afficher_concentrations()))
+        #self.ui.animationSubstrat.setData(self.npToMplForAnimation(self.m.afficher_concentrations()))
+        #self.ui.graph_1.setData(self.npToMplForGraph(self.m.afficher_concentrations()))
+        #self.ui.graph_2.setData(self.npToMplForGraph(self.m.afficher_concentrations()))
         pass
