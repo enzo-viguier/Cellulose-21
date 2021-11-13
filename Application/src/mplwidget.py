@@ -25,3 +25,6 @@ class Mplwidget(FigureCanvasQTAgg):
     def update_plot(self):
         print(self.ax.__class__)
 #        self.canvas.axes.plot(self.xdata, self.ydata)
+
+    def setData(self, data):
+        self.data_ref = data
