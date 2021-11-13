@@ -1,8 +1,10 @@
 import numpy as np
 from PyQt5 import QtCore
 from bacterie import *
+
+
 # Consignes générales :
-#Toutes les durrées sont en heure, les longueurs en µm
+# Toutes les durrées sont en heure, les longueurs en µm
 # -> dimension de l'enceinte carrée : 1/2 longueur L = 40 µm de côté (en micron µ)
 # -> nombre de cases : n =  250 dans chaque direction, donc 250² cases en tout
 # -> concentration initiale : c_ini = 0.4 pg/µm² (picogrammes par micromètre carré)
@@ -60,18 +62,18 @@ class Model(QtCore.QObject):
         if (delta > longueur ** 2 / (4 * v_diff)):
             raise Exception("Erreur dans le pas de temps (delta est trop grand)")  # Lève une erreur
 
-        #Initialisation des dictionnaires
+        # Initialisation des dictionnaires
         self.init_d_cellulose(c_ini, c_min, v_diff, rayon_cell)
         self.init_d_tore(delta, longueur, nb_cellules_large)
         self.init_d_biomasse(masse_ini, v_absorb, v_deplacement)
-        
+
         # Création des concentrations
         self.creer_concentrations()
-        
-        #Creation des bacteries
+
+        # Creation des bacteries
         self.__creer_bacterie(nb_bact_ini)
-        
-        if(view != None): # Constructeur avec interface
+
+        if (view != None):  # Constructeur avec interface
             self.view = view
             self.data = np.arange(2500).reshape((50, 50))
             self.timer = QtCore.QTimer()
@@ -79,7 +81,7 @@ class Model(QtCore.QObject):
             self.timer.timeout.connect(self.updateView)
             self.timer.start()
 
-    #---------------- Initialisation des différentes couches : le Tore, les concentrations et les bactéries---------
+    # ---------------- Initialisation des différentes couches : le Tore, les concentrations et les bactéries---------
 
     def init_d_cellulose(self, c_ini, c_min, v_diff, rayon_cell):
         """Initialise le dictionnaire de cellulose. Voir __init__ pour les attributs
@@ -102,14 +104,14 @@ class Model(QtCore.QObject):
         self.d_biomasse["masse_ini"] = masse_ini
         self.d_biomasse["v_absorb"] = v_absorb
         self.d_biomasse["vd"] = v_deplacement
-        self.d_biomasse["b_diff"] = 1/np.sqrt(self.d_tore["largeur_case"])
+        self.d_biomasse["b_diff"] = 1 / np.sqrt(self.d_tore["largeur_case"])
 
     def creer_concentrations(self):
         """Creer la matrice de concentration et appelle la création du substrat
         """
-        self.concentrations = np.zeros((self.d_tore["nb_cellules_large"], self.d_tore["nb_cellules_large"]), dtype=np.float64)
+        self.concentrations = np.zeros((self.d_tore["nb_cellules_large"], self.d_tore["nb_cellules_large"]),
+                                       dtype=np.float64)
         self.__creer_substrat()
-
 
     def __creer_substrat(self):
         """Creer le substrat, c'est à dire une zone centrale où les concentrations sont à c_ini
@@ -117,16 +119,15 @@ class Model(QtCore.QObject):
 
         # Met la concentration des cases centrales à c_ini
         nb_cel_large = self.d_tore["nb_cellules_large"]
-        rayon_cases_subst = self.d_cellulose["rayon_cell"]/(self.d_tore["longueur"]/nb_cel_large)
+        rayon_cases_subst = self.d_cellulose["rayon_cell"] / (self.d_tore["longueur"] / nb_cel_large)
 
-        X, Y = np.meshgrid(np.linspace(-nb_cel_large/2, nb_cel_large/2, nb_cel_large),
-                           np.linspace(nb_cel_large/2, -nb_cel_large/2, nb_cel_large),
+        X, Y = np.meshgrid(np.linspace(-nb_cel_large / 2, nb_cel_large / 2, nb_cel_large),
+                           np.linspace(nb_cel_large / 2, -nb_cel_large / 2, nb_cel_large),
                            indexing='xy')
 
         cellulose = ((X * X + Y * Y) <= (rayon_cases_subst * rayon_cases_subst))
 
         self.concentrations[cellulose] = self.d_cellulose["c_ini"]
-
 
     def __creer_bacterie(self, n):
         """
@@ -134,14 +135,14 @@ class Model(QtCore.QObject):
         :return: void
         Place des bactéries de manière regulière à une case plus loin que le rayon du substrat (pour être en contact)
         """
-        interval = 2*np.pi / n
-        
-        for i in range(1,n+1):
-            x = np.cos(i*interval)
-            y = np.sin(i*interval)
+        interval = 2 * np.pi / n
+
+        for i in range(1, n + 1):
+            x = np.cos(i * interval)
+            y = np.sin(i * interval)
             self.bacteries.append(Bacterie(self, x, y, self.d_biomasse["masse_ini"]))
 
-    #---------------- Gestion du multicouche et utilitaires ------------------------
+    # ---------------- Gestion du multicouche et utilitaires ------------------------
     def convert_coord_xy_to_ij(self, coord):
         """Permet de convertir des coordonnées x, y en coordonnées i, j. x et y doivent être entre -largeurTore/2 et largeurTore/2
 
@@ -156,7 +157,6 @@ class Model(QtCore.QObject):
         return (int(np.floor(i)), int(np.floor(j)))
         # floor() fait un arrondi à l'inférieur, on convertit ensuite la valeur en entier.
 
-
     # --------------- Gestion des concentrations-------------------------------------------
 
     def get_concentrations(self):
@@ -166,14 +166,11 @@ class Model(QtCore.QObject):
         i, j = self.convert_coord_xy_to_ij(coord)
         return self.get_concentration_by_coord_ij((i, j))
 
-
     def get_concentration_by_coord_ij(self, coords):
         return self.concentrations[coords[0], coords[1]]
 
-
     def set_concentration_by_ij(self, coords, c):
         self.concentrations[coords[0], coords[1]] = c
-
 
     # ------------- Boucle du programme ---------------
 
@@ -203,9 +200,9 @@ class Model(QtCore.QObject):
 
     def __somme_case_adj(self):
         """
-        Renvoie la somme des diffusions avec les cases voisines sans les constantes, FONCTION AUXILIAIRE DE __diffuse. 
+        Renvoie la somme des diffusions avec les cases voisines sans les constantes, FONCTION AUXILIAIRE DE __diffuse.
         :return: la partie de la formule (Somme pour les 4 cases adj(c_actu − c_case_adj*etat_case)
-        
+
         """
         # creation des concentrations décallés d'une ligne ou d'une colone
         c_haut = np.roll(self.concentrations, 1, axis=0)
@@ -229,7 +226,6 @@ class Model(QtCore.QObject):
             c_gauche[c_gauche <= c_min] - self.concentrations[self.concentrations <= c_min]
 
         return new_concentrations
-
 
     def __mouvement_bacteries(self):
         """
@@ -264,9 +260,7 @@ class Model(QtCore.QObject):
         # TODO
         pass
 
-
-
-    #-------------------------------- Affichages ----------------------------------
+    # -------------------------------- Affichages ----------------------------------
 
     def to_string(self):
         """
@@ -283,11 +277,9 @@ class Model(QtCore.QObject):
         largeur_case = {self.d_tore['largeur_case']}\
         delta = {self.d_tore['delta']}"
 
-    
     def afficher_concentrations(self):
         print("afficher concentrations")
         print(self.concentrations)
-
 
     # PYQT
     def getData(self):
@@ -295,6 +287,6 @@ class Model(QtCore.QObject):
 
     def updateView(self):
         self.data = np.roll(self.data, 1)
-        self.view.data_ref.set_data(self.data)
-        self.view.draw()
-        # self.stateChangedSignal.emit()
+        # self.view.data_ref.set_data(self.data)
+        # self.view.draw()
+        self.stateChangedSignal.emit()

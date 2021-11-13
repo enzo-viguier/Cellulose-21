@@ -39,19 +39,13 @@ class control(QMainWindow):
         super().__init__(parent)
         self.ui = Ui_Simulation.Ui_MainWindow()
         self.ui.setupUi(self)
-#      self.ui.updateButton.clicked.connect(self.update_view)
+        #self.ui.updateButton.clicked.connect(self.update_view)
         self.m = Model(self.ui)
-#        self.m.stateChangedSignal.connect(self.update_view)
+        self.m.stateChangedSignal.connect(self.update_view)
 
-    def npToMplForAnimation(self, np_data):
-        pass
-
-    def npToMplForGraph(self, np_data):
-        pass
-        
     def update_view(self):
-        #self.ui.mplView.data_ref.set_data(self.m.getData())
-        #self.ui.mplView.draw()
+        self.ui.animationBacteries.data_ref.set_data(self.m.getData())
+        self.ui.animationBacteries.draw()
 
         #self.ui.animationBacteries.setData(self.npToMplForAnimation(self.m.afficher_concentrations()))
         #self.ui.animationSubstrat.setData(self.npToMplForAnimation(self.m.afficher_concentrations()))
