@@ -319,7 +319,7 @@
 									"font": "Arial;13;0",
 									"left": 454,
 									"top": 172.5,
-									"width": 219,
+									"width": 220.234375,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAF8DfcP3E+Q1LQ="
@@ -518,7 +518,7 @@
 									"font": "Arial;13;0",
 									"left": 484,
 									"top": 300.5,
-									"width": 135,
+									"width": 135.70263671875,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAF8DfdR40+/RNA="
@@ -714,7 +714,7 @@
 									"font": "Arial;13;0",
 									"left": 456,
 									"top": 412.5,
-									"width": 191,
+									"width": 192.04443359375,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAF8Dfepi0/uB3k="
@@ -908,7 +908,7 @@
 									"font": "Arial;13;0",
 									"left": 500.5,
 									"top": 564.5,
-									"width": 135,
+									"width": 136.42626953125,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAF8DfffI1AcnPU="
@@ -3805,7 +3805,7 @@
 							"top": 448,
 							"width": 177,
 							"height": 153,
-							"text": "d_tore contient des constantes :\nlongueur: float = 40\nnb_cellules_large: int = 250\nlargeur_case: float\ndelta: float = 0.005"
+							"text": "d_tore contient des constantes :\nlongueur: float = 80\nnb_cellules_large: int = 250\nlargeur_case: float\ndelta: float = 0.005"
 						},
 						{
 							"_type": "UMLNoteLinkView",

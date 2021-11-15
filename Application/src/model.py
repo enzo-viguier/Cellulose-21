@@ -5,7 +5,7 @@ from bacterie import *
 
 # Consignes générales :
 # Toutes les durrées sont en heure, les longueurs en µm
-# -> dimension de l'enceinte carrée : 1/2 longueur L = 40 µm de côté (en micron µ)
+# -> dimension de l'enceinte carrée : 1/2 longueur L = 40 µm (soit longueur = 80) de côté (en micron µ) 
 # -> nombre de cases : n =  250 dans chaque direction, donc 250² cases en tout
 # -> concentration initiale : c_ini = 0.4 pg/µm² (picogrammes par micromètre carré)
 # -> concentration pour diffuser : c_min = 0.3 pg/µm²
@@ -36,7 +36,7 @@ class Model(QtCore.QObject):
     bacteries = []
 
     def __init__(self, view=None, c_ini=0.4, c_min=5, v_diff=0.02,
-                 rayon_cell=25, delta=0.005, longueur=40, nb_cellules_large=250, Delta=0.3,
+                 rayon_cell=25, delta=0.005, longueur=80, nb_cellules_large=250, Delta=0.3,
                  masse_ini=0.4, v_absorb=0.1, v_deplacement=0.1, nb_bact_ini=50):
         """Initialise le model avec le tore, les concentrations et les bactéries
 
