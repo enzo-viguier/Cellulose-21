@@ -12,7 +12,7 @@ class Mplwidget(FigureCanvasQTAgg):
         self.ax = self.fig.add_subplot(111)
         data = np.arange(2500).reshape((50, 50))
         self.data_ref = self.ax.imshow(data, origin='lower',
-                                       norm=Normalize(0, 2500),
+                                       norm=Normalize(0, 0.4),
                                        cmap=cm.coolwarm,
                                        interpolation='bicubic',
                                        extent=([-1, 1, -1, 1]),
@@ -27,8 +27,3 @@ class Mplwidget(FigureCanvasQTAgg):
         print(self.ax.__class__)
 #        self.canvas.axes.plot(self.xdata, self.ydata)
 
-    def set_data(self, data):
-        self.data_ref = data
-
-    def setData(self, data):
-        self.data_ref = data

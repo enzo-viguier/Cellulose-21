@@ -282,11 +282,8 @@ class Model(QtCore.QObject):
         print(self.concentrations)
 
     # PYQT
-    def getData(self):
-        return self.data
-
     def updateView(self):
-        self.data = np.roll(self.data, 1)
-        # self.view.data_ref.set_data(self.data)
-        # self.view.draw()
+        #self.data = np.roll(self.concentrations, 1)
+        #self.view.set_data(self.concentrations)
+        #self.view.draw()
         self.stateChangedSignal.emit()
