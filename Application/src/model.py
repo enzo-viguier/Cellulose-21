@@ -34,8 +34,11 @@ class Model(QtCore.QObject):
     stateChangedSignal = QtCore.pyqtSignal()
     # Stockage des bacteries
     bacteries = []
+    #Compteur à supprimer
+    #compteur = 0
 
-    def __init__(self, view=None, c_ini=0.4, c_min=5, v_diff=0.02,
+
+    def __init__(self, view=None, c_ini=0.4, c_min=0.3, v_diff=0.02,
                  rayon_cell=25, delta=0.005, longueur=80, nb_cellules_large=250, Delta=0.3,
                  masse_ini=0.4, v_absorb=0.1, v_deplacement=0.1, nb_bact_ini=50):
         """Initialise le model avec le tore, les concentrations et les bactéries
@@ -78,7 +81,7 @@ class Model(QtCore.QObject):
             self.data = np.arange(2500).reshape((50, 50))
             self.timer = QtCore.QTimer()
             self.timer.setInterval(10)
-            self.timer.timeout.connect(self.updateView)
+            self.timer.timeout.connect(self.update_view)
             self.timer.start()
 
     # ---------------- Initialisation des différentes couches : le Tore, les concentrations et les bactéries---------
@@ -174,11 +177,20 @@ class Model(QtCore.QObject):
 
     # ------------- Boucle du programme ---------------
 
+    def run_simu(self):
+        self.timer2 = QtCore.QTimer()
+        self.timer2.setInterval(1)
+        self.timer2.timeout.connect(self.jour)
+        self.timer2.start()
+        
+
     def jour(self):
         """
         :return: void
         La fonction jour lance les cinq étapes de la boucle
         """
+        #print("jour ", self.compteur)
+        #self.compteur+=1
         self.__diffuse()
         self.__mouvement_bacteries()
         self.__bacteries_se_nourrisent()
@@ -211,7 +223,9 @@ class Model(QtCore.QObject):
         c_gauche = np.roll(self.concentrations, -1, axis=1)
         c_min = self.d_cellulose['c_min']  # sert juste à améliorer la lisibilité des calculs
 
-        new_concentrations = np.copy(self.concentrations)
+        new_concentrations = np.zeros((self.d_tore["nb_cellules_large"], self.d_tore["nb_cellules_large"]),
+                                       dtype=np.float64)#np.copy(self.concentrations)
+
 
         new_concentrations[self.concentrations <= c_min] = \
             c_haut[c_haut <= c_min] - self.concentrations[self.concentrations <= c_min]
@@ -224,7 +238,6 @@ class Model(QtCore.QObject):
 
         new_concentrations[self.concentrations <= c_min] += \
             c_gauche[c_gauche <= c_min] - self.concentrations[self.concentrations <= c_min]
-
         return new_concentrations
 
     def __mouvement_bacteries(self):
@@ -282,7 +295,7 @@ class Model(QtCore.QObject):
         print(self.concentrations)
 
     # PYQT
-    def updateView(self):
+    def update_view(self):
         #self.data = np.roll(self.concentrations, 1)
         #self.view.set_data(self.concentrations)
         #self.view.draw()

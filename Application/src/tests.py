@@ -11,17 +11,17 @@ class UneClasseDeTest(unittest.TestCase):
         model = Model(delta=1, longueur=3, nb_cellules_large=5, c_ini=0,rayon_cell=1)
 
         model.set_concentration_by_coord_ij((0, 0), 0.2)
-        model.set_concentration_by_coord_ij((0, 1), 0.4)
+        model.set_concentration_by_coord_ij((0, 1), 0.3)
         #model.afficher_concentrations()
 
-        for i in range(800):
+        for i in range(1000):
             model.jour()
             #imshow
 
         #model.afficher_concentrations()
         for i in range(5):
             for j in range(5):
-                self.assertTrue(model.concentrations[i, j]<0.0241 and model.concentrations[i, j]>0.0239) #on a pas une concentration exacte
+                self.assertTrue(model.concentrations[i, j]<0.021 and model.concentrations[i, j]>0.0199) #on a pas une concentration exacte
 
 
 
