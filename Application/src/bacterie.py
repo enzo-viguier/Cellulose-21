@@ -17,10 +17,15 @@ class Bacterie:
         Déplace la bactérie en fonction de la vitesse de déplacement
         à finir !
         """
-        delta = self.model.d_tore["delta"]
-        vd_x, vd_y = self.__calcul_vitesse_deplacement()
-        self.x = self.x + delta*vd_x + self.model.d_biomasse["b_diff"] * (np.sqrt(delta)*np.random.rand()) # np.random.rand() ∈ [0;1]
-        self.y = self.y + delta*vd_y + self.model.d_biomasse["b_diff"] * (np.sqrt(delta) * np.random.rand())
+        if(self.model.get_concentration_by_coord_xy((self.x, self.y))==self.model.d_cellulose["c_min"]):
+            delta = self.model.d_tore["delta"]
+            vd_x, vd_y = self.__calcul_vitesse_deplacement()
+            self.x = self.x + delta*vd_x + self.model.d_biomasse["b_diff"] * (np.sqrt(delta)*np.random.rand()) # np.random.rand() ∈ [0;1]
+            if(self.x > self.model.d_tore["longueur"]/2):
+                self.x = -self.x
+            self.y = self.y + delta*vd_y + self.model.d_biomasse["b_diff"] * (np.sqrt(delta) * np.random.rand())
+            if(self.y > d_tore["longueur"]/2):
+                self.y = -self.y
 
 
     def manger(self):
