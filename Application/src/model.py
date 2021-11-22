@@ -34,7 +34,7 @@ class Model(QtCore.QObject):
     # PYQT
     stateChangedSignal = QtCore.pyqtSignal()
     # Stockage des bacteries
-    bacteries = []
+    bacteries = list()
     #Compteur à supprimer
     compteur = 0
 
@@ -142,9 +142,10 @@ class Model(QtCore.QObject):
         """
         interval = 2 * np.pi / n
 
-        for i in range(1, n + 1):
+        for i in np.arange(1, n + 1):
             x = np.cos(i * interval) * self.d_cellulose["rayon_cell"] 
             y = np.sin(i * interval) * self.d_cellulose["rayon_cell"] 
+            #print("type x, y : ", type(x), type(y))
             self.bacteries.append(Bacterie(self, x, y, self.d_biomasse["masse_ini"]))
 
     # ---------------- Gestion du multicouche et utilitaires ------------------------
@@ -182,7 +183,7 @@ class Model(QtCore.QObject):
     def run_simu(self):
         print("run simu lancé")
         self.timer2 = QtCore.QTimer()
-        self.timer2.setInterval(10)
+        self.timer2.setInterval(100)
         self.timer2.timeout.connect(self.jour)
         self.timer2.start()
         
@@ -193,9 +194,9 @@ class Model(QtCore.QObject):
         La fonction jour lance les cinq étapes de la boucle
         """
         #print("jour ", self.compteur)
-        self.compteur+=1
-        if(self.compteur%100==0):
-            self.afficher_concentrations()
+        #self.compteur+=1
+        #if(self.compteur%100==0):
+        #    self.afficher_concentrations()
         self.__diffuse()
         self.__mouvement_bacteries()
         self.__bacteries_se_nourrisent()
@@ -270,8 +271,11 @@ class Model(QtCore.QObject):
         for bact in self.bacteries:
             if(bact.peut_se_dupliquer()):
                 coords = bact.get_coord_xy()
-                nouv_bact = Bacterie(self, coords[0], coords[1], bact.masse_act/2)
-                #self.bacteries.append(Bacterie(self, 0, 0, self.d_biomasse["masse_ini"]))
+                value = np.float64(0)
+                nouv_bact = Bacterie(self, np.float64(coords[0]), np.float64(coords[1]), np.float64(bact.masse_act/2))
+                self.bacteries.append(Bacterie(self, 0, 0, self.d_biomasse["masse_ini"]))
+                if(len(self.bacteries)<100):
+                    print(len(self.bacteries))
                 bact.masse_act/=2
 
     def __produire_image(self):

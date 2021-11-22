@@ -17,15 +17,23 @@ class Bacterie:
         Déplace la bactérie en fonction de la vitesse de déplacement
         à finir !
         """
-        if(self.model.get_concentration_by_coord_xy((self.x, self.y))==self.model.d_cellulose["c_min"]):
+        if(self.model.get_concentration_by_coord_xy((self.x, self.y))<=self.model.d_cellulose["c_min"]):
+
             delta = self.model.d_tore["delta"]
+            demi_longueur = self.model.d_tore["longueur"]/2
             vd_x, vd_y = self.__calcul_vitesse_deplacement()
-            self.x = self.x + delta*vd_x + self.model.d_biomasse["b_diff"] * (np.sqrt(delta)*np.random.rand()) # np.random.rand() ∈ [0;1]
-            if(self.x > self.model.d_tore["longueur"]/2):
-                self.x = -self.x
+            #print(self.x + delta*vd_x + self.model.d_biomasse["b_diff"] * np.sqrt(delta) * np.random.rand())
+            self.x = self.x + delta*vd_x + self.model.d_biomasse["b_diff"] * np.sqrt(delta) * np.random.rand() # np.random.rand() ∈ [0;1]
+            if(self.x > demi_longueur+2):
+                self.x = -demi_longueur+2
+            elif(self.x < -demi_longueur-2):
+                self.x = demi_longueur-2
+
             self.y = self.y + delta*vd_y + self.model.d_biomasse["b_diff"] * (np.sqrt(delta) * np.random.rand())
-            if(self.y > d_tore["longueur"]/2):
-                self.y = -self.y
+            if(self.y > demi_longueur+2):
+                self.y = -demi_longueur+2
+            elif(self.y < demi_longueur-2):
+                self.y = demi_longueur-2
 
 
     def manger(self):
@@ -53,7 +61,7 @@ class Bacterie:
         self.masse_act += self.model.d_biomasse["k_conv"] * conso
 
     def peut_se_dupliquer(self):
-        if self.masse_act < self.model.d_biomasse["masse_ini"]*2:
+        if self.masse_act > self.model.d_biomasse["masse_ini"]*2:
             return True
         return False
 
