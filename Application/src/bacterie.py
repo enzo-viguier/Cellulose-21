@@ -24,6 +24,7 @@ class Bacterie:
 
 
     def manger(self):
+        qt_mange = 0
         coord_case_xy = (self.x, self.y)
         coords_ij_centre = self.model.convert_coord_xy_to_ij(coord_case_xy)
         # On recupere les coordonnes de la case centrale (emplacement de la bactérie)
@@ -35,6 +36,7 @@ class Bacterie:
                 # On prend les cases autour du centre ainsi que le centre
                 case = self.model.get_concentration_by_coord_ij(coords_ij)
                 conso = np.minimum(np.square(self.model.d_tore["largeur_case"]) * case, self.model.d_biomasse["v_absorb"]) #carre à verifier
+                qt_mange+=conso
                 self.model.set_concentration_by_coord_ij(coords_ij, case - (conso / np.square(self.model.d_tore["largeur_case"])))
 
 
@@ -43,11 +45,12 @@ class Bacterie:
         Args:
             conso (float): masse de cellulose dégradé par la bactérie
         """
-        pass
+        self.masse_act += self.model.d_biomasse["k_conv"] * conso
 
-    def se_dupliquer(self):
-        # TODO
-        pass
+    def peut_se_dupliquer(self):
+        if self.masse_act < self.model.d_biomasse["masse_ini"]*2:
+            return True
+        return False
 
     def __calcul_vitesse_deplacement(self):
         """

@@ -3,6 +3,7 @@ from PyQt5 import QtCore
 from bacterie import *
 
 
+
 # Consignes générales :
 # Toutes les durrées sont en heure, les longueurs en µm
 # -> dimension de l'enceinte carrée : 1/2 longueur L = 40 µm (soit longueur = 80) de côté (en micron µ) 
@@ -142,8 +143,8 @@ class Model(QtCore.QObject):
         interval = 2 * np.pi / n
 
         for i in range(1, n + 1):
-            x = np.cos(i * interval)
-            y = np.sin(i * interval)
+            x = np.cos(i * interval) * self.d_cellulose["rayon_cell"] 
+            y = np.sin(i * interval) * self.d_cellulose["rayon_cell"] 
             self.bacteries.append(Bacterie(self, x, y, self.d_biomasse["masse_ini"]))
 
     # ---------------- Gestion du multicouche et utilitaires ------------------------
@@ -266,8 +267,12 @@ class Model(QtCore.QObject):
         :return: void
         Divise chaque bacterie ayant une masse supérieure à sa masse maximale en deux bactéries placées au même point
         """
-        # TODO
-        pass
+        for bact in self.bacteries:
+            if(bact.peut_se_dupliquer()):
+                coords = bact.get_coord_xy()
+                nouv_bact = Bacterie(self, coords[0], coords[1], bact.masse_act/2)
+                #self.bacteries.append(Bacterie(self, 0, 0, self.d_biomasse["masse_ini"]))
+                bact.masse_act/=2
 
     def __produire_image(self):
         """
