@@ -17,7 +17,7 @@ class Bacterie:
         Déplace la bactérie en fonction de la vitesse de déplacement
         à finir !
         """
-        delta = self.model.d_cellulose["delta"]
+        delta = self.model.d_tore["delta"]
         vd_x, vd_y = self.__calcul_vitesse_deplacement()
         self.x = self.x + delta*vd_x + self.model.d_biomasse["b_diff"] * (np.sqrt(delta)*np.random.rand()) # np.random.rand() ∈ [0;1]
         self.y = self.y + delta*vd_y + self.model.d_biomasse["b_diff"] * (np.sqrt(delta) * np.random.rand())

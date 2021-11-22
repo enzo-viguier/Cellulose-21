@@ -35,7 +35,7 @@ class Model(QtCore.QObject):
     # Stockage des bacteries
     bacteries = []
     #Compteur à supprimer
-    #compteur = 0
+    compteur = 0
 
 
     def __init__(self, view=None, c_ini=0.4, c_min=0.3, v_diff=0.02,
@@ -178,8 +178,9 @@ class Model(QtCore.QObject):
     # ------------- Boucle du programme ---------------
 
     def run_simu(self):
+        print("run simu lancé")
         self.timer2 = QtCore.QTimer()
-        self.timer2.setInterval(1)
+        self.timer2.setInterval(10)
         self.timer2.timeout.connect(self.jour)
         self.timer2.start()
         
@@ -190,7 +191,9 @@ class Model(QtCore.QObject):
         La fonction jour lance les cinq étapes de la boucle
         """
         #print("jour ", self.compteur)
-        #self.compteur+=1
+        self.compteur+=1
+        if(self.compteur%100==0):
+            self.afficher_concentrations()
         self.__diffuse()
         self.__mouvement_bacteries()
         self.__bacteries_se_nourrisent()
@@ -203,7 +206,7 @@ class Model(QtCore.QObject):
         :return: none
         Met à jour les concentrations du modèle pour un pas de temps de diffusion
         """
-
+        
         # c_actu + v_diff δ h² (Somme pour les 4 cases adj(c_case_adj*etat_case - c_actu)
         # Avec h la taille d'une cellule, δ le pas de temps, etat_case=1 si case à l'état liquide ou semi
         # La fonction roll() permet de décaller la matrice le long d'un axe
@@ -245,17 +248,17 @@ class Model(QtCore.QObject):
         :return: void
         Effectue un pas de temps de mouvement de bactéries
         """
-        # TODO
-
-        pass
+        for bact in self.bacteries:
+            bact.se_deplacer()
 
     def __bacteries_se_nourrisent(self):
         """
         :return: void
         Effectue une dégradation de la cellulose et un gain de masse des bactéries pour les nourrir
         """
-        # TODO
-        pass
+        for bact in self.bacteries:
+            bact.manger()
+
 
     def __division_bacteries(self):
         """
