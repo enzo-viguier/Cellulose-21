@@ -45,12 +45,16 @@ class Bacterie:
         # main_case = self.modele.get_concentration_by_coord_ij(coords_ij)
         for i in np.arange(-1, 2):
             for j in np.arange(-1, 2):
+
+                # Verification que les coordonnée ne sortents pas du tableau avec l'incrementation
                 coords_ij = (coords_ij_centre[0]+i, coords_ij_centre[1]+j)
+
                 # On prend les cases autour du centre ainsi que le centre
                 case = self.model.get_concentration_by_coord_ij(coords_ij)
                 conso = np.minimum(np.square(self.model.d_tore["largeur_case"]) * case, self.model.d_biomasse["v_absorb"]) #carre à verifier
                 qt_mange+=conso
                 self.model.set_concentration_by_coord_ij(coords_ij, case - (conso / np.square(self.model.d_tore["largeur_case"])))
+
 
 
     def gain_masse(self, conso):
@@ -72,7 +76,10 @@ class Bacterie:
         """
         vd = self.model.d_biomasse["vd"]
         # Convertir coordonnées x,y en i,j
+        
         (i, j) = self.model.convert_coord_xy_to_ij((self.x, self.y))
+        
+        #exemple des lignes suivantes découposes
         c_est = self.model.get_concentration_by_coord_ij((i+1, j))
         c_ouest = self.model.get_concentration_by_coord_ij((i-1, j))
         c_nord = self.model.get_concentration_by_coord_ij((i, j+1))

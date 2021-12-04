@@ -167,10 +167,37 @@ class Model(QtCore.QObject):
         return self.get_concentration_by_coord_ij((i, j))
 
     def get_concentration_by_coord_ij(self, coords):
-        return self.concentrations[coords[0], coords[1]]
+        return self.concentrations[self.coord_in_tore_ij((coords[0], coords[1]))]
 
     def set_concentration_by_coord_ij(self, coords, c):
-        self.concentrations[coords[0], coords[1]] = c
+        self.concentrations[self.coord_in_tore_ij((coords[0], coords[1]))] = c
+
+
+    def coord_in_tore_ij(self, coords):
+        #change les coordonnes facon tore si elles depassent du tableau
+        coord_i=0
+        coord_j=0
+        if(coords[0]==self.d_tore["longueur"]):
+            coord_i = 0
+        else:
+            coord_i = coords[0]
+
+        if(coords[0]<0):
+            coord_i = self.d_tore["longueur"]-(1-coords[0])
+        else:
+            coord_i = coords[0]
+
+        if(coords[1]==self.d_tore["longueur"]):
+            coord_j = 0
+        else:
+            coord_j = coords[0]
+
+        if(coords[1]<0):
+            coord_j = self.d_tore["longueur"]-(1-coords[1])
+        else:
+            coord_j = coords[0]
+
+        return (coord_i, coord_j)
 
     # ------------- Boucle du programme ---------------
 
@@ -182,6 +209,7 @@ class Model(QtCore.QObject):
         while(self.nb_step<self.__calcul_nb_tours()):
             self.step()
             self.nb_step+=1
+            print(self.nb_step)
         
 
     def step(self):
