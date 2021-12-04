@@ -12,8 +12,11 @@ class control(QMainWindow):
         #self.ui.updateButton.clicked.connect(self.update_view)
         self.m = Model(self.ui)
         self.m.stateChangedSignal.connect(self.update_view)
-        self.m.run_simu()
+        self.start()
 
+    def start(self):
+        self.m.run_simu()
+    
     def update_view(self):
         self.ui.animationSubstrat.data_ref.set_data(self.m.concentrations)
         self.ui.animationSubstrat.draw()

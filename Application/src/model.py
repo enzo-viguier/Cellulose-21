@@ -35,8 +35,8 @@ class Model(QtCore.QObject):
     stateChangedSignal = QtCore.pyqtSignal()
     # Stockage des bacteries
     bacteries = list()
-    #Compteur à supprimer
-    compteur = 0
+    #compte le nombre de steps effectues par l'algo
+    nb_step = 0
 
 
     def __init__(self, view=None, c_ini=0.4, c_min=0.3, v_diff=0.02,
@@ -50,7 +50,7 @@ class Model(QtCore.QObject):
             c_min (float, optional): Concentration minimale à partir de laquelle le substrat diffuse. Defaults to 5.
             v_diff (float, optional): Vitesse de diffusion du substrat. Defaults to 0.02.
             rayon_cell (int, optional): rayon du substrat (en nanometre). Defaults to 25.
-            delta (float, optional): Pas de temps entre chaque boucle de la simulation (voir fonction jour pour une boucle). Defaults to 0.005.
+            delta (float, optional): Pas de temps entre chaque boucle de la simulation (voir fonction step pour une boucle). Defaults to 0.005.
             longueur (int, optional): Longueur et largeur du tore. Defaults to 40.
             nb_cellules_large (int, optional): Nombre de cases en largeur et en longueur. Defaults to 250.
             Delta (float, optional) : Pas de temps utilisé pour les sorties de l'algorithme 
@@ -77,13 +77,7 @@ class Model(QtCore.QObject):
         # Creation des bacteries
         self.__creer_bacterie(nb_bact_ini)
 
-        if (view != None):  # Constructeur avec interface
-            self.view = view
-            self.data = np.arange(2500).reshape((50, 50))
-            self.timer = QtCore.QTimer()
-            self.timer.setInterval(10)
-            self.timer.timeout.connect(self.update_view)
-            self.timer.start()
+
 
     # ---------------- Initialisation des différentes couches : le Tore, les concentrations et les bactéries---------
 
@@ -180,23 +174,21 @@ class Model(QtCore.QObject):
 
     # ------------- Boucle du programme ---------------
 
+    def __calcul_nb_tours(self):
+        #Le temps total est de 30h chaque tour de boucle prend delta heures
+        return 30/self.d_tore["delta"]
+
     def run_simu(self):
-        print("run simu lancé")
-        self.timer2 = QtCore.QTimer()
-        self.timer2.setInterval(100)
-        self.timer2.timeout.connect(self.jour)
-        self.timer2.start()
+        while(self.nb_step<self.__calcul_nb_tours()):
+            self.step()
+            self.nb_step+=1
         
 
-    def jour(self):
+    def step(self):
         """
         :return: void
-        La fonction jour lance les cinq étapes de la boucle
+        La fonction step lance les cinq étapes de la boucle
         """
-        #print("jour ", self.compteur)
-        #self.compteur+=1
-        #if(self.compteur%100==0):
-        #    self.afficher_concentrations()
         self.__diffuse()
         self.__mouvement_bacteries()
         self.__bacteries_se_nourrisent()
