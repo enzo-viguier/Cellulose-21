@@ -1,6 +1,5 @@
 import numpy as np
 
-
 class Bacterie:
     # Mettre ici les variables statiques
     # Dictionnaire de constantes de la biomasse

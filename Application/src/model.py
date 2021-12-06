@@ -1,7 +1,7 @@
 import numpy as np
 from PyQt5 import QtCore
 from bacterie import *
-
+import threading
 
 
 # Consignes générales :
@@ -26,7 +26,7 @@ from bacterie import *
 # population initiale : 50
 
 
-class Model(QtCore.QObject):
+class Model(QtCore.QObject, threading.Thread):
     # Dictionnaire de constantes d'algo
     d_tore = {}
     # Dictionnaire de constantes relatives à la cellulose
@@ -60,7 +60,7 @@ class Model(QtCore.QObject):
         Raises:
             Exception: Si delta trop grand, la simulation ne peut pas fonctionner
         """
-
+        threading.Thread.__init__(self)
         super(QtCore.QObject, self).__init__()
         # vérifie que les données sont cohérentes
         if (delta > longueur ** 2 / (4 * v_diff)):
@@ -204,6 +204,9 @@ class Model(QtCore.QObject):
     def __calcul_nb_tours(self):
         #Le temps total est de 30h chaque tour de boucle prend delta heures
         return 30/self.d_tore["delta"]
+
+    def run(self):
+        self.run_simu()
 
     def run_simu(self):
         while(self.nb_step<self.__calcul_nb_tours()):

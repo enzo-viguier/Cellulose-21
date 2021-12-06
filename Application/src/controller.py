@@ -15,7 +15,7 @@ class control(QMainWindow):
         self.start()
 
     def start(self):
-        self.m.run_simu()
+        self.m.start()
     
     def update_view(self):
         self.ui.animationSubstrat.data_ref.set_data(self.m.concentrations)
