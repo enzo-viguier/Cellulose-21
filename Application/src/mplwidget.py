@@ -20,10 +20,6 @@ class Mplwidget(FigureCanvasQTAgg):
         super().__init__(self.fig)
         self.setParent(parent)
 
-    #        FigureCanvasQTAgg.__init__(self,self.fig)
-    #        super(Canvas, self).__init__(self.fig,parent)
-
     def update_plot(self):
         print(self.ax.__class__)
-#        self.canvas.axes.plot(self.xdata, self.ydata)
 

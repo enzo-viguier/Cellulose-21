@@ -332,7 +332,4 @@ class Model(QtCore.QObject, threading.Thread):
 
     # PYQT
     def update_view(self):
-        #self.data = np.roll(self.concentrations, 1)
-        #self.view.set_data(self.concentrations)
-        #self.view.draw()
         self.stateChangedSignal.emit()
