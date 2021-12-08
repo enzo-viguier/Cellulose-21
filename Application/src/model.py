@@ -39,7 +39,7 @@ class Model(QtCore.QObject, threading.Thread):
     nb_step = 0
 
 
-    def __init__(self, view=None, c_ini=0.4, c_min=0.3, v_diff=0.02,
+    def __init__(self, c_ini=0.4, c_min=0.3, v_diff=0.02,
                  rayon_cell=25, delta=0.005, longueur=80, nb_cellules_large=250, Delta=0.3,
                  masse_ini=0.4, v_absorb=0.1, v_deplacement=0.1, nb_bact_ini=50, k_conv=0.2):
         """Initialise le model avec le tore, les concentrations et les bactéries
@@ -76,6 +76,10 @@ class Model(QtCore.QObject, threading.Thread):
 
         # Creation des bacteries
         self.__creer_bacterie(nb_bact_ini)
+
+ 
+
+
 
 
 
@@ -209,10 +213,13 @@ class Model(QtCore.QObject, threading.Thread):
         self.run_simu()
 
     def run_simu(self):
+        self.creer_concentrations()
+
         while(self.nb_step<self.__calcul_nb_tours()):
             self.step()
-            self.nb_step+=1
+            self.nb_step+=100
             print(self.nb_step)
+            self.update_view()
         
 
     def step(self):
@@ -238,6 +245,8 @@ class Model(QtCore.QObject, threading.Thread):
         # La fonction roll() permet de décaller la matrice le long d'un axe
         self.concentrations += (self.d_cellulose["v_diff"] * self.d_tore["delta"] *
                                 self.d_tore["largeur_case"] ** 2 * self.__somme_case_adj())
+
+        self.concentrations = self.concentrations/(100/99)
 
     def __somme_case_adj(self):
         """

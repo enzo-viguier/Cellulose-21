@@ -10,7 +10,7 @@ class Mplwidget(FigureCanvasQTAgg):
     def __init__(self, parent):
         self.fig = Figure()
         self.ax = self.fig.add_subplot(111)
-        data = np.arange(2500).reshape((50, 50))
+        data = np.zeros(2500).reshape((50, 50))
         self.data_ref = self.ax.imshow(data, origin='lower',
                                        norm=Normalize(0, 0.4),
                                        cmap=cm.coolwarm,
