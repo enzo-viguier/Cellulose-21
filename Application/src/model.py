@@ -246,7 +246,6 @@ class Model(QtCore.QObject, threading.Thread):
         self.concentrations += (self.d_cellulose["v_diff"] * self.d_tore["delta"] *
                                 self.d_tore["largeur_case"] ** 2 * self.__somme_case_adj())
 
-        self.concentrations = self.concentrations/(100/99)
 
     def __somme_case_adj(self):
         """
