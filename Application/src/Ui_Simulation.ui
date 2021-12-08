@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1195</width>
-    <height>833</height>
+    <height>837</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -57,7 +57,7 @@
            <enum>QFrame::Plain</enum>
           </property>
           <property name="text">
-           <string>Titre</string>
+           <string>Cellulose 21</string>
           </property>
           <property name="scaledContents">
            <bool>false</bool>
@@ -68,54 +68,13 @@
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_animation">
+         <layout class="QHBoxLayout" name="horizontalLayout_animation" stretch="0,2,0,0,0">
           <property name="spacing">
            <number>0</number>
           </property>
           <property name="bottomMargin">
            <number>0</number>
           </property>
-          <item>
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="mplWidget" name="animationBacteries" native="true">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>200</width>
-              <height>300</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>500</width>
-              <height>500</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: red</string>
-            </property>
-           </widget>
-          </item>
           <item>
            <spacer name="horizontalSpacer_1">
             <property name="orientation">
@@ -142,14 +101,14 @@
             </property>
             <property name="minimumSize">
              <size>
-              <width>200</width>
+              <width>300</width>
               <height>300</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>500</width>
-              <height>500</height>
+              <width>400</width>
+              <height>600</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -347,6 +306,22 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_forLabel">
             <item>
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Expanding</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>100</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
              <widget class="QLabel" name="titreGraph_1">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -369,6 +344,22 @@
                <set>Qt::AlignCenter</set>
               </property>
              </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Preferred</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>200</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
             </item>
             <item>
              <widget class="QLabel" name="titreGraph_2">
@@ -394,42 +385,26 @@
               </property>
              </widget>
             </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_forGraphs">
             <item>
-             <spacer name="horizontalSpacer_5">
+             <spacer name="horizontalSpacer_8">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Expanding</enum>
+              </property>
               <property name="sizeHint" stdset="0">
                <size>
-                <width>40</width>
+                <width>100</width>
                 <height>20</height>
                </size>
               </property>
              </spacer>
             </item>
-            <item>
-             <widget class="mplWidget" name="graph_1" native="true">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                <horstretch>1</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>500</width>
-                <height>300</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: green</string>
-              </property>
-             </widget>
-            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_forGraphs">
             <item>
              <spacer name="horizontalSpacer_6">
               <property name="orientation">
@@ -444,9 +419,9 @@
              </spacer>
             </item>
             <item>
-             <widget class="mplWidget" name="graph_2" native="true">
+             <widget class="mplWidget" name="graph_1" native="true">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
                 <horstretch>1</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -457,13 +432,60 @@
                 <height>300</height>
                </size>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>600</width>
+                <height>300</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: green</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_7">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="mplWidget" name="graph_2" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                <horstretch>1</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>500</width>
+                <height>300</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>600</width>
+                <height>300</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">background-color: yellow</string>
               </property>
              </widget>
             </item>
             <item>
-             <spacer name="horizontalSpacer_7">
+             <spacer name="horizontalSpacer_5">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
