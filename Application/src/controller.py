@@ -1,3 +1,4 @@
+import numpy as np
 from matplotlib import pyplot as plt
 
 from model import Model
@@ -15,6 +16,8 @@ class control(QMainWindow):
         self.m.start()
 
     def update_view(self):
+
+        self.ui.animationSubstrat.update_plot()
         self.ui.animationSubstrat.data_ref.set_data(self.m.concentrations)
         self.ui.animationSubstrat.draw()
         self.ui.graph_1.data_ref.set_data(self.m.concentrations)

@@ -1,10 +1,12 @@
 import matplotlib as mpl
-mpl.use('QT5Agg')
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 from matplotlib import cm
 from matplotlib.colors import Normalize
 import numpy as np
+
+mpl.use('QT5Agg')
+
 
 class Mplwidget(FigureCanvasQTAgg):
     def __init__(self, parent):
@@ -17,9 +19,12 @@ class Mplwidget(FigureCanvasQTAgg):
                                        interpolation='bicubic',
                                        extent=([-1, 1, -1, 1]),
                                        aspect='auto')
+        x = np.array([0.1, 0.1, 0.3, 0.5])
+        y = np.array([0.1, 0.2, 0.3, 0.4])
+
+        self.ax.scatter(x, y, 20, "green", marker="*")
         super().__init__(self.fig)
         self.setParent(parent)
 
     def update_plot(self):
         print(self.ax.__class__)
-
