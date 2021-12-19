@@ -11,6 +11,13 @@ class Bacterie:
         self.masse_act = masse_ini
         self.model = model
 
+
+    def get_x(self):
+        return self.x
+
+    def get_y(self):
+        return self.y
+
     def se_deplacer(self):
         """
         Déplace la bactérie en fonction de la vitesse de déplacement

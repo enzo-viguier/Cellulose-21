@@ -203,6 +203,20 @@ class Model(QtCore.QObject, threading.Thread):
 
         return (coord_i, coord_j)
 
+
+    # --------------------- Gestion des bacteries ------------------------------
+    def getAllCoords(self):
+        """Retourne les coordonnées des toutes les bactéries dans deux array
+
+        Returns:
+            array(int), array(int): tableaux des coordonnées des bactéries
+        """
+        X = []
+        Y = []
+        for bact in self.bacteries:
+            X.append(bact.get_x())
+            Y.append(bact.get_y())
+        return X, Y
     # ------------- Boucle du programme ---------------
 
     def __calcul_nb_tours(self):
