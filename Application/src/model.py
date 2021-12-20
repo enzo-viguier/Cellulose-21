@@ -5,7 +5,7 @@ import threading
 
 
 # Consignes générales :
-# Toutes les durrées sont en heure, les longueurs en µm
+# Toutes les durées sont en heure, les longueurs en µm
 # -> dimension de l'enceinte carrée : 1/2 longueur L = 40 µm (soit longueur = 80) de côté (en micron µ) 
 # -> nombre de cases : n =  250 dans chaque direction, donc 250² cases en tout
 # -> concentration initiale : c_ini = 0.4 pg/µm² (picogrammes par micromètre carré)
@@ -37,7 +37,6 @@ class Model(QtCore.QObject, threading.Thread):
     bacteries = list()
     #compte le nombre de steps effectues par l'algo
     nb_step = 0
-
 
     def __init__(self, c_ini=0.4, c_min=0.3, v_diff=0.02,
                  rayon_cell=25, delta=0.005, longueur=80, nb_cellules_large=250, Delta=0.3,
@@ -77,16 +76,11 @@ class Model(QtCore.QObject, threading.Thread):
         # Creation des bacteries
         self.__creer_bacterie(nb_bact_ini)
 
- 
-
-
-
-
-
     # ---------------- Initialisation des différentes couches : le Tore, les concentrations et les bactéries---------
 
     def init_d_cellulose(self, c_ini, c_min, v_diff, rayon_cell):
-        """Initialise le dictionnaire de cellulose. Voir __init__ pour les attributs
+        """
+        Objectif : Initialiser le dictionnaire de cellulose. Voir __init__() pour les attributs
         """
         self.d_cellulose["c_ini"] = c_ini
         self.d_cellulose["c_min"] = c_min
@@ -94,7 +88,8 @@ class Model(QtCore.QObject, threading.Thread):
         self.d_cellulose["rayon_cell"] = rayon_cell
 
     def init_d_tore(self, delta, longueur, nb_cellules_large):
-        """ Initialise le dictionnaire du tore. Voir __init__ pour les attributs
+        """
+        Objectif : Initialiser le dictionnaire du tore. Voir __init__() pour les attributs
         """
         self.d_tore["longueur"] = longueur
         self.d_tore["nb_cellules_large"] = nb_cellules_large
@@ -102,6 +97,9 @@ class Model(QtCore.QObject, threading.Thread):
         self.d_tore["delta"] = delta
 
     def init_d_biomasse(self, masse_ini, v_absorb, v_deplacement, k_conv):
+        """
+        Objectif : Initialiser le dictionnaire des bactéries. Voir __init__() pour les attributs
+        """
         self.d_biomasse = {}
         self.d_biomasse["masse_ini"] = masse_ini
         self.d_biomasse["v_absorb"] = v_absorb
@@ -110,14 +108,16 @@ class Model(QtCore.QObject, threading.Thread):
         self.d_biomasse["k_conv"] = k_conv
 
     def creer_concentrations(self):
-        """Creer la matrice de concentration et appelle la création du substrat
+        """
+        Objectif : Créer la matrice de concentrations et appeler la création du substrat
         """
         self.concentrations = np.zeros((self.d_tore["nb_cellules_large"], self.d_tore["nb_cellules_large"]),
                                        dtype=np.float64)
         self.__creer_substrat()
 
     def __creer_substrat(self):
-        """Creer le substrat, c'est à dire une zone centrale où les concentrations sont à c_ini
+        """
+        Objectif : Creer le substrat, c'est-à-dire une zone centrale où les concentrations sont à c_ini
         """
 
         # Met la concentration des cases centrales à c_ini
@@ -143,22 +143,22 @@ class Model(QtCore.QObject, threading.Thread):
         for i in np.arange(1, n + 1):
             x = np.cos(i * interval) * self.d_cellulose["rayon_cell"] 
             y = np.sin(i * interval) * self.d_cellulose["rayon_cell"] 
-            #print("type x, y : ", type(x), type(y))
+            # print("type x, y : ", type(x), type(y))
             self.bacteries.append(Bacterie(self, x, y, self.d_biomasse["masse_ini"]))
 
     # ---------------- Gestion du multicouche et utilitaires ------------------------
     def convert_coord_xy_to_ij(self, coords):
-        """Permet de convertir des coordonnées x, y en coordonnées i, j. x et y doivent être entre -largeurTore/2 et largeurTore/2
-
-        Returns:
-            (int, int): Coordonnées sur le tableau de concentration
+        """
+        Objectif : Permettre de convertir des coordonnées x, y en coordonnées i, j.
+        Pré-requis : x et y doivent être entre -largeurTore/2 et largeurTore/2
+        :return: (int, int): Coordonnées sur le tableau de concentration
         """
         x, y = coords
 
         j = ((x + self.d_tore['longueur'] / 2) / self.d_tore['largeur_case'])
         i = ((-y + self.d_tore['longueur'] / 2) / self.d_tore['largeur_case'])
 
-        return (int(np.floor(i)), int(np.floor(j)))
+        return int(np.floor(i)), int(np.floor(j))
         # floor() fait un arrondi à l'inférieur, on convertit ensuite la valeur en entier.
 
     # --------------- Gestion des concentrations-------------------------------------------
@@ -176,38 +176,39 @@ class Model(QtCore.QObject, threading.Thread):
     def set_concentration_by_coord_ij(self, coords, c):
         self.concentrations[self.coord_in_tore_ij((coords[0], coords[1]))] = c
 
-
     def coord_in_tore_ij(self, coords):
-        #change les coordonnes facon tore si elles depassent du tableau
-        coord_i=0
-        coord_j=0
-        if(coords[0]==self.d_tore["longueur"]):
+        """
+        Objectif : Changer les coordonnées façon tore si elles depassent du tableau
+        :return: tuple
+        """
+        coord_i = 0
+        coord_j = 0
+        if coords[0] == self.d_tore["longueur"]:
             coord_i = 0
         else:
             coord_i = coords[0]
 
-        if(coords[0]<0):
+        if coords[0] < 0:
             coord_i = self.d_tore["longueur"]-(1-coords[0])
         else:
             coord_i = coords[0]
 
-        if(coords[1]==self.d_tore["longueur"]):
+        if coords[1] == self.d_tore["longueur"]:
             coord_j = 0
         else:
             coord_j = coords[0]
 
-        if(coords[1]<0):
+        if coords[1]<0:
             coord_j = self.d_tore["longueur"]-(1-coords[1])
         else:
             coord_j = coords[0]
 
-        return (coord_i, coord_j)
-
+        return coord_i, coord_j
 
     # --------------------- Gestion des bacteries ------------------------------
-    def getAllCoords(self):
-        """Retourne les coordonnées des toutes les bactéries dans deux array
-
+    def get_all_coords(self):
+        """
+        Objectifs Retourner les coordonnées des toutes les bactéries dans deux arrays
         Returns:
             array(int), array(int): tableaux des coordonnées des bactéries
         """
@@ -217,10 +218,11 @@ class Model(QtCore.QObject, threading.Thread):
             X.append(bact.get_x())
             Y.append(bact.get_y())
         return X, Y
+
     # ------------- Boucle du programme ---------------
 
     def __calcul_nb_tours(self):
-        #Le temps total est de 30h chaque tour de boucle prend delta heures
+        # Le temps total est de 30h chaque tour de boucle prend delta heures
         return 30/self.d_tore["delta"]
 
     def run(self):
@@ -228,18 +230,16 @@ class Model(QtCore.QObject, threading.Thread):
 
     def run_simu(self):
         self.creer_concentrations()
-
-        while(self.nb_step<self.__calcul_nb_tours()):
+        while self.nb_step < self.__calcul_nb_tours():
             self.step()
-            self.nb_step+=100
+            self.nb_step += 100
             print(self.nb_step)
             self.update_view()
-        
 
     def step(self):
         """
+        Objectif : Lancer les cinq étapes de la boucle
         :return: void
-        La fonction step lance les cinq étapes de la boucle
         """
         self.__diffuse()
         self.__mouvement_bacteries()
@@ -250,22 +250,22 @@ class Model(QtCore.QObject, threading.Thread):
     # Les __ servent à declarer en private
     def __diffuse(self):
         """
-        :return: none
-        Met à jour les concentrations du modèle pour un pas de temps de diffusion
+        Méthode privée
+        Objectif : Mettre à jour les concentrations du model pour un pas de temps de diffusion
+        :return: void
         """
-        
         # c_actu + v_diff δ h² (Somme pour les 4 cases adj(c_case_adj*etat_case - c_actu)
         # Avec h la taille d'une cellule, δ le pas de temps, etat_case=1 si case à l'état liquide ou semi
         # La fonction roll() permet de décaller la matrice le long d'un axe
         self.concentrations += (self.d_cellulose["v_diff"] * self.d_tore["delta"] *
                                 self.d_tore["largeur_case"] ** 2 * self.__somme_case_adj())
 
-
     def __somme_case_adj(self):
         """
-        Renvoie la somme des diffusions avec les cases voisines sans les constantes, FONCTION AUXILIAIRE DE __diffuse.
+        Méthode privée
+        Objectif : Renvoyer la somme des diffusions avec les cases voisines sans les constantes.
+        FONCTION AUXILIAIRE DE __diffuse.
         :return: la partie de la formule (Somme pour les 4 cases adj(c_actu − c_case_adj*etat_case)
-
         """
         # creation des concentrations décallés d'une ligne ou d'une colone
         c_haut = np.roll(self.concentrations, 1, axis=0)
@@ -275,8 +275,8 @@ class Model(QtCore.QObject, threading.Thread):
         c_min = self.d_cellulose['c_min']  # sert juste à améliorer la lisibilité des calculs
 
         new_concentrations = np.zeros((self.d_tore["nb_cellules_large"], self.d_tore["nb_cellules_large"]),
-                                       dtype=np.float64)#np.copy(self.concentrations)
-
+                                       dtype=np.float64)
+        # np.copy(self.concentrations)
 
         new_concentrations[self.concentrations <= c_min] = \
             c_haut[c_haut <= c_min] - self.concentrations[self.concentrations <= c_min]
@@ -293,25 +293,24 @@ class Model(QtCore.QObject, threading.Thread):
 
     def __mouvement_bacteries(self):
         """
+        Objectif : Effectuer un pas de temps de mouvement de bactéries.
         :return: void
-        Effectue un pas de temps de mouvement de bactéries
         """
         for bact in self.bacteries:
             bact.se_deplacer()
 
     def __bacteries_se_nourrisent(self):
         """
+        Objectif : Effectuer une dégradation de la cellulose et un gain de masse des bactéries pour les nourrir
         :return: void
-        Effectue une dégradation de la cellulose et un gain de masse des bactéries pour les nourrir
         """
         for bact in self.bacteries:
             bact.manger()
 
-
     def __division_bacteries(self):
         """
+        Divise chaque bacterie ayant une masse supérieure à sa masse maximale en deux bactéries placées au même point.
         :return: void
-        Divise chaque bacterie ayant une masse supérieure à sa masse maximale en deux bactéries placées au même point
         """
         for bact in self.bacteries:
             if(bact.peut_se_dupliquer()):
@@ -325,8 +324,8 @@ class Model(QtCore.QObject, threading.Thread):
 
     def __produire_image(self):
         """
+        Objectif : Produire une image de la situation actuelle
         :return: void
-        Produit une image de la situation actuelle
         """
         # TODO
         pass
