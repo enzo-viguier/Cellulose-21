@@ -35,7 +35,7 @@ class Model(QtCore.QObject, threading.Thread):
     stateChangedSignal = QtCore.pyqtSignal()
     # Stockage des bacteries
     bacteries = list()
-    #compte le nombre de steps effectues par l'algo
+    # Compte le nombre de cycles (step()) effectués par l'algo
     nb_step = 0
 
     def __init__(self, c_ini=0.4, c_min=0.3, v_diff=0.02,
@@ -43,7 +43,7 @@ class Model(QtCore.QObject, threading.Thread):
                  masse_ini=0.4, v_absorb=0.1, v_deplacement=0.1, nb_bact_ini=50, k_conv=0.2):
         """Initialise le model avec le tore, les concentrations et les bactéries
 
-        Args:
+        :arg:
             view (MainWindow, optional): Contient la mainwindows pour l'interface. Si non remplis lance sans interface.
             c_ini (float, optional): Concentration initiale. Defaults to 0.4 .
             c_min (float, optional): Concentration minimale à partir de laquelle le substrat diffuse. Defaults to 5.
@@ -56,13 +56,13 @@ class Model(QtCore.QObject, threading.Thread):
             masse_ini (float, optional): Masse initiale des bactéries
             v_absorb (float, optional): Vitesse d'absorption des bactéries
             v_deplacement (float, optional): Vitesse de déplacement des bactéries
-        Raises:
+        :raise:
             Exception: Si delta trop grand, la simulation ne peut pas fonctionner
         """
         threading.Thread.__init__(self)
         super(QtCore.QObject, self).__init__()
         # vérifie que les données sont cohérentes
-        if (delta > longueur ** 2 / (4 * v_diff)):
+        if delta > longueur ** 2 / (4 * v_diff):
             raise Exception("Erreur dans le pas de temps (delta est trop grand)")  # Lève une erreur
 
         # Initialisation des dictionnaires
@@ -138,11 +138,11 @@ class Model(QtCore.QObject, threading.Thread):
         :return: void
         Place des bactéries de manière regulière à une case plus loin que le rayon du substrat (pour être en contact)
         """
-        interval = 2 * np.pi / n
+        intervalle = 2 * np.pi / n
 
         for i in np.arange(1, n + 1):
-            x = np.cos(i * interval) * self.d_cellulose["rayon_cell"] 
-            y = np.sin(i * interval) * self.d_cellulose["rayon_cell"] 
+            x = np.cos(i * intervalle) * self.d_cellulose["rayon_cell"]
+            y = np.sin(i * intervalle) * self.d_cellulose["rayon_cell"]
             # print("type x, y : ", type(x), type(y))
             self.bacteries.append(Bacterie(self, x, y, self.d_biomasse["masse_ini"]))
 
