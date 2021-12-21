@@ -139,15 +139,14 @@ class Model(QtCore.QObject, threading.Thread):
         Place des bactéries de manière regulière à une case plus loin que le rayon du substrat (pour être en contact)
         """
 
-        self.bacteries.append(Bacterie(self, 0, 0, self.d_biomasse["masse_ini"]))
 
         intervalle = 2 * np.pi / n
 
-        #for i in np.arange(1, n + 1):
-        #    x = np.cos(i * intervalle) * self.d_cellulose["rayon_cell"]
-        #    y = np.sin(i * intervalle) * self.d_cellulose["rayon_cell"]
-        #    print("x, y : ", x, y)
-        #    self.bacteries.append(Bacterie(self, x, y, self.d_biomasse["masse_ini"]))
+        for i in np.arange(1, n + 1):
+            x = np.cos(i * intervalle) * self.d_cellulose["rayon_cell"]*5/2
+            y = np.sin(i * intervalle) * self.d_cellulose["rayon_cell"]*5/2
+            print("x, y : ", x, y)
+            self.bacteries.append(Bacterie(self, x, y, self.d_biomasse["masse_ini"]))
 
     # ---------------- Gestion du multicouche et utilitaires ------------------------
     def convert_coord_xy_to_ij(self, coords):
@@ -236,11 +235,11 @@ class Model(QtCore.QObject, threading.Thread):
         self.creer_concentrations()
         self.update_view()
         
-        while self.nb_step < self.__calcul_nb_tours():
-            self.step()
-            self.nb_step += 100 #Cette valeur est élevé pour les tests
-            print(self.nb_step)
-            self.update_view()
+        #while self.nb_step < self.__calcul_nb_tours():
+        #    self.step()
+        #    self.nb_step += 100 #Cette valeur est élevé pour les tests
+        #    print(self.nb_step)
+        #    self.update_view()
 
     def step(self):
         """
