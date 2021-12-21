@@ -11,13 +11,13 @@ class control(QMainWindow):
         self.ui = Ui_Simulation.Ui_MainWindow()
         self.ui.setupUi(self)
         #self.ui.updateButton.clicked.connect(self.update_view)
-        self.m = Model()
+        self.m = Model(nb_bact_ini=1, Delta=0.3)
         self.m.stateChangedSignal.connect(self.update_view)
         self.m.start()
 
     def update_view(self):
 
-        self.ui.animationSubstrat.update_plot()
+        self.ui.animationSubstrat.update_plot(self.m.get_all_coords())
         self.ui.animationSubstrat.data_ref.set_data(self.m.concentrations)
         self.ui.animationSubstrat.draw()
         self.ui.graph_1.data_ref.set_data(self.m.concentrations)
