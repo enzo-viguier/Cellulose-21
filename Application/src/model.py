@@ -2,7 +2,7 @@ import numpy as np
 from PyQt5 import QtCore
 from bacterie import *
 import threading
-
+from time import sleep
 
 # Consignes générales :
 # Toutes les durées sont en heure, les longueurs en µm
@@ -234,12 +234,13 @@ class Model(QtCore.QObject, threading.Thread):
     def run_simu(self):
         self.creer_concentrations()
         self.update_view()
-        
-        #while self.nb_step < self.__calcul_nb_tours():
-        #    self.step()
-        #    self.nb_step += 100 #Cette valeur est élevé pour les tests
-        #    print(self.nb_step)
-        #    self.update_view()
+        sleep(1) #On laisse le temps à l'interface de se lancer
+        while self.nb_step < self.__calcul_nb_tours():
+            self.step()
+            self.nb_step += 100 #Cette valeur est élevé pour les tests
+            print(self.nb_step)
+            self.update_view()
+
 
     def step(self):
         """
@@ -247,8 +248,8 @@ class Model(QtCore.QObject, threading.Thread):
         :return: void
         """
         self.__diffuse()
-        self.__mouvement_bacteries()
-        self.__bacteries_se_nourrisent()
+        #self.__mouvement_bacteries()
+        #self.__bacteries_se_nourrisent()
         self.__division_bacteries()
         self.__produire_image()
 
