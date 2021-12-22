@@ -49,11 +49,13 @@ class Bacterie:
         Objectif :
         :return: void
         """
+
         qt_mange = 0
         coord_case_xy = (self.x, self.y)
         coords_ij_centre = self.model.convert_coord_xy_to_ij(coord_case_xy)
         # On récupère les coordonnées de la case centrale (emplacement de la bactérie)
-
+        print(coord_case_xy)
+        print("ij = ", coords_ij_centre)
         # main_case = self.modele.get_concentration_by_coord_ij(coords_ij)
         for i in np.arange(-1, 2):
             for j in np.arange(-1, 2):
@@ -67,6 +69,7 @@ class Bacterie:
                 # carre à verifier
                 qt_mange += conso
                 self.model.set_concentration_by_coord_ij(coords_ij, case - (conso / np.square(self.model.d_tore["largeur_case"])))
+
 
     def gain_masse(self, conso):
         """

@@ -67,7 +67,7 @@ class Model(QtCore.QObject, threading.Thread):
 
         # Initialisation des dictionnaires
         self.init_d_cellulose(c_ini, c_min, v_diff, rayon_cell)
-        self.init_d_tore(delta, longueur, nb_cellules_large)
+        self.init_d_tore(delta, longueur, nb_cellules_large, Delta)
         self.init_d_biomasse(masse_ini, v_absorb, v_deplacement, k_conv)
 
         # Création des concentrations
@@ -87,7 +87,7 @@ class Model(QtCore.QObject, threading.Thread):
         self.d_cellulose["v_diff"] = v_diff
         self.d_cellulose["rayon_cell"] = rayon_cell
 
-    def init_d_tore(self, delta, longueur, nb_cellules_large):
+    def init_d_tore(self, delta, longueur, nb_cellules_large, Delta):
         """
         Objectif : Initialiser le dictionnaire du tore. Voir __init__() pour les attributs
         """
@@ -95,6 +95,7 @@ class Model(QtCore.QObject, threading.Thread):
         self.d_tore["nb_cellules_large"] = nb_cellules_large
         self.d_tore["largeur_case"] = longueur / nb_cellules_large
         self.d_tore["delta"] = delta
+        self.d_tore["Delta"] = Delta
 
     def init_d_biomasse(self, masse_ini, v_absorb, v_deplacement, k_conv):
         """
@@ -226,7 +227,7 @@ class Model(QtCore.QObject, threading.Thread):
 
     def __calcul_nb_tours(self):
         # Le temps total est de 30h chaque tour de boucle prend delta heures
-        return 30/self.d_tore["delta"]
+        return self.d_tore["Delta"]/self.d_tore["delta"]
 
     def run(self):
         self.run_simu()
@@ -238,10 +239,10 @@ class Model(QtCore.QObject, threading.Thread):
         while self.nb_step < self.__calcul_nb_tours():
             self.step()
             self.nb_step += 1
-           
-            if(self.nb_step%50==0):
+            print(self.nb_step)
+            if(self.nb_step%10==0):
                 self.update_view()
-                print(self.nb_step)
+                
 
     def step(self):
         """
@@ -251,7 +252,7 @@ class Model(QtCore.QObject, threading.Thread):
         self.__diffuse()
         self.__mouvement_bacteries()
         self.__bacteries_se_nourrisent()
-        #self.__division_bacteries()
+        self.__division_bacteries()
         
 
     # Les __ servent à declarer en private
