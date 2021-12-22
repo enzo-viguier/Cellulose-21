@@ -105,6 +105,6 @@ class Bacterie:
         c_nord = self.model.get_concentration_by_coord_ij((i, j+1))
         c_sud = self.model.get_concentration_by_coord_ij((i, j-1))
         h = self.model.d_tore["largeur_case"]
-        vd_x = vd*(c_est - c_ouest) / 2*h
-        vd_y = vd*(c_nord - c_sud) / 2*h
+        vd_x = vd*(c_est - c_ouest) / (2*h)
+        vd_y = vd*(c_nord - c_sud) / (2*h)
         return vd_x, vd_y
