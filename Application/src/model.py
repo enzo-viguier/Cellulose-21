@@ -142,7 +142,7 @@ class Model(QtCore.QObject, threading.Thread):
         :return: void
         Place des bactéries de manière regulière à une case plus loin que le rayon du substrat (pour être en contact)
         """
-        self.bacteries.append(Bacterie(self, 10, 10, self.d_biomasse["masse_ini"]))
+        self.bacteries.append(Bacterie(self, 0, 0, self.d_biomasse["masse_ini"]))
         #if(n!=0):
         #    intervalle = 2 * np.pi / n
 
@@ -188,17 +188,19 @@ class Model(QtCore.QObject, threading.Thread):
         """
         coord_i = coords[0]
         coord_j = coords[1]
-        if coords[0] >= self.d_tore["longueur"]:
-            coord_i = self.d_tore["longueur"]-coords[0]
+        if coords[0] >= self.d_tore["longueur"]*2:
+            coord_i = self.d_tore["longueur"]*2-coords[0]
+
        
         elif coords[0] < 0:
-            coord_i = self.d_tore["longueur"]-(1-coords[0])
+            coord_i = self.d_tore["longueur"]*2-(1-coords[0])
        
 
-        if coords[1] >= self.d_tore["longueur"]:
-            coord_j = self.d_tore["longueur"]-coords[1]
+        if coords[1] >= self.d_tore["longueur"]*2:
+            coord_j = self.d_tore["longueur"]*2-coords[1]
+
         elif coords[1]<0:
-            coord_j = self.d_tore["longueur"]-(1-coords[1])
+            coord_j = self.d_tore["longueur"]*2-(1-coords[1])
         
         return coord_i, coord_j
 
@@ -235,7 +237,7 @@ class Model(QtCore.QObject, threading.Thread):
             self.step()
             self.nb_step += 1
             print(self.nb_step)
-            if(self.nb_step%10==0):
+            if(self.nb_step%30==0):
                 self.update_view()
                 
 
@@ -245,7 +247,7 @@ class Model(QtCore.QObject, threading.Thread):
         :return: void
         """
         self.__diffuse()
-        self.__mouvement_bacteries()
+        #self.__mouvement_bacteries()
         self.__bacteries_se_nourrisent()
         self.__division_bacteries()
         
