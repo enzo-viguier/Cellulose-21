@@ -114,6 +114,7 @@ class Model(QtCore.QObject, threading.Thread):
         """
         self.concentrations = np.zeros((self.d_tore["nb_cellules_large"], self.d_tore["nb_cellules_large"]),
                                        dtype=np.float64)
+
         self.__creer_substrat()
 
     def __creer_substrat(self):
@@ -130,7 +131,9 @@ class Model(QtCore.QObject, threading.Thread):
                            indexing='xy')
 
         cellulose = ((X * X + Y * Y) <= (rayon_cases_subst * rayon_cases_subst))
-
+        #----------------ceci est un test-------------------------
+        #cellulose = (X<20)
+        #---------------------------
         self.concentrations[cellulose] = self.d_cellulose["c_ini"]
 
     def __creer_bacterie(self, n):
@@ -139,14 +142,14 @@ class Model(QtCore.QObject, threading.Thread):
         :return: void
         Place des bactéries de manière regulière à une case plus loin que le rayon du substrat (pour être en contact)
         """
+        self.bacteries.append(Bacterie(self, 10, 10, self.d_biomasse["masse_ini"]))
+        #if(n!=0):
+        #    intervalle = 2 * np.pi / n
 
-        if(n!=0):
-            intervalle = 2 * np.pi / n
-
-            for i in np.arange(1, n + 1):
-                x = np.cos(i * intervalle) * self.d_cellulose["rayon_cell"]
-                y = np.sin(i * intervalle) * self.d_cellulose["rayon_cell"]
-                self.bacteries.append(Bacterie(self, x, y, self.d_biomasse["masse_ini"]))
+        #    for i in np.arange(1, n + 1):
+        #        x = np.cos(i * intervalle) * self.d_cellulose["rayon_cell"]
+        #        y = np.sin(i * intervalle) * self.d_cellulose["rayon_cell"]
+         #       self.bacteries.append(Bacterie(self, x, y, self.d_biomasse["masse_ini"]))
 
     # ---------------- Gestion du multicouche et utilitaires ------------------------
     def convert_coord_xy_to_ij(self, coords):
@@ -183,28 +186,20 @@ class Model(QtCore.QObject, threading.Thread):
         Objectif : Changer les coordonnées façon tore si elles depassent du tableau
         :return: tuple
         """
-        coord_i = 0
-        coord_j = 0
-        if coords[0] == self.d_tore["longueur"]:
-            coord_i = 0
-        else:
-            coord_i = coords[0]
-
-        if coords[0] < 0:
+        coord_i = coords[0]
+        coord_j = coords[1]
+        if coords[0] >= self.d_tore["longueur"]:
+            coord_i = self.d_tore["longueur"]-coords[0]
+       
+        elif coords[0] < 0:
             coord_i = self.d_tore["longueur"]-(1-coords[0])
-        else:
-            coord_i = coords[0]
+       
 
-        if coords[1] == self.d_tore["longueur"]:
-            coord_j = 0
-        else:
-            coord_j = coords[0]
-
-        if coords[1]<0:
+        if coords[1] >= self.d_tore["longueur"]:
+            coord_j = self.d_tore["longueur"]-coords[1]
+        elif coords[1]<0:
             coord_j = self.d_tore["longueur"]-(1-coords[1])
-        else:
-            coord_j = coords[0]
-
+        
         return coord_i, coord_j
 
     # --------------------- Gestion des bacteries ------------------------------
