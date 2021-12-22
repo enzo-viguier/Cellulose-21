@@ -139,14 +139,13 @@ class Model(QtCore.QObject, threading.Thread):
         Place des bactéries de manière regulière à une case plus loin que le rayon du substrat (pour être en contact)
         """
 
+        if(n!=0):
+            intervalle = 2 * np.pi / n
 
-        intervalle = 2 * np.pi / n
-
-        for i in np.arange(1, n + 1):
-            x = np.cos(i * intervalle) * self.d_cellulose["rayon_cell"]*5/2
-            y = np.sin(i * intervalle) * self.d_cellulose["rayon_cell"]*5/2
-            print("x, y : ", x, y)
-            self.bacteries.append(Bacterie(self, x, y, self.d_biomasse["masse_ini"]))
+            for i in np.arange(1, n + 1):
+                x = np.cos(i * intervalle) * self.d_cellulose["rayon_cell"]
+                y = np.sin(i * intervalle) * self.d_cellulose["rayon_cell"]
+                self.bacteries.append(Bacterie(self, x, y, self.d_biomasse["masse_ini"]))
 
     # ---------------- Gestion du multicouche et utilitaires ------------------------
     def convert_coord_xy_to_ij(self, coords):
@@ -220,7 +219,8 @@ class Model(QtCore.QObject, threading.Thread):
             x, y = ((bact.get_x(), bact.get_y()))
             X.append(x/100)
             Y.append(y/100)
-        return X, Y
+        
+        return np.array(X), np.array(Y)
 
     # ------------- Boucle du programme ---------------
 
@@ -237,10 +237,11 @@ class Model(QtCore.QObject, threading.Thread):
         sleep(1) #On laisse le temps à l'interface de se lancer
         while self.nb_step < self.__calcul_nb_tours():
             self.step()
-            self.nb_step += 100 #Cette valeur est élevé pour les tests
-            print(self.nb_step)
-            self.update_view()
-
+            self.nb_step += 1
+           
+            if(self.nb_step%50==0):
+                self.update_view()
+                print(self.nb_step)
 
     def step(self):
         """
@@ -248,10 +249,10 @@ class Model(QtCore.QObject, threading.Thread):
         :return: void
         """
         self.__diffuse()
-        #self.__mouvement_bacteries()
-        #self.__bacteries_se_nourrisent()
-        self.__division_bacteries()
-        self.__produire_image()
+        self.__mouvement_bacteries()
+        self.__bacteries_se_nourrisent()
+        #self.__division_bacteries()
+        
 
     # Les __ servent à declarer en private
     def __diffuse(self):
@@ -327,14 +328,6 @@ class Model(QtCore.QObject, threading.Thread):
                 if(len(self.bacteries)<100):
                     print(len(self.bacteries))
                 bact.masse_act/=2
-
-    def __produire_image(self):
-        """
-        Objectif : Produire une image de la situation actuelle
-        :return: void
-        """
-        # TODO
-        pass
 
     # -------------------------------- Affichages ----------------------------------
 

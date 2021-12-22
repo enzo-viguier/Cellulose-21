@@ -24,5 +24,6 @@ class Mplwidget(FigureCanvasQTAgg):
         self.setParent(parent)
 
     def update_plot(self, data):
-        self.ax.scatter(data[0], data[1], 20, "green", marker="*")
+        #Le *5/2 sert à positionner bien les bactéries en prenant en compte la taille du canvas
+        self.ax.scatter(data[0]*5/2, data[1]*5/2, 20, "green", marker="*")
         #print(self.ax.__class__)

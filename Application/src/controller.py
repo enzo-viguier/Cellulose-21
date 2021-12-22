@@ -17,7 +17,7 @@ class control(QMainWindow):
 
     def update_view(self):
 
-        self.ui.animationSubstrat.update_plot(self.m.get_all_coords())
+        self.ui.animationSubstrat.update_plot((self.m.get_all_coords()))
         self.ui.animationSubstrat.data_ref.set_data(self.m.concentrations)
         self.ui.animationSubstrat.draw()
         self.ui.graph_1.data_ref.set_data(self.m.concentrations)
