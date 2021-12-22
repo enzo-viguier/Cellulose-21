@@ -142,7 +142,11 @@ class Model(QtCore.QObject, threading.Thread):
         :return: void
         Place des bactéries de manière regulière à une case plus loin que le rayon du substrat (pour être en contact)
         """
+        #for x in range(30):
+        self.bacteries.append(Bacterie(self, -5, -5, self.d_biomasse["masse_ini"]))
         self.bacteries.append(Bacterie(self, 0, 0, self.d_biomasse["masse_ini"]))
+        self.bacteries.append(Bacterie(self, 12, 12, self.d_biomasse["masse_ini"]))
+
         #if(n!=0):
         #    intervalle = 2 * np.pi / n
 
@@ -160,11 +164,38 @@ class Model(QtCore.QObject, threading.Thread):
         """
         x, y = coords
 
-        j = ((x + self.d_tore['longueur'] / 2) / self.d_tore['largeur_case'])
-        i = ((y + self.d_tore['longueur'] / 2) / self.d_tore['largeur_case'])
+        i = ((x + self.d_tore['longueur'] / 2) / self.d_tore['largeur_case'])
+        j = ((y + self.d_tore['longueur'] / 2) / self.d_tore['largeur_case'])
 
         return int(np.floor(i)), int(np.floor(j))
         # floor() fait un arrondi à l'inférieur, on convertit ensuite la valeur en entier.
+
+    def coord_in_tore_ij(self, coords):
+        """
+        Objectif : Changer les coordonnées façon tore si elles depassent du tableau
+        :return: tuple
+        """
+        coord_i = coords[0]
+        coord_j = coords[1]
+        print("self.d_tore[nb_cellules_large] = ", self.d_tore["nb_cellules_large"])
+        if coords[0] >= self.d_tore["nb_cellules_large"]:
+            coord_i = self.d_tore["nb_cellules_large"]-coords[0]
+            print("ok1")
+
+       
+        elif coords[0] < 0:
+            coord_i = self.d_tore["nb_cellules_large"]-(1-coords[0])
+            print("ok2")
+
+        if coords[1] >= self.d_tore["nb_cellules_large"]:
+            coord_j = self.d_tore["nb_cellules_large"]-coords[1]
+            print("ok3")
+
+        elif coords[1]<0:
+            coord_j = self.d_tore["nb_cellules_large"]-(1-coords[1])
+            print("ok4")
+
+        return coord_i, coord_j
 
     # --------------- Gestion des concentrations-------------------------------------------
 
@@ -181,28 +212,7 @@ class Model(QtCore.QObject, threading.Thread):
     def set_concentration_by_coord_ij(self, coords, c):
         self.concentrations[self.coord_in_tore_ij((coords[0], coords[1]))] = c
 
-    def coord_in_tore_ij(self, coords):
-        """
-        Objectif : Changer les coordonnées façon tore si elles depassent du tableau
-        :return: tuple
-        """
-        coord_i = coords[0]
-        coord_j = coords[1]
-        if coords[0] >= self.d_tore["longueur"]*2:
-            coord_i = self.d_tore["longueur"]*2-coords[0]
 
-       
-        elif coords[0] < 0:
-            coord_i = self.d_tore["longueur"]*2-(1-coords[0])
-       
-
-        if coords[1] >= self.d_tore["longueur"]*2:
-            coord_j = self.d_tore["longueur"]*2-coords[1]
-
-        elif coords[1]<0:
-            coord_j = self.d_tore["longueur"]*2-(1-coords[1])
-        
-        return coord_i, coord_j
 
     # --------------------- Gestion des bacteries ------------------------------
     def get_all_coords(self):
