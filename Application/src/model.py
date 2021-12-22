@@ -160,7 +160,7 @@ class Model(QtCore.QObject, threading.Thread):
         """
         x, y = coords
 
-        j = ((-x + self.d_tore['longueur'] / 2) / self.d_tore['largeur_case'])
+        j = ((x + self.d_tore['longueur'] / 2) / self.d_tore['largeur_case'])
         i = ((y + self.d_tore['longueur'] / 2) / self.d_tore['largeur_case'])
 
         return int(np.floor(i)), int(np.floor(j))
