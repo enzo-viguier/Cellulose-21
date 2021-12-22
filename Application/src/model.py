@@ -145,7 +145,7 @@ class Model(QtCore.QObject, threading.Thread):
         #for x in range(30):
         self.bacteries.append(Bacterie(self, -5, -5, self.d_biomasse["masse_ini"]))
         self.bacteries.append(Bacterie(self, 0, 0, self.d_biomasse["masse_ini"]))
-        self.bacteries.append(Bacterie(self, 12, 12, self.d_biomasse["masse_ini"]))
+        self.bacteries.append(Bacterie(self, 30, 30, self.d_biomasse["masse_ini"]))
 
         #if(n!=0):
         #    intervalle = 2 * np.pi / n
@@ -252,7 +252,7 @@ class Model(QtCore.QObject, threading.Thread):
         :return: void
         """
         self.__diffuse()
-        #self.__mouvement_bacteries()
+        self.__mouvement_bacteries()
         self.__bacteries_se_nourrisent()
         self.__division_bacteries()
         

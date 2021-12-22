@@ -33,16 +33,17 @@ class Bacterie:
             # print(self.x + delta*vd_x + self.model.d_biomasse["b_diff"] * np.sqrt(delta) * np.random.rand())
             self.x = self.x + delta*vd_x + self.model.d_biomasse["b_diff"] * np.sqrt(delta) * np.random.rand()
             # np.random.rand() ∈ [0;1]
-            if self.x > demi_longueur+2:
-                self.x = -demi_longueur+2
-            elif self.x < -demi_longueur-2:
-                self.x = demi_longueur-2
+            # Si les coordonnées sortent de l'environnement, les faire passer de l'autre côté du tore
+            if self.x > demi_longueur+1:
+                self.x = -demi_longueur+1
+            elif self.x < -demi_longueur-1:
+                self.x = demi_longueur-1
 
             self.y = self.y + delta*vd_y + self.model.d_biomasse["b_diff"] * (np.sqrt(delta) * np.random.rand())
-            if self.y > demi_longueur+2:
-                self.y = -demi_longueur+2
-            elif self.y < demi_longueur-2:
-                self.y = demi_longueur-2
+            if self.y > demi_longueur+1:
+                self.y = -demi_longueur+1
+            elif self.y < -demi_longueur-1:
+                self.y = demi_longueur-1
 
     def manger(self):
         """
