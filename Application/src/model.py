@@ -177,23 +177,18 @@ class Model(QtCore.QObject, threading.Thread):
         """
         coord_i = coords[0]
         coord_j = coords[1]
-        print("self.d_tore[nb_cellules_large] = ", self.d_tore["nb_cellules_large"])
         if coords[0] >= self.d_tore["nb_cellules_large"]:
             coord_i = self.d_tore["nb_cellules_large"]-coords[0]
-            print("ok1")
 
        
         elif coords[0] < 0:
             coord_i = self.d_tore["nb_cellules_large"]-(1-coords[0])
-            print("ok2")
 
         if coords[1] >= self.d_tore["nb_cellules_large"]:
             coord_j = self.d_tore["nb_cellules_large"]-coords[1]
-            print("ok3")
 
         elif coords[1]<0:
             coord_j = self.d_tore["nb_cellules_large"]-(1-coords[1])
-            print("ok4")
 
         return coord_i, coord_j
 
