@@ -30,7 +30,6 @@ class Bacterie:
             delta = self.model.d_tore["delta"]
             demi_longueur = self.model.d_tore["longueur"]/2
             vd_x, vd_y = self.__calcul_vitesse_deplacement()
-            # print(self.x + delta*vd_x + self.model.d_biomasse["b_diff"] * np.sqrt(delta) * np.random.rand())
             self.x = self.x + delta*vd_x + self.model.d_biomasse["b_diff"] * np.sqrt(delta) * np.random.rand()
             # np.random.rand() ∈ [0;1]
             # Si les coordonnées sortent de l'environnement, les faire passer de l'autre côté du tore
@@ -40,6 +39,7 @@ class Bacterie:
                 self.x = demi_longueur
 
             self.y = self.y + delta*vd_y + self.model.d_biomasse["b_diff"] * (np.sqrt(delta) * np.random.rand())
+            # Si les coordonnées sortent de l'environnement, les faire passer de l'autre côté du tore
             if self.y > demi_longueur:
                 self.y = -demi_longueur
             elif self.y < -demi_longueur:
@@ -80,7 +80,6 @@ class Bacterie:
         Objectif :
         :return: void
         """
-
         qt_mange = 0
         coord_case_xy = (self.x, self.y)
         coords_ij_centre = self.model.convert_coord_xy_to_ij(coord_case_xy)
