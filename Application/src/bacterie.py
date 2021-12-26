@@ -45,6 +45,36 @@ class Bacterie:
             elif self.y < -demi_longueur-1:
                 self.y = demi_longueur-1
 
+    def __calcul_vitesse_deplacement(self):
+        """
+        Méthode privée
+        Objectif : Calculer la vitesse de déplacement d'une bactérie puis
+        retourner la vitesse sur l'axe x et la vitesse sur l'axe y
+        :return: tuple
+        """
+        vd = self.model.d_biomasse["vd"]
+        # Convertir coordonnées x,y en i,j
+        # (i, j) = self.model.convert_coord_xy_to_ij((self.x, self.y))
+        # print("My i = ", i, ". My j = ", j)
+        # Exemple des lignes suivantes décomposées
+        # c_est = self.model.get_concentration_by_coord_ij((i + 1, j))
+        # c_ouest = self.model.get_concentration_by_coord_ij((i - 1, j))
+        # c_nord = self.model.get_concentration_by_coord_ij((i, j + 1))
+        # c_sud = self.model.get_concentration_by_coord_ij((i, j - 1))
+        c_est = self.model.get_concentration_by_coord_xy((self.x+1, self.y))
+        c_ouest = self.model.get_concentration_by_coord_xy((self.x-1, self.y))
+        c_nord = self.model.get_concentration_by_coord_xy((self.x, self.y+1))
+        c_sud = self.model.get_concentration_by_coord_xy((self.x, self.y-1))
+        h = self.model.d_tore["largeur_case"]
+        print("c_est", c_est)
+        print("c_ouest", c_ouest)
+        print("c_nord", c_nord)
+        print("c_sud", c_sud)
+        vd_x = vd * (c_est - c_ouest) / (2 * h)
+        vd_y = vd * (c_nord - c_sud) / (2 * h)
+        print("vd_x : ", vd_x, "vd_y :", vd_y)
+        return vd_x, vd_y
+
     def manger(self):
         """
         Objectif :
@@ -87,25 +117,3 @@ class Bacterie:
         if self.masse_act > self.model.d_biomasse["masse_ini"]*2:
             return True
         return False
-
-    def __calcul_vitesse_deplacement(self):
-        """
-        Méthode privée
-        Objectif : Calculer la vitesse de déplacement d'une bactérie puis
-        retourner la vitesse sur l'axe x et la vitesse sur l'axe y
-        :return: tuple
-        """
-        vd = self.model.d_biomasse["vd"]
-        # Convertir coordonnées x,y en i,j
-        
-        (i, j) = self.model.convert_coord_xy_to_ij((self.x, self.y))
-        
-        # Exemple des lignes suivantes décomposées
-        c_est = self.model.get_concentration_by_coord_ij((i+1, j))
-        c_ouest = self.model.get_concentration_by_coord_ij((i-1, j))
-        c_nord = self.model.get_concentration_by_coord_ij((i, j+1))
-        c_sud = self.model.get_concentration_by_coord_ij((i, j-1))
-        h = self.model.d_tore["largeur_case"]
-        vd_x = vd*(c_est - c_ouest) / (2*h)
-        vd_y = vd*(c_nord - c_sud) / (2*h)
-        return vd_x, vd_y

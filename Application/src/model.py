@@ -207,19 +207,17 @@ class Model(QtCore.QObject, threading.Thread):
     def set_concentration_by_coord_ij(self, coords, c):
         self.concentrations[self.coord_in_tore_ij((coords[0], coords[1]))] = c
 
-
-
     # --------------------- Gestion des bacteries ------------------------------
     def get_all_coords(self):
         """
-        Objectifs Retourner les coordonnées des toutes les bactéries dans deux arrays
+        Objectif : Retourner les coordonnées de toutes les bactéries dans deux arrays
         Returns:
             array(int), array(int): tableaux des coordonnées des bactéries
         """
         X = []
         Y = [] 
         for bact in self.bacteries:
-            x, y = ((bact.get_x(), bact.get_y()))
+            x, y = (bact.get_x(), bact.get_y())
             X.append(x/100)
             Y.append(y/100)
         
