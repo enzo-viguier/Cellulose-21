@@ -34,16 +34,16 @@ class Bacterie:
             self.x = self.x + delta*vd_x + self.model.d_biomasse["b_diff"] * np.sqrt(delta) * np.random.rand()
             # np.random.rand() ∈ [0;1]
             # Si les coordonnées sortent de l'environnement, les faire passer de l'autre côté du tore
-            if self.x > demi_longueur+1:
-                self.x = -demi_longueur+1
-            elif self.x < -demi_longueur-1:
-                self.x = demi_longueur-1
+            if self.x > demi_longueur:
+                self.x = -demi_longueur
+            elif self.x < -demi_longueur:
+                self.x = demi_longueur
 
             self.y = self.y + delta*vd_y + self.model.d_biomasse["b_diff"] * (np.sqrt(delta) * np.random.rand())
-            if self.y > demi_longueur+1:
-                self.y = -demi_longueur+1
-            elif self.y < -demi_longueur-1:
-                self.y = demi_longueur-1
+            if self.y > demi_longueur:
+                self.y = -demi_longueur
+            elif self.y < -demi_longueur:
+                self.y = demi_longueur
 
     def __calcul_vitesse_deplacement(self):
         """
