@@ -30,7 +30,7 @@ class Bacterie:
             delta = self.model.d_tore["delta"]
             demi_longueur = self.model.d_tore["longueur"]/2
             vd_x, vd_y = self.__calcul_vitesse_deplacement()
-            self.x = self.x + delta*vd_x + self.model.d_biomasse["b_diff"] * np.sqrt(delta) * np.random.rand()
+            self.x = self.x + delta*vd_x + self.model.d_biomasse["b_diff"] * np.sqrt(delta) * self.random()
             # np.random.rand() ∈ [0;1]
             # Si les coordonnées sortent de l'environnement, les faire passer de l'autre côté du tore
             if self.x > demi_longueur:
@@ -38,12 +38,18 @@ class Bacterie:
             elif self.x < -demi_longueur:
                 self.x = demi_longueur
 
-            self.y = self.y + delta*vd_y + self.model.d_biomasse["b_diff"] * (np.sqrt(delta) * np.random.rand())
+            self.y = self.y + delta*vd_y + self.model.d_biomasse["b_diff"] * np.sqrt(delta) * self.random()
             # Si les coordonnées sortent de l'environnement, les faire passer de l'autre côté du tore
             if self.y > demi_longueur:
                 self.y = -demi_longueur
             elif self.y < -demi_longueur:
                 self.y = demi_longueur
+
+    def random(self):
+        r = (np.random.rand()-0.5)*2
+        print("random = ", r)
+        return r
+
 
     def __calcul_vitesse_deplacement(self):
         """

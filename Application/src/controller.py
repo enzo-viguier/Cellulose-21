@@ -11,7 +11,7 @@ class control(QMainWindow):
         self.ui = Ui_Simulation.Ui_MainWindow()
         self.ui.setupUi(self)
         #self.ui.updateButton.clicked.connect(self.update_view)
-        self.m = Model(Delta=2)
+        self.m = Model()
         self.m.stateChangedSignal.connect(self.update_view)
         self.m.start()
 

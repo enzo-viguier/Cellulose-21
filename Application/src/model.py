@@ -143,6 +143,7 @@ class Model(QtCore.QObject, threading.Thread):
         Place des bactéries de manière regulière à une case plus loin que le rayon du substrat (pour être en contact)
         """
         #for x in range(30):
+
         if(n!=0):
             intervalle = 2 * np.pi / n
 
@@ -160,8 +161,8 @@ class Model(QtCore.QObject, threading.Thread):
         """
         x, y = coords
 
-        i = ((x + self.d_tore['longueur'] / 2) / self.d_tore['largeur_case'])
-        j = ((y + self.d_tore['longueur'] / 2) / self.d_tore['largeur_case'])
+        j = ((x + self.d_tore['longueur'] / 2) / self.d_tore['largeur_case'])
+        i = ((-y + self.d_tore['longueur'] / 2) / self.d_tore['largeur_case'])
 
         return int(np.floor(i)), int(np.floor(j))
         # floor() fait un arrondi à l'inférieur, on convertit ensuite la valeur en entier.
