@@ -143,17 +143,13 @@ class Model(QtCore.QObject, threading.Thread):
         Place des bactéries de manière regulière à une case plus loin que le rayon du substrat (pour être en contact)
         """
         #for x in range(30):
-        self.bacteries.append(Bacterie(self, -5, -5, self.d_biomasse["masse_ini"]))
-        self.bacteries.append(Bacterie(self, 0, 0, self.d_biomasse["masse_ini"]))
-        self.bacteries.append(Bacterie(self, 30, 30, self.d_biomasse["masse_ini"]))
+        if(n!=0):
+            intervalle = 2 * np.pi / n
 
-        #if(n!=0):
-        #    intervalle = 2 * np.pi / n
-
-        #    for i in np.arange(1, n + 1):
-        #        x = np.cos(i * intervalle) * self.d_cellulose["rayon_cell"]
-        #        y = np.sin(i * intervalle) * self.d_cellulose["rayon_cell"]
-         #       self.bacteries.append(Bacterie(self, x, y, self.d_biomasse["masse_ini"]))
+            for i in np.arange(1, n + 1):
+                x = np.cos(i * intervalle) * self.d_cellulose["rayon_cell"]
+                y = np.sin(i * intervalle) * self.d_cellulose["rayon_cell"]
+                self.bacteries.append(Bacterie(self, x, y, self.d_biomasse["masse_ini"]))
 
     # ---------------- Gestion du multicouche et utilitaires ------------------------
     def convert_coord_xy_to_ij(self, coords):
