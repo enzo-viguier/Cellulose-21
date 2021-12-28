@@ -10,16 +10,20 @@ mpl.use('QT5Agg')
 
 class Mplwidget(FigureCanvasQTAgg):
     def __init__(self, parent):
+        # on attribue une figure a la classe
         self.fig = Figure()
+        # on lui donne un axe
         self.ax = self.fig.add_subplot(111)
+        # on fait une jolie matrice qui se reshape en fonction du modele
         data = np.zeros(2500).reshape((50, 50))
+        # on installe le imshow avec tous ses parametres
         self.data_ref = self.ax.imshow(data, origin='lower',
                                        norm=Normalize(0, 0.4),
                                        cmap=cm.coolwarm,
                                        interpolation='bicubic',
                                        extent=([-1, 1, -1, 1]),
                                        aspect='auto')
-        
+        # on lui set des parents (je pense que c'est a bouger au debut ça)
         super().__init__(self.fig)
         self.setParent(parent)
 

@@ -238,6 +238,7 @@ class Model(QtCore.QObject, threading.Thread):
         sleep(1)  # On laisse le temps à l'interface de se lancer
         while self.nb_step < self.__calcul_nb_tours():
             if self.isRunning:
+                # n'execute la boucle que si la simulation n'est pas en pause
                 self.step()
                 self.nb_step += 1
                 print(self.nb_step)
