@@ -10,11 +10,14 @@
     <x>0</x>
     <y>0</y>
     <width>1195</width>
-    <height>837</height>
+    <height>844</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color:  rgb(210, 255, 252)</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="minimumSize">
@@ -22,6 +25,9 @@
      <width>0</width>
      <height>0</height>
     </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
    </property>
    <layout class="QGridLayout" name="gridLayout_2">
     <item row="0" column="1">
@@ -47,8 +53,15 @@
           </property>
           <property name="font">
            <font>
+            <family>Century Schoolbook L</family>
             <pointsize>20</pointsize>
+            <weight>9</weight>
+            <italic>false</italic>
+            <bold>false</bold>
            </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 75 20pt &quot;Century Schoolbook L&quot;;</string>
           </property>
           <property name="frameShape">
            <enum>QFrame::NoFrame</enum>
@@ -108,7 +121,7 @@
             <property name="maximumSize">
              <size>
               <width>400</width>
-              <height>600</height>
+              <height>400</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -139,13 +152,22 @@
              <layout class="QHBoxLayout" name="donnees_7">
               <item>
                <widget class="QLabel" name="temps">
+                <property name="styleSheet">
+                 <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                </property>
                 <property name="text">
                  <string>Temps de simulation (en h) = </string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QDoubleSpinBox" name="tempsVal"/>
+               <widget class="QDoubleSpinBox" name="tempsVal">
+                <property name="styleSheet">
+                 <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>
@@ -153,13 +175,22 @@
              <layout class="QHBoxLayout" name="donnees_6">
               <item>
                <widget class="QLabel" name="vDiff">
+                <property name="styleSheet">
+                 <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                </property>
                 <property name="text">
                  <string>Vitesse de diffusion (en µm²/h) =  </string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QDoubleSpinBox" name="vDiffVal"/>
+               <widget class="QDoubleSpinBox" name="vDiffVal">
+                <property name="styleSheet">
+                 <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>
@@ -167,13 +198,22 @@
              <layout class="QHBoxLayout" name="donnees_1">
               <item>
                <widget class="QLabel" name="largeur">
+                <property name="styleSheet">
+                 <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                </property>
                 <property name="text">
                  <string>Largeur (µm) = </string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QDoubleSpinBox" name="largeurVal"/>
+               <widget class="QDoubleSpinBox" name="largeurVal">
+                <property name="styleSheet">
+                 <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>
@@ -181,13 +221,22 @@
              <layout class="QHBoxLayout" name="donnees_5">
               <item>
                <widget class="QLabel" name="cDiff">
+                <property name="styleSheet">
+                 <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                </property>
                 <property name="text">
                  <string>Concentration pour diffuser (en pg/µ²) = </string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QDoubleSpinBox" name="cDiffVal"/>
+               <widget class="QDoubleSpinBox" name="cDiffVal">
+                <property name="styleSheet">
+                 <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>
@@ -195,13 +244,22 @@
              <layout class="QHBoxLayout" name="donnees_2">
               <item>
                <widget class="QLabel" name="nbCases">
+                <property name="styleSheet">
+                 <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                </property>
                 <property name="text">
                  <string>Nombre de cases = </string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QDoubleSpinBox" name="nbCasesVal"/>
+               <widget class="QDoubleSpinBox" name="nbCasesVal">
+                <property name="styleSheet">
+                 <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>
@@ -209,13 +267,22 @@
              <layout class="QHBoxLayout" name="donnees_4">
               <item>
                <widget class="QLabel" name="cIni">
+                <property name="styleSheet">
+                 <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                </property>
                 <property name="text">
                  <string>Concentration initiale (en pg/µ²) = </string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QDoubleSpinBox" name="cIniVal"/>
+               <widget class="QDoubleSpinBox" name="cIniVal">
+                <property name="styleSheet">
+                 <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>
@@ -223,13 +290,22 @@
              <layout class="QHBoxLayout" name="donnees_3">
               <item>
                <widget class="QLabel" name="rayon">
+                <property name="styleSheet">
+                 <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                </property>
                 <property name="text">
                  <string>Rayon du cercle (en µm) = </string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QDoubleSpinBox" name="rayonVal"/>
+               <widget class="QDoubleSpinBox" name="rayonVal">
+                <property name="styleSheet">
+                 <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>
@@ -237,20 +313,48 @@
              <layout class="QHBoxLayout" name="donnees_8">
               <item>
                <widget class="QLabel" name="gdDelta">
+                <property name="styleSheet">
+                 <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                </property>
                 <property name="text">
                  <string>Delta = </string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QDoubleSpinBox" name="gdDeltaVal"/>
+               <widget class="QDoubleSpinBox" name="gdDeltaVal">
+                <property name="styleSheet">
+                 <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>
             <item row="9" column="0">
              <layout class="QHBoxLayout" name="entreeDonnee">
               <item>
+               <spacer name="horizontalSpacer_9">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
                <widget class="QPushButton" name="entree">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
                 <property name="maximumSize">
                  <size>
                   <width>100</width>
@@ -262,19 +366,85 @@
                 </property>
                </widget>
               </item>
+              <item>
+               <spacer name="horizontalSpacer_10">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="start">
+                <property name="text">
+                 <string>Start</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_11">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="stop">
+                <property name="text">
+                 <string>Stop</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_12">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
              </layout>
             </item>
             <item row="8" column="0">
              <layout class="QHBoxLayout" name="donnees_9">
               <item>
                <widget class="QLabel" name="ptDelta">
+                <property name="styleSheet">
+                 <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                </property>
                 <property name="text">
                  <string>delta = </string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QDoubleSpinBox" name="ptDeltaVal"/>
+               <widget class="QDoubleSpinBox" name="ptDeltaVal">
+                <property name="whatsThis">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;background-color: white;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;
+</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>
@@ -331,14 +501,21 @@
               </property>
               <property name="font">
                <font>
+                <family>Century Schoolbook L</family>
                 <pointsize>10</pointsize>
+                <weight>9</weight>
+                <italic>false</italic>
+                <bold>false</bold>
                </font>
               </property>
               <property name="layoutDirection">
                <enum>Qt::LeftToRight</enum>
               </property>
+              <property name="styleSheet">
+               <string notr="true">font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+              </property>
               <property name="text">
-               <string>Insérer le texte correspondant au graphe</string>
+               <string>Concentration du substrat</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
@@ -371,14 +548,21 @@
               </property>
               <property name="font">
                <font>
+                <family>Century Schoolbook L</family>
                 <pointsize>10</pointsize>
+                <weight>9</weight>
+                <italic>false</italic>
+                <bold>false</bold>
                </font>
               </property>
               <property name="layoutDirection">
                <enum>Qt::LeftToRight</enum>
               </property>
+              <property name="styleSheet">
+               <string notr="true">font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+              </property>
               <property name="text">
-               <string>Insérer le texte correspondant au graphe</string>
+               <string>Population de bactéries</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
@@ -513,7 +697,7 @@
      <x>0</x>
      <y>0</y>
      <width>1195</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
