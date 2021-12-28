@@ -4,6 +4,7 @@ from bacterie import *
 import threading
 from time import sleep
 
+
 # Consignes générales :
 # Toutes les durées sont en heure, les longueurs en µm
 # -> dimension de l'enceinte carrée : 1/2 longueur L = 40 µm (soit longueur = 80) de côté (en micron µ) 
@@ -37,6 +38,8 @@ class Model(QtCore.QObject, threading.Thread):
     bacteries = list()
     # Compte le nombre de cycles (step()) effectués par l'algo
     nb_step = 0
+    # gestion de la boucle
+    isRunning = True
 
     def __init__(self, c_ini=0.4, c_min=0.3, v_diff=0.02,
                  rayon_cell=25, delta=0.005, longueur=80, nb_cellules_large=250, Delta=0.3,
@@ -131,9 +134,9 @@ class Model(QtCore.QObject, threading.Thread):
                            indexing='xy')
 
         cellulose = ((X * X + Y * Y) <= (rayon_cases_subst * rayon_cases_subst))
-        #----------------ceci est un test-------------------------
-        #cellulose = (X<20)
-        #---------------------------
+        # ----------------ceci est un test-------------------------
+        # cellulose = (X<20)
+        # ---------------------------
         self.concentrations[cellulose] = self.d_cellulose["c_ini"]
 
     def __creer_bacterie(self, n):
@@ -142,9 +145,9 @@ class Model(QtCore.QObject, threading.Thread):
         :return: void
         Place des bactéries de manière regulière à une case plus loin que le rayon du substrat (pour être en contact)
         """
-        #for x in range(30):
+        # for x in range(30):
 
-        if(n!=0):
+        if (n != 0):
             intervalle = 2 * np.pi / n
 
             for i in np.arange(1, n + 1):
@@ -175,17 +178,17 @@ class Model(QtCore.QObject, threading.Thread):
         coord_i = coords[0]
         coord_j = coords[1]
         if coords[0] >= self.d_tore["nb_cellules_large"]:
-            coord_i = self.d_tore["nb_cellules_large"]-coords[0]
+            coord_i = self.d_tore["nb_cellules_large"] - coords[0]
 
-       
+
         elif coords[0] < 0:
-            coord_i = self.d_tore["nb_cellules_large"]-(1-coords[0])
+            coord_i = self.d_tore["nb_cellules_large"] - (1 - coords[0])
 
         if coords[1] >= self.d_tore["nb_cellules_large"]:
-            coord_j = self.d_tore["nb_cellules_large"]-coords[1]
+            coord_j = self.d_tore["nb_cellules_large"] - coords[1]
 
-        elif coords[1]<0:
-            coord_j = self.d_tore["nb_cellules_large"]-(1-coords[1])
+        elif coords[1] < 0:
+            coord_j = self.d_tore["nb_cellules_large"] - (1 - coords[1])
 
         return coord_i, coord_j
 
@@ -212,19 +215,19 @@ class Model(QtCore.QObject, threading.Thread):
             array(int), array(int): tableaux des coordonnées des bactéries
         """
         X = []
-        Y = [] 
+        Y = []
         for bact in self.bacteries:
             x, y = (bact.get_x(), bact.get_y())
-            X.append(x/100)
-            Y.append(y/100)
-        
+            X.append(x / 100)
+            Y.append(y / 100)
+
         return np.array(X), np.array(Y)
 
     # ------------- Boucle du programme ---------------
 
     def __calcul_nb_tours(self):
         # Le temps total est de 30h chaque tour de boucle prend delta heures
-        return self.d_tore["Delta"]/self.d_tore["delta"]
+        return self.d_tore["Delta"] / self.d_tore["delta"]
 
     def run(self):
         self.run_simu()
@@ -232,14 +235,14 @@ class Model(QtCore.QObject, threading.Thread):
     def run_simu(self):
         self.creer_concentrations()
         self.update_view()
-        sleep(1) #On laisse le temps à l'interface de se lancer
+        sleep(1)  # On laisse le temps à l'interface de se lancer
         while self.nb_step < self.__calcul_nb_tours():
-            self.step()
-            self.nb_step += 1
-            print(self.nb_step)
-            if(self.nb_step%30==0):
-                self.update_view()
-                
+            if self.isRunning:
+                self.step()
+                self.nb_step += 1
+                print(self.nb_step)
+                if self.nb_step % 30 == 0:
+                    self.update_view()
 
     def step(self):
         """
@@ -250,7 +253,6 @@ class Model(QtCore.QObject, threading.Thread):
         self.__mouvement_bacteries()
         self.__bacteries_se_nourrisent()
         self.__division_bacteries()
-        
 
     # Les __ servent à declarer en private
     def __diffuse(self):
@@ -280,7 +282,7 @@ class Model(QtCore.QObject, threading.Thread):
         c_min = self.d_cellulose['c_min']  # sert juste à améliorer la lisibilité des calculs
 
         new_concentrations = np.zeros((self.d_tore["nb_cellules_large"], self.d_tore["nb_cellules_large"]),
-                                       dtype=np.float64)
+                                      dtype=np.float64)
         # np.copy(self.concentrations)
 
         new_concentrations[self.concentrations <= c_min] = \
@@ -318,14 +320,14 @@ class Model(QtCore.QObject, threading.Thread):
         :return: void
         """
         for bact in self.bacteries:
-            if(bact.peut_se_dupliquer()):
+            if (bact.peut_se_dupliquer()):
                 coords = bact.get_coord_xy()
                 value = np.float64(0)
-                nouv_bact = Bacterie(self, np.float64(coords[0]), np.float64(coords[1]), np.float64(bact.masse_act/2))
+                nouv_bact = Bacterie(self, np.float64(coords[0]), np.float64(coords[1]), np.float64(bact.masse_act / 2))
                 self.bacteries.append(Bacterie(self, 0, 0, self.d_biomasse["masse_ini"]))
-                if(len(self.bacteries)<100):
+                if (len(self.bacteries) < 100):
                     print(len(self.bacteries))
-                bact.masse_act/=2
+                bact.masse_act /= 2
 
     # -------------------------------- Affichages ----------------------------------
 
