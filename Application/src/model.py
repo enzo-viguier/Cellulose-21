@@ -18,13 +18,13 @@ from time import sleep
 # -> Temps de simulation : 30h
 # -> pas de temps pour l'algorithme : Delta = 0.3h
 
-# - masse initiale bactérie : m_ini = 0.4 pg
+# -> masse initiale bactérie : m_ini = 0.4 pg
 # vitesse max des bactéries : 10 µm/h
-# - vitesse de dérive des bactéries : vd = 0.1 (µm^4/(pg h)
-# - écart-type sur la vitesse de déplacement : b_diff = 1 µm/sqrt(h)
-# constante de conversion masse/biomass : k_conv = 0.2 (sans unité)
+# -> vitesse de dérive des bactéries : vd = 0.1 (µm^4/(pg h)
+# -> écart-type sur la vitesse de déplacement : b_diff = 1 µm/sqrt(h)
+# -> constante de conversion masse/biomass : k_conv = 0.2 (sans unité)
 # vitesse de consommation : v_cons = 0.2 pg/h
-# population initiale : 50
+# -> population initiale : 50
 
 
 class Model(QtCore.QObject, threading.Thread):
@@ -43,7 +43,7 @@ class Model(QtCore.QObject, threading.Thread):
 
     def __init__(self, c_ini=0.4, c_min=0.3, v_diff=0.02,
                  rayon_cell=25, delta=0.005, longueur=80, nb_cellules_large=250, Delta=0.3,
-                 masse_ini=0.4, v_absorb=0.1, v_deplacement=0.1, nb_bact_ini=50, k_conv=0.2):
+                 masse_ini=0.4, v_absorb=0.1, v_deplacement=0.1, nb_bact_ini=50, k_conv=0.2, temps_simu=3):
         """Initialise le model avec le tore, les concentrations et les bactéries
 
         :arg:
@@ -70,7 +70,7 @@ class Model(QtCore.QObject, threading.Thread):
 
         # Initialisation des dictionnaires
         self.init_d_cellulose(c_ini, c_min, v_diff, rayon_cell)
-        self.init_d_tore(delta, longueur, nb_cellules_large, Delta)
+        self.init_d_tore(delta, longueur, nb_cellules_large, Delta, temps_simu)
         self.init_d_biomasse(masse_ini, v_absorb, v_deplacement, k_conv)
 
         # Création des concentrations
@@ -90,13 +90,14 @@ class Model(QtCore.QObject, threading.Thread):
         self.d_cellulose["v_diff"] = v_diff
         self.d_cellulose["rayon_cell"] = rayon_cell
 
-    def init_d_tore(self, delta, longueur, nb_cellules_large, Delta):
+    def init_d_tore(self, delta, longueur, nb_cellules_large, Delta, temps_simu):
         """
         Objectif : Initialiser le dictionnaire du tore. Voir __init__() pour les attributs
         """
         self.d_tore["longueur"] = longueur
         self.d_tore["nb_cellules_large"] = nb_cellules_large
         self.d_tore["largeur_case"] = longueur / nb_cellules_large
+        self.d_tore["temps_simu"] = temps_simu
         self.d_tore["delta"] = delta
         self.d_tore["Delta"] = Delta
 

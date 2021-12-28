@@ -38,6 +38,15 @@ class control(QMainWindow):
     def do_entree(self):
         print("entree des données")
         # donner les valeurs aux parametres + relancer la simu
+        # self.m.d_tore["longueur"] =
+        # self.m.d_tore["nb_cellules_large"] =
+        # self.m.d_cellulose["rayon_cell"] =
+        # self.m.d_cellulose["c_ini"] =
+        # self.m.d_cellulose["c_min"] =
+        # self.m.d_cellulose["v_diff"] =
+        # self.m.d_tore["temps_simu"] =
+        # self.m.d_tore["delta"] =
+        # self.m.d_tore["Delta"] =
         pass
 
     def update_view(self):
