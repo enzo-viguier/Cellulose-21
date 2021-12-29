@@ -9,14 +9,14 @@ from time import sleep
 # Toutes les durées sont en heure, les longueurs en µm
 # -> dimension de l'enceinte carrée : 1/2 longueur L = 40 µm (soit longueur = 80) de côté (en micron µ) 
 # -> nombre de cases : n =  250 dans chaque direction, donc 250² cases en tout
+# -> pas de temps pour l'algorithme : Delta = 0.3h
+# -> pas de temps pour diffuser : delta = 0.005h
+
 # -> concentration initiale : c_ini = 0.4 pg/µm² (picogrammes par micromètre carré)
 # -> concentration pour diffuser : c_min = 0.3 pg/µm²
 # -> vitesse de diffusion : 5 µm²/h (micromètres carrés par heure)
-# -> pas de temps pour diffuser : delta = 0.005h
-
 # -> rayon du cercle initial de cellulose : R = 25 µm
-# -> Temps de simulation : 30h
-# -> pas de temps pour l'algorithme : Delta = 0.3h
+# Temps de simulation : 30h
 
 # -> masse initiale bactérie : m_ini = 0.4 pg
 # vitesse max des bactéries : 10 µm/h
@@ -44,8 +44,9 @@ class Model(QtCore.QObject, threading.Thread):
     def __init__(self, c_ini=0.4, c_min=0.3, v_diff=0.02,
                  rayon_cell=25, delta=0.005, longueur=80, nb_cellules_large=250, Delta=0.3,
                  masse_ini=0.4, v_absorb=0.1, v_deplacement=0.1, nb_bact_ini=50, k_conv=0.2, temps_simu=3):
-        """Initialise le model avec le tore, les concentrations et les bactéries
-
+        """
+        Constructeur
+        Objectif : Initialiser le model avec le tore, les concentrations et les bactéries
         :arg:
             view (MainWindow, optional): Contient la mainwindows pour l'interface. Si non remplis lance sans interface.
             c_ini (float, optional): Concentration initiale. Defaults to 0.4 .
@@ -123,7 +124,7 @@ class Model(QtCore.QObject, threading.Thread):
 
     def __creer_substrat(self):
         """
-        Objectif : Creer le substrat, c'est-à-dire une zone centrale où les concentrations sont à c_ini
+        Objectif : Créer le substrat, c'est-à-dire une zone centrale où les concentrations sont à c_ini
         """
 
         # Met la concentration des cases centrales à c_ini
@@ -143,12 +144,13 @@ class Model(QtCore.QObject, threading.Thread):
     def __creer_bacterie(self, n):
         """
         :param n: le nombre de bactéries du modèle
+        Objectif : Placer des bactéries de manière regulière à une case plus loin que le rayon du substrat
+        pour être en contact)
         :return: void
-        Place des bactéries de manière regulière à une case plus loin que le rayon du substrat (pour être en contact)
         """
         # for x in range(30):
 
-        if (n != 0):
+        if n != 0:
             intervalle = 2 * np.pi / n
 
             for i in np.arange(1, n + 1):
@@ -180,7 +182,6 @@ class Model(QtCore.QObject, threading.Thread):
         coord_j = coords[1]
         if coords[0] >= self.d_tore["nb_cellules_large"]:
             coord_i = self.d_tore["nb_cellules_large"] - coords[0]
-
 
         elif coords[0] < 0:
             coord_i = self.d_tore["nb_cellules_large"] - (1 - coords[0])
@@ -256,10 +257,9 @@ class Model(QtCore.QObject, threading.Thread):
         self.__bacteries_se_nourrisent()
         self.__division_bacteries()
 
-    # Les __ servent à declarer en private
+    # Les __ devant une méthode servent à la declarer en privée
     def __diffuse(self):
         """
-        Méthode privée
         Objectif : Mettre à jour les concentrations du model pour un pas de temps de diffusion
         :return: void
         """
@@ -271,9 +271,8 @@ class Model(QtCore.QObject, threading.Thread):
 
     def __somme_case_adj(self):
         """
-        Méthode privée
+        Méthode auxiliaire DE __diffuse.
         Objectif : Renvoyer la somme des diffusions avec les cases voisines sans les constantes.
-        FONCTION AUXILIAIRE DE __diffuse.
         :return: la partie de la formule (Somme pour les 4 cases adj(c_actu − c_case_adj*etat_case)
         """
         # creation des concentrations décallés d'une ligne ou d'une colone
@@ -318,7 +317,8 @@ class Model(QtCore.QObject, threading.Thread):
 
     def __division_bacteries(self):
         """
-        Divise chaque bacterie ayant une masse supérieure à sa masse maximale en deux bactéries placées au même point.
+        Objectif : Diviser chaque bacterie ayant une masse supérieure à sa masse maximale
+        en deux bactéries placées au même point.
         :return: void
         """
         for bact in self.bacteries:
@@ -335,7 +335,7 @@ class Model(QtCore.QObject, threading.Thread):
 
     def to_string(self):
         """
-        Retourne un string contenant les différentes valeurs des constantes
+        Objetif : Retourner un string contenant les différentes valeurs des constantes
         """
         return f"d_cellulose = :\n \
         cIni = {self.d_cellulose['c_ini']}\
