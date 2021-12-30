@@ -362,7 +362,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  </size>
                 </property>
                 <property name="text">
-                 <string>Entrée</string>
+                 <string>Lancer</string>
                 </property>
                </widget>
               </item>
@@ -382,7 +382,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
               <item>
                <widget class="QPushButton" name="start">
                 <property name="text">
-                 <string>Start</string>
+                 <string>Continuer</string>
                 </property>
                </widget>
               </item>
@@ -402,7 +402,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
               <item>
                <widget class="QPushButton" name="stop">
                 <property name="text">
-                 <string>Stop</string>
+                 <string>Pause</string>
                 </property>
                </widget>
               </item>

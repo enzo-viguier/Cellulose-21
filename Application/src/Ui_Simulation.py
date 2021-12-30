@@ -322,11 +322,12 @@ class Ui_MainWindow(object):
         self.cIni.setText(_translate("MainWindow", "Concentration initiale (en pg/µ²) = "))
         self.rayon.setText(_translate("MainWindow", "Rayon du cercle (en µm) = "))
         self.gdDelta.setText(_translate("MainWindow", "Delta = "))
-        self.entree.setText(_translate("MainWindow", "Entrée"))
-        self.start.setText(_translate("MainWindow", "Start"))
-        self.stop.setText(_translate("MainWindow", "Stop"))
+        self.entree.setText(_translate("MainWindow", "Lancer"))
+        self.start.setText(_translate("MainWindow", "Continuer"))
+        self.stop.setText(_translate("MainWindow", "Pause"))
         self.ptDelta.setText(_translate("MainWindow", "delta = "))
         self.ptDeltaVal.setWhatsThis(_translate("MainWindow", "<html><head/><body><p>background-color: white;</p></body></html>"))
         self.titreGraph_1.setText(_translate("MainWindow", "Concentration du substrat"))
         self.titreGraph_2.setText(_translate("MainWindow", "Population de bactéries"))
+
 
