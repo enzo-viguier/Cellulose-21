@@ -61,11 +61,12 @@ class Bacterie:
         :return: tuple
         """
         vd = self.model.d_biomasse["vd"]
+        v_max = self.model.d_biomasse["v_max"]
+        h = self.model.d_tore["largeur_case"]
         c_est = self.model.get_concentration_by_coord_xy((self.x + 1, self.y))
         c_ouest = self.model.get_concentration_by_coord_xy((self.x - 1, self.y))
         c_nord = self.model.get_concentration_by_coord_xy((self.x, self.y + 1))
         c_sud = self.model.get_concentration_by_coord_xy((self.x, self.y - 1))
-        h = self.model.d_tore["largeur_case"]
         print("c_est", c_est)
         print("c_ouest", c_ouest)
         print("c_nord", c_nord)
@@ -73,6 +74,10 @@ class Bacterie:
         vd_x = vd * (c_est - c_ouest) / (2 * h)
         vd_y = vd * (c_nord - c_sud) / (2 * h)
         print("vd_x : ", vd_x, "vd_y :", vd_y)
+        if vd_x > v_max:
+            vd_x = v_max
+        if vd_y > v_max:
+            vd_y = v_max
         return vd_x, vd_y
 
     def manger(self):

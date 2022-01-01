@@ -19,7 +19,7 @@ from time import sleep
 # Temps de simulation : 30h
 
 # -> masse initiale bactérie : m_ini = 0.4 pg
-# vitesse max des bactéries : 10 µm/h
+# -> vitesse max des bactéries : 10 µm/h
 # -> vitesse de dérive des bactéries : vd = 0.1 (µm^4/(pg h)
 # -> écart-type sur la vitesse de déplacement : b_diff = 1 µm/sqrt(h)
 # -> constante de conversion masse/biomass : k_conv = 0.2 (sans unité)
@@ -41,9 +41,9 @@ class Model(QtCore.QObject, threading.Thread):
     # gestion de la boucle
     isRunning = True
 
-    def __init__(self, c_ini=0.4, c_min=0.3, v_diff=0.02,
-                 rayon_cell=25, delta=0.005, longueur=80, nb_cellules_large=250, Delta=0.3,
-                 masse_ini=0.4, v_absorb=0.1, v_deplacement=0.1, nb_bact_ini=50, k_conv=0.2, temps_simu=3):
+    def __init__(self, c_ini=0.4, c_min=0.3, v_diff=0.02, rayon_cell=25,
+                 longueur=80, nb_cellules_large=250, temps_simu=3, delta=0.005, Delta=0.3,
+                 masse_ini=0.4, v_absorb=0.1, v_deplacement=0.1, v_max=10, k_conv=0.2, nb_bact_ini=50):
         """
         Constructeur
         Objectif : Initialiser le model avec le tore, les concentrations et les bactéries
@@ -53,13 +53,15 @@ class Model(QtCore.QObject, threading.Thread):
             c_min (float, optional): Concentration minimale à partir de laquelle le substrat diffuse. Defaults to 5.
             v_diff (float, optional): Vitesse de diffusion du substrat. Defaults to 0.02.
             rayon_cell (int, optional): rayon du substrat (en nanometre). Defaults to 25.
-            delta (float, optional): Pas de temps entre chaque boucle de la simulation (voir fonction step pour une boucle). Defaults to 0.005.
             longueur (int, optional): Longueur et largeur du tore. Defaults to 40.
             nb_cellules_large (int, optional): Nombre de cases en largeur et en longueur. Defaults to 250.
+            temps_simu (float, optional): Temps de simulation en heures. Defaults to 3.
+            delta (float, optional): Pas de temps entre chaque boucle de la simulation (cf. méthode step()). Defaults to 0.005.
             Delta (float, optional) : Pas de temps utilisé pour les sorties de l'algorithme 
-            masse_ini (float, optional): Masse initiale des bactéries
-            v_absorb (float, optional): Vitesse d'absorption des bactéries
-            v_deplacement (float, optional): Vitesse de déplacement des bactéries
+            masse_ini (float, optional): Masse initiale des bactéries. Defaults to 0.4.
+            v_absorb (float, optional): Vitesse d'absorption des bactéries. Defaults to 0.1.
+            v_deplacement (float, optional): Vitesse de déplacement des bactéries. Defaults to 0.1.
+            v_max (float, optional): Vitesse maximale d'une bactérie. Defaults to 10.
         :raise:
             Exception: Si delta trop grand, la simulation ne peut pas fonctionner
         """
@@ -72,7 +74,7 @@ class Model(QtCore.QObject, threading.Thread):
         # Initialisation des dictionnaires
         self.init_d_cellulose(c_ini, c_min, v_diff, rayon_cell)
         self.init_d_tore(delta, longueur, nb_cellules_large, Delta, temps_simu)
-        self.init_d_biomasse(masse_ini, v_absorb, v_deplacement, k_conv)
+        self.init_d_biomasse(masse_ini, v_absorb, v_deplacement, v_max, k_conv)
 
         # Création des concentrations
         self.creer_concentrations()
@@ -102,7 +104,7 @@ class Model(QtCore.QObject, threading.Thread):
         self.d_tore["delta"] = delta
         self.d_tore["Delta"] = Delta
 
-    def init_d_biomasse(self, masse_ini, v_absorb, v_deplacement, k_conv):
+    def init_d_biomasse(self, masse_ini, v_absorb, v_deplacement, v_max, k_conv):
         """
         Objectif : Initialiser le dictionnaire des bactéries. Voir __init__() pour les attributs
         """
@@ -110,6 +112,7 @@ class Model(QtCore.QObject, threading.Thread):
         self.d_biomasse["masse_ini"] = masse_ini
         self.d_biomasse["v_absorb"] = v_absorb
         self.d_biomasse["vd"] = v_deplacement
+        self.d_biomasse["v_max"] = v_max
         self.d_biomasse["b_diff"] = 1 / np.sqrt(self.d_tore["largeur_case"])
         self.d_biomasse["k_conv"] = k_conv
 
