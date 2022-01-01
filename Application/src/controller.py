@@ -6,7 +6,7 @@ import Ui_Simulation
 from PyQt5.QtWidgets import QMainWindow
 
 
-class control(QMainWindow):
+class Controller(QMainWindow):
     def __init__(self, parent=None):
         # on initialise la main window
         super().__init__(parent)
