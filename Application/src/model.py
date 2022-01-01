@@ -42,7 +42,7 @@ class Model(QtCore.QObject, threading.Thread):
     isRunning = True
 
     def __init__(self, c_ini=0.4, c_min=0.3, v_diff=0.02, rayon_cell=25,
-                 longueur=80, nb_cellules_large=250, temps_simu=3, delta=0.005, Delta=0.3,
+                 longueur=80, nb_cellules_large=250, temps_simu=30, delta=0.005, Delta=0.3,
                  masse_ini=0.4, v_absorb=0.1, v_deplacement=0.1, v_max=10, k_conv=0.2, nb_bact_ini=50):
         """
         Constructeur
