@@ -12,14 +12,10 @@ class Bacterie:
         self.masse_act = masse_ini
         self.model = model
 
-    def get_x(self):
-        return self.x
 
-    def get_y(self):
-        return self.y
 
     def get_coord_xy(self):
-        return self.x, self.y
+        return (self.x, self.y)
 
     def se_deplacer(self):
         """
@@ -94,11 +90,13 @@ class Bacterie:
                 # On prend les cases autour du centre ainsi que le centre
                 case = self.model.get_concentration_by_coord_ij(coords_ij)
                 conso = np.minimum(np.square(self.model.d_tore["largeur_case"]) * case,
-                                   self.model.d_biomasse["v_absorb"])
+                        self.model.d_biomasse["v_absorb"]/np.square(self.model.d_tore["largeur_case"]))
                 # carre à verifier
                 qt_mange += conso
                 self.model.set_concentration_by_coord_ij(coords_ij,
-                                                         case - (conso / np.square(self.model.d_tore["largeur_case"])))
+                        case - (conso / np.square(self.model.d_tore["largeur_case"])))
+                self.gain_masse(qt_mange)
+
 
     def gain_masse(self, conso):
         """
@@ -113,5 +111,5 @@ class Bacterie:
         :return: boolean
         """
         if self.masse_act > self.model.d_biomasse["masse_ini"] * 2:
-            return True
+            return True      
         return False

@@ -23,7 +23,7 @@ from time import sleep
 # -> vitesse de dérive des bactéries : vd = 0.1 (µm^4/(pg h)
 # -> écart-type sur la vitesse de déplacement : b_diff = 1 µm/sqrt(h)
 # -> constante de conversion masse/biomass : k_conv = 0.2 (sans unité)
-# vitesse de consommation : v_cons = 0.2 pg/h
+# vitesse de consommation : v_absorb = 0.2 pg/h
 # -> population initiale : 50
 
 
@@ -43,7 +43,7 @@ class Model(QtCore.QObject, threading.Thread):
 
     def __init__(self, c_ini=0.4, c_min=0.3, v_diff=0.02, rayon_cell=25,
                  longueur=80, nb_cellules_large=250, temps_simu=30, delta=0.005, Delta=0.3,
-                 masse_ini=0.4, v_absorb=0.1, v_deplacement=0.1, v_max=10, k_conv=0.2, nb_bact_ini=50):
+                 masse_ini=0.4, v_absorb=0.2, v_deplacement=0.1, v_max=10, k_conv=0.2, nb_bact_ini=50):
         """
         Constructeur
         Objectif : Initialiser le model avec le tore, les concentrations et les bactéries
@@ -59,7 +59,7 @@ class Model(QtCore.QObject, threading.Thread):
             delta (float, optional): Pas de temps entre chaque boucle de la simulation (cf. méthode step()). Defaults to 0.005.
             Delta (float, optional) : Pas de temps utilisé pour les sorties de l'algorithme 
             masse_ini (float, optional): Masse initiale des bactéries. Defaults to 0.4.
-            v_absorb (float, optional): Vitesse d'absorption des bactéries. Defaults to 0.1.
+            v_absorb (float, optional): Vitesse d'absorption des bactéries. Defaults to 0.2.
             v_deplacement (float, optional): Vitesse de déplacement des bactéries. Defaults to 0.1.
             v_max (float, optional): Vitesse maximale d'une bactérie. Defaults to 10.
         :raise:
@@ -109,12 +109,12 @@ class Model(QtCore.QObject, threading.Thread):
         Objectif : Initialiser le dictionnaire des bactéries. Voir __init__() pour les attributs
         """
         self.d_biomasse = {}
-        self.d_biomasse["masse_ini"] = masse_ini
-        self.d_biomasse["v_absorb"] = v_absorb
-        self.d_biomasse["vd"] = v_deplacement
-        self.d_biomasse["v_max"] = v_max
+        self.d_biomasse["masse_ini"] = masse_ini #masse initiale
+        self.d_biomasse["v_absorb"] = v_absorb #vitesse de consomation
+        self.d_biomasse["vd"] = v_deplacement #vitesse de deplacement
+        self.d_biomasse["v_max"] = v_max #deplacement maximal
         self.d_biomasse["b_diff"] = 1 / np.sqrt(self.d_tore["largeur_case"])
-        self.d_biomasse["k_conv"] = k_conv
+        self.d_biomasse["k_conv"] = k_conv #constante de conversion
 
     def creer_concentrations(self):
         """
@@ -171,7 +171,7 @@ class Model(QtCore.QObject, threading.Thread):
         x, y = coords
 
         j = ((x + self.d_tore['longueur'] / 2) / self.d_tore['largeur_case'])
-        i = ((-y + self.d_tore['longueur'] / 2) / self.d_tore['largeur_case'])
+        i = ((y + self.d_tore['longueur'] / 2) / self.d_tore['largeur_case'])
 
         return int(np.floor(i)), int(np.floor(j))
         # floor() fait un arrondi à l'inférieur, on convertit ensuite la valeur en entier.
@@ -222,7 +222,7 @@ class Model(QtCore.QObject, threading.Thread):
         X = []
         Y = []
         for bact in self.bacteries:
-            x, y = (bact.get_x(), bact.get_y())
+            x, y = bact.get_coord_xy()
             X.append(x / 100)
             Y.append(y / 100)
 
@@ -232,7 +232,7 @@ class Model(QtCore.QObject, threading.Thread):
 
     def __calcul_nb_tours(self):
         # Le temps total est de 30h chaque tour de boucle prend delta heures
-        return self.d_tore["temps_simu"] * self.d_tore["Delta"] / self.d_tore["delta"]
+        return self.d_tore["temps_simu"] / self.d_tore["delta"]
 
     def run(self):
         self.run_simu()
@@ -246,8 +246,7 @@ class Model(QtCore.QObject, threading.Thread):
                 # n'execute la boucle que si la simulation n'est pas en pause
                 self.step()
                 self.nb_step += 1
-                print(self.nb_step)
-                if self.nb_step % 30 == 0:
+                if self.nb_step % (self.d_tore["Delta"]/self.d_tore["delta"]) == 0:
                     self.update_view()
 
     def step(self):
@@ -327,11 +326,10 @@ class Model(QtCore.QObject, threading.Thread):
         for bact in self.bacteries:
             if (bact.peut_se_dupliquer()):
                 coords = bact.get_coord_xy()
+            
                 value = np.float64(0)
                 nouv_bact = Bacterie(self, np.float64(coords[0]), np.float64(coords[1]), np.float64(bact.masse_act / 2))
-                self.bacteries.append(Bacterie(self, 0, 0, self.d_biomasse["masse_ini"]))
-                if (len(self.bacteries) < 100):
-                    print(len(self.bacteries))
+                self.bacteries.append(nouv_bact)
                 bact.masse_act /= 2
 
     # -------------------------------- Affichages ----------------------------------
