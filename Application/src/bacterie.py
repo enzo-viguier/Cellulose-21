@@ -50,7 +50,6 @@ class Bacterie:
         :return: float ∈ [-1;1]
         """
         r = (np.random.rand() - 0.5) * 2  # np.random.rand() ∈ [0;1]
-        print("random = ", r)
         return r
 
     def __calcul_vitesse_deplacement(self):
@@ -67,13 +66,9 @@ class Bacterie:
         c_ouest = self.model.get_concentration_by_coord_xy((self.x - 1, self.y))
         c_nord = self.model.get_concentration_by_coord_xy((self.x, self.y + 1))
         c_sud = self.model.get_concentration_by_coord_xy((self.x, self.y - 1))
-        print("c_est", c_est)
-        print("c_ouest", c_ouest)
-        print("c_nord", c_nord)
-        print("c_sud", c_sud)
+      
         vd_x = vd * (c_est - c_ouest) / (2 * h)
         vd_y = vd * (c_nord - c_sud) / (2 * h)
-        print("vd_x : ", vd_x, "vd_y :", vd_y)
         if vd_x > v_max:
             vd_x = v_max
         if vd_y > v_max:
@@ -89,8 +84,7 @@ class Bacterie:
         coord_case_xy = (self.x, self.y)
         coords_ij_centre = self.model.convert_coord_xy_to_ij(coord_case_xy)
         # On récupère les coordonnées de la case centrale (emplacement de la bactérie)
-        print(coord_case_xy)
-        print("ij = ", coords_ij_centre)
+
         # main_case = self.modele.get_concentration_by_coord_ij(coords_ij)
         for i in np.arange(-1, 2):
             for j in np.arange(-1, 2):
