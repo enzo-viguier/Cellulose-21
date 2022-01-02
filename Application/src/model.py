@@ -232,7 +232,7 @@ class Model(QtCore.QObject, threading.Thread):
 
     def __calcul_nb_tours(self):
         # Le temps total est de 30h chaque tour de boucle prend delta heures
-        return self.d_tore["Delta"] / self.d_tore["delta"]
+        return self.d_tore["temps_simu"] * self.d_tore["Delta"] / self.d_tore["delta"]
 
     def run(self):
         self.run_simu()
