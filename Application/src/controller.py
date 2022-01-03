@@ -27,27 +27,33 @@ class Controller(QMainWindow):
         print("je me dépause")
         # remet la valeur de isRunning a true pour relancer la boucle
         self.m.isRunning = True
-        pass
+        
 
     def do_stop(self):
         print("je me stoppe !")
         # met la valeur de isRunning a false pour stoper la boucle
         self.m.isRunning = False
-        pass
+        
 
     def do_entree(self):
         print("entree des données")
         # donner les valeurs aux parametres + relancer la simu
-        self.m.d_tore["longueur"] = self.ui.nbCasesVal
-        self.m.d_tore["nb_cellules_large"] = self.ui.largeurVal
-        self.m.d_cellulose["rayon_cell"] = self.ui.rayonVal
-        self.m.d_cellulose["c_ini"] = self.ui.cIni
-        self.m.d_cellulose["c_min"] = self.ui.cDiffVal
-        self.m.d_cellulose["v_diff"] = self.ui.vDiffVal
-        self.m.d_tore["temps_simu"] = self.ui.tempsVal
-        self.m.d_tore["delta"] = self.ui.ptDeltaVal
-        self.m.d_tore["Delta"] = self.ui.gdDeltaVal
-        pass
+        c_ini = self.ui.cIniVal.value()
+        c_min = self.ui.cDiffVal.value()
+        v_diff = self.ui.vDiffVal.value()
+        rayon_cell = self.ui.rayonVal.value()
+        temps_simu = self.ui.tempsVal.value()
+        delta = self.ui.ptDeltaVal.value()
+        longueur = self.ui.nbCasesVal.value()
+        nb_cellules_large = self.ui.largeurVal.value()
+        Delta = self.ui.gdDeltaVal.value()
+        #Mise à jour des constantes de simulation
+        self.m.init_d_cellulose(c_ini, c_min, v_diff, rayon_cell)
+        self.m.init_d_tore(delta, longueur, int(nb_cellules_large), Delta, temps_simu)
+        #self.m.init_d_biomasse(masse_ini, v_absorb, v_deplacement, v_max, k_conv, nb_bact_ini)
+
+        self.m.isRunning = True
+        self.m.start()
 
     def update_view(self):
         # on attribue a chaque widget ce qu'il doit afficher, animationSubstrat affichera le substrat et les bacteries

@@ -65,22 +65,33 @@ class Model(QtCore.QObject, threading.Thread):
         :raise:
             Exception: Si delta trop grand, la simulation ne peut pas fonctionner
         """
-        threading.Thread.__init__(self)
-        super(QtCore.QObject, self).__init__()
-        # vérifie que les données sont cohérentes
-        if delta > longueur ** 2 / (4 * v_diff):
-            raise Exception("Erreur dans le pas de temps (delta est trop grand)")  # Lève une erreur
 
-        # Initialisation des dictionnaires
+        super(QtCore.QObject, self).__init__()
+
+
+        # Met les valeurs par défaut aux constantes
         self.init_d_cellulose(c_ini, c_min, v_diff, rayon_cell)
         self.init_d_tore(delta, longueur, nb_cellules_large, Delta, temps_simu)
-        self.init_d_biomasse(masse_ini, v_absorb, v_deplacement, v_max, k_conv)
+        self.init_d_biomasse(masse_ini, v_absorb, v_deplacement, v_max, k_conv, nb_bact_ini)
 
+
+
+
+
+    def start(self):
+        """apelle les fonction de lancement et lance le thread
+        """
+        #if delta > longueur ** 2 / (4 * v_diff):
+        #    raise Exception("Erreur dans le pas de temps (delta est trop grand)")  # Lève une erreur
         # Création des concentrations
         self.creer_concentrations()
 
         # Creation des bacteries
-        self.__creer_bacterie(nb_bact_ini)
+        self.__creer_bacterie()
+
+        threading.Thread.__init__(self)
+        # vérifie que les données sont cohérentes
+
 
     # ---------------- Initialisation des différentes couches : le Tore, les concentrations et les bactéries---------
 
@@ -104,7 +115,7 @@ class Model(QtCore.QObject, threading.Thread):
         self.d_tore["delta"] = delta
         self.d_tore["Delta"] = Delta
 
-    def init_d_biomasse(self, masse_ini, v_absorb, v_deplacement, v_max, k_conv):
+    def init_d_biomasse(self, masse_ini, v_absorb, v_deplacement, v_max, k_conv, nb_bact_ini):
         """
         Objectif : Initialiser le dictionnaire des bactéries. Voir __init__() pour les attributs
         """
@@ -115,6 +126,7 @@ class Model(QtCore.QObject, threading.Thread):
         self.d_biomasse["v_max"] = v_max #deplacement maximal
         self.d_biomasse["b_diff"] = 1 / np.sqrt(self.d_tore["largeur_case"])
         self.d_biomasse["k_conv"] = k_conv #constante de conversion
+        self.d_biomasse["nb_bact_ini"] = nb_bact_ini #nombre de bactéries initiales
 
     def creer_concentrations(self):
         """
@@ -144,7 +156,7 @@ class Model(QtCore.QObject, threading.Thread):
         # ---------------------------
         self.concentrations[cellulose] = self.d_cellulose["c_ini"]
 
-    def __creer_bacterie(self, n):
+    def __creer_bacterie(self):
         """
         :param n: le nombre de bactéries du modèle
         Objectif : Placer des bactéries de manière regulière à une case plus loin que le rayon du substrat
@@ -152,7 +164,7 @@ class Model(QtCore.QObject, threading.Thread):
         :return: void
         """
         # for x in range(30):
-
+        n = self.d_biomasse["nb_bact_ini"]
         if n != 0:
             intervalle = 2 * np.pi / n
 
