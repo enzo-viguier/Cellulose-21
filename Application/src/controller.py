@@ -60,3 +60,39 @@ class Controller(QMainWindow):
         self.ui.graph_1.draw()
         self.ui.graph_2.data_ref.set_data(self.m.concentrations)
         self.ui.graph_2.draw()
+
+    # CI-DESSOUS LES FONCTIONS DES GRAPHIQUES A MODIFIER POUR LES AFFICHER SUR L'INTERFACE
+
+    def update_graph1(self):
+        # Données
+        x = np.array([0, 1]) # Donnée en abscisse
+        y = np.array([]) # Donnée en ordonnée
+
+        plt.plot(x, y) # Tracé de la courbe
+        plt.title("Titre graphe 1") # Titre du graphique
+
+        plt.xlabel("Nom abscisse")
+        # plt.xlim() Si on veut ajouter une limite à l'axe des abscisses
+
+        plt.ylabel("Nom ordonnée")
+        # plt.ylim() Si on veut ajouter une limite à l'axe des ordonnées
+
+        plt.grid() # Rajoute une grille -> optionnel
+        plt.show() # Affichage
+
+    def update_graph2(self):
+        # Données
+        x = np.array([0, 1])  # Donnée en abscisse
+        y = np.array([])  # Donnée en ordonnée
+
+        plt.plot(x, y)  # Tracé de la courbe
+        plt.title("Titre graphe 2")  # Titre du graphique
+
+        plt.xlabel("Nom abscisse")
+        # plt.xlim() Si on veut ajouter une limite à l'axe des abscisses
+
+        plt.ylabel("Nom ordonnée")
+        # plt.ylim() Si on veut ajouter une limite à l'axe des ordonnées
+
+        plt.grid()  # Rajoute une grille -> optionnel
+        plt.show()  # Affichage
