@@ -44,13 +44,21 @@ class Controller(QMainWindow):
         rayon_cell = self.ui.rayonVal.value()
         temps_simu = self.ui.tempsVal.value()
         delta = self.ui.ptDeltaVal.value()
-        longueur = self.ui.nbCasesVal.value()
-        nb_cellules_large = self.ui.largeurVal.value()
+        longueur = self.ui.longueurVal.value()
+        nb_cellules_large = self.ui.nbCasesVal.value()
         Delta = self.ui.gdDeltaVal.value()
+
+        masse_ini = self.ui.masse_ini_val.value()
+        v_absorb = self.ui.v_absorb_val.value()
+        v_deplacement = self.ui.v_deplacement_val
+        v_max = self.ui.vmax_bacterie_val.value()
+        k_conv = self.ui.k_conv_val.value()
+        nb_bact_ini = self.ui.nb_bacterie_val.value()
+
         #Mise à jour des constantes de simulation
         self.m.init_d_cellulose(c_ini, c_min, v_diff, rayon_cell)
         self.m.init_d_tore(delta, longueur, int(nb_cellules_large), Delta, temps_simu)
-        #self.m.init_d_biomasse(masse_ini, v_absorb, v_deplacement, v_max, k_conv, nb_bact_ini)
+        self.m.init_d_biomasse(masse_ini, v_absorb, v_deplacement, v_max, k_conv, nb_bact_ini)
 
         self.m.isRunning = True
         self.m.start()
