@@ -71,8 +71,8 @@ class Controller(QMainWindow):
         self.ui.animationSubstrat.draw()
         # graph1 et 2 afficheront des graphiques différents en fonction de la concentration et de la population de
         # bacteries
-        self.ui.graph_1.data_ref.set_data(self.m.concentrations)
-        self.ui.graph_1.update_graph1(self.m.nb_step, self.m.concentrations.sum)
+        #self.ui.graph_1.data_ref.set_data(self.m.concentrations)
+        self.ui.graph_1.update_graph1(self.m.nb_step, self.m.nb_tour_affich, self.m.get_masses_substra())
         self.ui.graph_1.draw()
 
         

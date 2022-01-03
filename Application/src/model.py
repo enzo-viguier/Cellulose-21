@@ -40,6 +40,11 @@ class Model(QtCore.QObject, threading.Thread):
     nb_step = 0
     # gestion de la boucle
     isRunning = True
+    # masse totale de substra à chaqe pas Delta
+    masses_substra = []
+    # nombre de tour entre chaque affichage
+    nb_tour_affich = 0
+
 
 
     def __init__(self, c_ini=0.4, c_min=0.3, v_diff=0.02, rayon_cell=25,
@@ -120,6 +125,7 @@ class Model(QtCore.QObject, threading.Thread):
         self.d_tore["temps_simu"] = temps_simu
         self.d_tore["delta"] = delta
         self.d_tore["Delta"] = Delta
+        self.nb_tour_affich = self.d_tore["Delta"]/self.d_tore["delta"]
 
     def init_d_biomasse(self, masse_ini, v_absorb, v_deplacement, v_max, k_conv, nb_bact_ini):
         """
@@ -230,6 +236,10 @@ class Model(QtCore.QObject, threading.Thread):
     def set_concentration_by_coord_ij(self, coords, c):
         self.concentrations[self.coord_in_tore_ij((coords[0], coords[1]))] = c
 
+
+    def get_masses_substra(self):
+        return self.masses_substra
+
     # --------------------- Gestion des bacteries ------------------------------
     def get_all_coords(self):
         """
@@ -245,6 +255,7 @@ class Model(QtCore.QObject, threading.Thread):
             Y.append(y / 100)
 
         return np.array(X), np.array(Y)
+
 
     # ------------- Boucle du programme ---------------
 
@@ -265,7 +276,7 @@ class Model(QtCore.QObject, threading.Thread):
                 # n'execute la boucle que si la simulation n'est pas en pause
                 self.step()
                 self.nb_step += 1
-                if self.nb_step % (self.d_tore["Delta"]/self.d_tore["delta"]) == 0:
+                if self.nb_step % self.nb_tour_affich == 0:
                     self.update_view()
             else:
                 sleep(1) 
@@ -376,4 +387,6 @@ class Model(QtCore.QObject, threading.Thread):
 
     # PYQT
     def update_view(self):
+        self.masses_substra.append(self.concentrations.sum()) #Ajoute la concentration actuelle aux sauvegardes
+        
         self.stateChangedSignal.emit()

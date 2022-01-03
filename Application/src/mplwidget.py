@@ -44,11 +44,17 @@ class Mplwidget(FigureCanvasQTAgg):
 
     # CI-DESSOUS LES FONCTIONS DES GRAPHIQUES A MODIFIER POUR LES AFFICHER SUR L'INTERFACE
 
-    def update_graph1(self, n, masse_substra):
-        # Données
-        x = np.array([0, 1, 50]) # Donnée en abscisse
-        y = np.array([0, 1, 50]) # Donnée en ordonnée
+    def update_graph1(self, n, nb_tour_affich, masse_substra):
+        """Met à jour le graphique sur la masse totale de substrat
 
+        Args:
+            n (int): nombre de tour de boucle effectue
+            nb_tour_affich (int): nombre de tour de boucle entre deux appel de update_view
+            masse_substra (float[]): masse totale de substrat 
+        """
+        # Données
+        x = np.linspace(0, len(masse_substra)-1, len(masse_substra))*nb_tour_affich# Donnée en abscisse
+        y = masse_substra # Donnée en ordonnée
         self.ax_plot_substra = self.ax.plot(x, y) # Tracé de la courbe
 
         plt.xlabel("Nom abscisse")
