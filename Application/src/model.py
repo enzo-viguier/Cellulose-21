@@ -41,6 +41,7 @@ class Model(QtCore.QObject, threading.Thread):
     # gestion de la boucle
     isRunning = True
 
+
     def __init__(self, c_ini=0.4, c_min=0.3, v_diff=0.02, rayon_cell=25,
                  longueur=80, nb_cellules_large=250, temps_simu=30, delta=0.005, Delta=0.3,
                  masse_ini=0.4, v_absorb=0.2, v_deplacement=0.1, v_max=10, k_conv=0.2, nb_bact_ini=50):
@@ -69,11 +70,13 @@ class Model(QtCore.QObject, threading.Thread):
 
         super(QtCore.QObject, self).__init__()
 
+
         print("lancement")
         # Met les valeurs par défaut aux constantes
         self.init_d_cellulose(c_ini, c_min, v_diff, rayon_cell)
         self.init_d_tore(delta, longueur, nb_cellules_large, Delta, temps_simu)
         self.init_d_biomasse(masse_ini, v_absorb, v_deplacement, v_max, k_conv, nb_bact_ini)
+
 
 
 
@@ -86,6 +89,9 @@ class Model(QtCore.QObject, threading.Thread):
         #    raise Exception("Erreur dans le pas de temps (delta est trop grand)")  # Lève une erreur
         # Création des concentrations
         self.creer_concentrations()
+
+
+
 
         # Creation des bacteries
         self.__creer_bacterie()
@@ -261,6 +267,8 @@ class Model(QtCore.QObject, threading.Thread):
                 self.nb_step += 1
                 if self.nb_step % (self.d_tore["Delta"]/self.d_tore["delta"]) == 0:
                     self.update_view()
+            else:
+                sleep(1) 
 
     def step(self):
         """
