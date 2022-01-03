@@ -256,7 +256,8 @@ class Model(QtCore.QObject, threading.Thread):
 
         return np.array(X), np.array(Y)
 
-
+    def get_nb_bacteries(self):
+        return len(self.bacteries)
     # ------------- Boucle du programme ---------------
 
     def __calcul_nb_tours(self):
