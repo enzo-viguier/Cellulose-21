@@ -21,7 +21,7 @@ class Controller(QMainWindow):
         self.ui.stop.clicked.connect(self.do_stop)
         self.ui.entree.clicked.connect(self.do_entree)
         # on lance la simulation par défaut quand on ouvre la fenetre (a changé à la fin)
-        self.m.start()
+        #self.m.demarer()
 
     def do_start(self):
         print("je me dépause")
@@ -50,7 +50,7 @@ class Controller(QMainWindow):
 
         masse_ini = self.ui.masse_ini_val.value()
         v_absorb = self.ui.v_absorb_val.value()
-        v_deplacement = self.ui.v_deplacement_val
+        v_deplacement = self.ui.v_deplacement_val.value()
         v_max = self.ui.vmax_bacterie_val.value()
         k_conv = self.ui.k_conv_val.value()
         nb_bact_ini = self.ui.nb_bacterie_val.value()
@@ -61,6 +61,7 @@ class Controller(QMainWindow):
         self.m.init_d_biomasse(masse_ini, v_absorb, v_deplacement, v_max, k_conv, nb_bact_ini)
 
         self.m.isRunning = True
+        self.m.demarer()
         self.m.start()
 
     def update_view(self):

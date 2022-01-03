@@ -65,10 +65,11 @@ class Model(QtCore.QObject, threading.Thread):
         :raise:
             Exception: Si delta trop grand, la simulation ne peut pas fonctionner
         """
+        threading.Thread.__init__(self)
 
         super(QtCore.QObject, self).__init__()
 
-
+        print("lancement")
         # Met les valeurs par défaut aux constantes
         self.init_d_cellulose(c_ini, c_min, v_diff, rayon_cell)
         self.init_d_tore(delta, longueur, nb_cellules_large, Delta, temps_simu)
@@ -78,7 +79,7 @@ class Model(QtCore.QObject, threading.Thread):
 
 
 
-    def start(self):
+    def demarer(self):
         """apelle les fonction de lancement et lance le thread
         """
         #if delta > longueur ** 2 / (4 * v_diff):
@@ -89,7 +90,6 @@ class Model(QtCore.QObject, threading.Thread):
         # Creation des bacteries
         self.__creer_bacterie()
 
-        threading.Thread.__init__(self)
         # vérifie que les données sont cohérentes
 
 
@@ -247,6 +247,7 @@ class Model(QtCore.QObject, threading.Thread):
         return self.d_tore["temps_simu"] / self.d_tore["delta"]
 
     def run(self):
+        print("thread actif")
         self.run_simu()
 
     def run_simu(self):
