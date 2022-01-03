@@ -81,7 +81,7 @@
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_animation" stretch="0,0,0,0,0,0,0">
+         <layout class="QHBoxLayout" name="horizontalLayout_animation" stretch="0,0,0,0,0,0,0,0">
           <property name="spacing">
            <number>0</number>
           </property>
@@ -190,6 +190,9 @@
            <layout class="QVBoxLayout" name="verticalLayout_3"/>
           </item>
           <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_3"/>
+          </item>
+          <item>
            <spacer name="horizontalSpacer_3">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -208,7 +211,7 @@
           <item>
            <layout class="QGridLayout" name="gridLayout_donnees">
             <item row="0" column="1">
-             <widget class="QLabel" name="label_2">
+             <widget class="QLabel" name="masse_ini">
               <property name="styleSheet">
                <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
@@ -253,7 +256,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
             <item row="1" column="0">
              <layout class="QHBoxLayout" name="donnees_2">
               <item>
-               <widget class="QLabel" name="nbCases">
+               <widget class="QLabel" name="nbCasesVal_2">
                 <property name="styleSheet">
                  <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
@@ -264,7 +267,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                </widget>
               </item>
               <item>
-               <widget class="QSpinBox" name="spinBox_2">
+               <widget class="QSpinBox" name="nbCasesVal">
                 <property name="styleSheet">
                  <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
@@ -389,7 +392,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                </widget>
               </item>
               <item>
-               <widget class="QDoubleSpinBox" name="largeurVal">
+               <widget class="QDoubleSpinBox" name="longueurVal">
                 <property name="styleSheet">
                  <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
@@ -471,104 +474,6 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  <double>0.300000000000000</double>
                 </property>
                </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="9" column="0">
-             <layout class="QHBoxLayout" name="entreeDonnee">
-              <item>
-               <spacer name="horizontalSpacer_9">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QPushButton" name="entree">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>100</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: white;</string>
-                </property>
-                <property name="text">
-                 <string>Lancer</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_10">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QPushButton" name="start">
-                <property name="styleSheet">
-                 <string notr="true">background-color: white;</string>
-                </property>
-                <property name="text">
-                 <string>Continuer</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_11">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QPushButton" name="stop">
-                <property name="styleSheet">
-                 <string notr="true">background-color: white;</string>
-                </property>
-                <property name="text">
-                 <string>Pause</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_12">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
               </item>
              </layout>
             </item>
@@ -697,7 +602,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QLabel" name="label_3">
+             <widget class="QLabel" name="v_absorb">
               <property name="styleSheet">
                <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
@@ -708,7 +613,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
              </widget>
             </item>
             <item row="2" column="1">
-             <widget class="QLabel" name="label_4">
+             <widget class="QLabel" name="vd">
               <property name="styleSheet">
                <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
@@ -719,7 +624,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
              </widget>
             </item>
             <item row="3" column="1">
-             <widget class="QLabel" name="label_5">
+             <widget class="QLabel" name="vmax_bacterie">
               <property name="styleSheet">
                <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
@@ -730,7 +635,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
              </widget>
             </item>
             <item row="5" column="1">
-             <widget class="QLabel" name="label_7">
+             <widget class="QLabel" name="nb_bacterie">
               <property name="styleSheet">
                <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
@@ -741,7 +646,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
              </widget>
             </item>
             <item row="4" column="1">
-             <widget class="QLabel" name="label_6">
+             <widget class="QLabel" name="k_conv">
               <property name="styleSheet">
                <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
@@ -764,6 +669,104 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                <number>50</number>
               </property>
              </widget>
+            </item>
+            <item row="9" column="0">
+             <layout class="QHBoxLayout" name="entreeDonnee">
+              <item>
+               <spacer name="horizontalSpacer_9">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="entree">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>100</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: white;</string>
+                </property>
+                <property name="text">
+                 <string>Lancer</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_10">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="start">
+                <property name="styleSheet">
+                 <string notr="true">background-color: white;</string>
+                </property>
+                <property name="text">
+                 <string>Continuer</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_11">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="stop">
+                <property name="styleSheet">
+                 <string notr="true">background-color: white;</string>
+                </property>
+                <property name="text">
+                 <string>Pause</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_12">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
             </item>
            </layout>
           </item>
