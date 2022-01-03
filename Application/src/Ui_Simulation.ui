@@ -207,6 +207,17 @@
           </item>
           <item>
            <layout class="QGridLayout" name="gridLayout_donnees">
+            <item row="0" column="1">
+             <widget class="QLabel" name="label_2">
+              <property name="styleSheet">
+               <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+              </property>
+              <property name="text">
+               <string>Masse initiale des bactérie (pg)</string>
+              </property>
+             </widget>
+            </item>
             <item row="4" column="0">
              <layout class="QHBoxLayout" name="donnees_5">
               <item>
@@ -226,8 +237,14 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                 </property>
+                <property name="maximum">
+                 <double>999.000000000000000</double>
+                </property>
                 <property name="singleStep">
                  <double>0.010000000000000</double>
+                </property>
+                <property name="value">
+                 <double>0.300000000000000</double>
                 </property>
                </widget>
               </item>
@@ -247,13 +264,16 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                </widget>
               </item>
               <item>
-               <widget class="QDoubleSpinBox" name="nbCasesVal">
+               <widget class="QSpinBox" name="spinBox_2">
                 <property name="styleSheet">
                  <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                 </property>
-                <property name="singleStep">
-                 <double>0.010000000000000</double>
+                <property name="maximum">
+                 <number>999</number>
+                </property>
+                <property name="value">
+                 <number>250</number>
                 </property>
                </widget>
               </item>
@@ -278,8 +298,14 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                 </property>
+                <property name="maximum">
+                 <double>999.000000000000000</double>
+                </property>
                 <property name="singleStep">
                  <double>0.010000000000000</double>
+                </property>
+                <property name="value">
+                 <double>0.400000000000000</double>
                 </property>
                </widget>
               </item>
@@ -304,8 +330,14 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                 </property>
+                <property name="maximum">
+                 <double>999.000000000000000</double>
+                </property>
                 <property name="singleStep">
                  <double>0.010000000000000</double>
+                </property>
+                <property name="value">
+                 <double>30.000000000000000</double>
                 </property>
                </widget>
               </item>
@@ -330,8 +362,14 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                 </property>
+                <property name="maximum">
+                 <double>999.000000000000000</double>
+                </property>
                 <property name="singleStep">
                  <double>0.010000000000000</double>
+                </property>
+                <property name="value">
+                 <double>5.000000000000000</double>
                 </property>
                </widget>
               </item>
@@ -346,7 +384,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                 </property>
                 <property name="text">
-                 <string>Largeur (µm) = </string>
+                 <string>Longueur (µm) = </string>
                 </property>
                </widget>
               </item>
@@ -356,11 +394,14 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                 </property>
+                <property name="maximum">
+                 <double>999.000000000000000</double>
+                </property>
                 <property name="singleStep">
                  <double>0.010000000000000</double>
                 </property>
                 <property name="value">
-                 <double>0.000000000000000</double>
+                 <double>80.000000000000000</double>
                 </property>
                </widget>
               </item>
@@ -385,8 +426,14 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                 </property>
+                <property name="maximum">
+                 <double>999.000000000000000</double>
+                </property>
                 <property name="singleStep">
                  <double>0.010000000000000</double>
+                </property>
+                <property name="value">
+                 <double>25.000000000000000</double>
                 </property>
                </widget>
               </item>
@@ -411,8 +458,17 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                 </property>
+                <property name="decimals">
+                 <number>2</number>
+                </property>
+                <property name="maximum">
+                 <double>999.000000000000000</double>
+                </property>
                 <property name="singleStep">
                  <double>0.010000000000000</double>
+                </property>
+                <property name="value">
+                 <double>0.300000000000000</double>
                 </property>
                </widget>
               </item>
@@ -539,12 +595,175 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
 font: 75 10pt &quot;Century Schoolbook L&quot;;
 </string>
                 </property>
+                <property name="decimals">
+                 <number>3</number>
+                </property>
+                <property name="maximum">
+                 <double>999.000000000000000</double>
+                </property>
                 <property name="singleStep">
                  <double>0.010000000000000</double>
+                </property>
+                <property name="value">
+                 <double>0.005000000000000</double>
                 </property>
                </widget>
               </item>
              </layout>
+            </item>
+            <item row="0" column="2">
+             <widget class="QDoubleSpinBox" name="doubleSpinBox">
+              <property name="styleSheet">
+               <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+              </property>
+              <property name="maximum">
+               <double>999.000000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.100000000000000</double>
+              </property>
+              <property name="value">
+               <double>0.400000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+              <property name="styleSheet">
+               <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+              </property>
+              <property name="maximum">
+               <double>999.000000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.100000000000000</double>
+              </property>
+              <property name="value">
+               <double>0.100000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2">
+             <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
+              <property name="styleSheet">
+               <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+              </property>
+              <property name="maximum">
+               <double>999.000000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.100000000000000</double>
+              </property>
+              <property name="value">
+               <double>0.100000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="2">
+             <widget class="QDoubleSpinBox" name="doubleSpinBox_4">
+              <property name="styleSheet">
+               <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+              </property>
+              <property name="maximum">
+               <double>999.000000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.100000000000000</double>
+              </property>
+              <property name="value">
+               <double>10.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="2">
+             <widget class="QDoubleSpinBox" name="doubleSpinBox_5">
+              <property name="styleSheet">
+               <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+              </property>
+              <property name="maximum">
+               <double>999.000000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.100000000000000</double>
+              </property>
+              <property name="value">
+               <double>0.200000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLabel" name="label_3">
+              <property name="styleSheet">
+               <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+              </property>
+              <property name="text">
+               <string>Vitesse d'absorbtion (µm/h)</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLabel" name="label_4">
+              <property name="styleSheet">
+               <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+              </property>
+              <property name="text">
+               <string>Vitesse déplacement (µm^4)/(pg h)</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QLabel" name="label_5">
+              <property name="styleSheet">
+               <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+              </property>
+              <property name="text">
+               <string>Vitesse max des bactérie (µm/h)</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="1">
+             <widget class="QLabel" name="label_7">
+              <property name="styleSheet">
+               <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+              </property>
+              <property name="text">
+               <string>Nombre bactérie initiale</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QLabel" name="label_6">
+              <property name="styleSheet">
+               <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+              </property>
+              <property name="text">
+               <string>Constante de conversion masse/biomasse </string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="2">
+             <widget class="QSpinBox" name="spinBox">
+              <property name="styleSheet">
+               <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+              </property>
+              <property name="maximum">
+               <number>999</number>
+              </property>
+              <property name="value">
+               <number>50</number>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
