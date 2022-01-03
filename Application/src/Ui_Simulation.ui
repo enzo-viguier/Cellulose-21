@@ -81,7 +81,7 @@
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_animation" stretch="0,0,0,0,0,0,0,0">
+         <layout class="QHBoxLayout" name="horizontalLayout_animation" stretch="0,0,0,0,0,0,0,0,0">
           <property name="spacing">
            <number>0</number>
           </property>
@@ -203,6 +203,19 @@
             <property name="sizeHint" stdset="0">
              <size>
               <width>50</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_13">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
               <height>20</height>
              </size>
             </property>
@@ -517,7 +530,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;
              </layout>
             </item>
             <item row="0" column="2">
-             <widget class="QDoubleSpinBox" name="doubleSpinBox">
+             <widget class="QDoubleSpinBox" name="masse_ini_val">
               <property name="styleSheet">
                <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
@@ -534,7 +547,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
              </widget>
             </item>
             <item row="1" column="2">
-             <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+             <widget class="QDoubleSpinBox" name="v_absorb_val">
               <property name="styleSheet">
                <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
@@ -551,7 +564,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
              </widget>
             </item>
             <item row="2" column="2">
-             <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
+             <widget class="QDoubleSpinBox" name="v_deplacement_val">
               <property name="styleSheet">
                <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
@@ -568,7 +581,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
              </widget>
             </item>
             <item row="3" column="2">
-             <widget class="QDoubleSpinBox" name="doubleSpinBox_4">
+             <widget class="QDoubleSpinBox" name="vmax_bacterie_val">
               <property name="styleSheet">
                <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
@@ -585,7 +598,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
              </widget>
             </item>
             <item row="4" column="2">
-             <widget class="QDoubleSpinBox" name="doubleSpinBox_5">
+             <widget class="QDoubleSpinBox" name="k_conv_val">
               <property name="styleSheet">
                <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
@@ -613,7 +626,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
              </widget>
             </item>
             <item row="2" column="1">
-             <widget class="QLabel" name="vd">
+             <widget class="QLabel" name="v_deplacement">
               <property name="styleSheet">
                <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
@@ -657,7 +670,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
              </widget>
             </item>
             <item row="5" column="2">
-             <widget class="QSpinBox" name="spinBox">
+             <widget class="QSpinBox" name="nb_bacterie_val">
               <property name="styleSheet">
                <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
