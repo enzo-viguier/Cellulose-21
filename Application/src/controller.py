@@ -20,20 +20,16 @@ class Controller(QMainWindow):
         self.ui.start.clicked.connect(self.do_start)
         self.ui.stop.clicked.connect(self.do_stop)
         self.ui.entree.clicked.connect(self.do_entree)
-        # on lance la simulation par défaut quand on ouvre la fenetre (a changé à la fin)
-        #self.m.demarer()
 
     def do_start(self):
         print("je me dépause")
         # remet la valeur de isRunning a true pour relancer la boucle
         self.m.isRunning = True
-        
 
     def do_stop(self):
         print("je me stoppe !")
         # met la valeur de isRunning a false pour stoper la boucle
         self.m.isRunning = False
-        
 
     def do_entree(self):
         print("entree des données")
@@ -55,32 +51,26 @@ class Controller(QMainWindow):
         k_conv = self.ui.k_conv_val.value()
         nb_bact_ini = self.ui.nb_bacterie_val.value()
 
-        #Mise à jour des constantes de simulation
+        # Mise à jour des constantes de simulation
         self.m.init_d_cellulose(c_ini, c_min, v_diff, rayon_cell)
         self.m.init_d_tore(delta, longueur, int(nb_cellules_large), Delta, temps_simu)
         self.m.init_d_biomasse(masse_ini, v_absorb, v_deplacement, v_max, k_conv, nb_bact_ini)
 
-        
-        
-        
-        if not self.m.thread_lance: # Premier lancement de la simulation
-            self.m.demarrer() #initialise les matrices
-            self.m.start() # lance le thread
-
-
+        if not self.m.thread_lance:  # Premier lancement de la simulation
+            self.m.demarrer()  # initialise les matrices
+            self.m.start()  # lance le thread
 
     def update_view(self):
         # on attribue a chaque widget ce qu'il doit afficher, animationSubstrat affichera le substrat et les bacteries
         self.ui.animationSubstrat.update_plot((self.m.get_all_coords()))
         self.ui.animationSubstrat.data_ref.set_data(self.m.concentrations)
         self.ui.animationSubstrat.draw()
-        # graph1 et 2 afficheront des graphiques différents en fonction de la concentration et de la population de bacteries
-        
+        # graph1 et 2 afficheront des graphiques différents en fonction de la concentration et de la population de
+        # bacteries
+
         self.ui.graph_1.update_graph1(self.m.nb_tour_affich, self.m.get_saved_masse_substra(), self.m.get_delta())
         self.ui.graph_1.draw()
 
-        
-        #self.ui.graph_2.data_ref.set_data(self.m.concentrations)
+        # self.ui.graph_2.data_ref.set_data(self.m.concentrations)
         self.ui.graph_2.update_graph2(self.m.nb_tour_affich, self.m.get_saved_bacteries(), self.m.get_delta())
         self.ui.graph_2.draw()
-
