@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1195</width>
-    <height>860</height>
+    <width>1215</width>
+    <height>872</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -81,9 +81,9 @@
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_animation" stretch="0,0,0,0,0,0,0,0,0">
+         <layout class="QHBoxLayout" name="horizontalLayout_animation" stretch="0,0,0,0,0">
           <property name="spacing">
-           <number>0</number>
+           <number>1</number>
           </property>
           <property name="bottomMargin">
            <number>0</number>
@@ -105,20 +105,10 @@
            </spacer>
           </item>
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_4">
-            <item>
-             <spacer name="verticalSpacer">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
+           <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0">
+            <property name="sizeConstraint">
+             <enum>QLayout::SetNoConstraint</enum>
+            </property>
             <item>
              <widget class="QLabel" name="label">
               <property name="text">
@@ -130,22 +120,9 @@
              </widget>
             </item>
             <item>
-             <spacer name="verticalSpacer_3">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
              <widget class="mplWidget" name="animationSubstrat" native="true">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -168,29 +145,7 @@
               </property>
              </widget>
             </item>
-            <item>
-             <spacer name="verticalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
            </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout"/>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_3"/>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_3"/>
           </item>
           <item>
            <spacer name="horizontalSpacer_3">
@@ -209,481 +164,711 @@
            </spacer>
           </item>
           <item>
-           <spacer name="horizontalSpacer_13">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <layout class="QGridLayout" name="gridLayout_donnees">
-            <item row="0" column="1">
-             <widget class="QLabel" name="masse_ini">
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <item>
+             <widget class="QGroupBox" name="">
               <property name="styleSheet">
-               <string notr="true">background-color: white;
-font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+               <string notr="true">background-color : rgb(255, 255, 255)</string>
               </property>
-              <property name="text">
-               <string>Masse initiale des bactérie (pg)</string>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="0">
-             <layout class="QHBoxLayout" name="donnees_5">
-              <item>
-               <widget class="QLabel" name="cDiff">
-                <property name="styleSheet">
-                 <string notr="true">background-color: white;
+              <layout class="QGridLayout" name="gridLayout_donnees">
+               <property name="sizeConstraint">
+                <enum>QLayout::SetFixedSize</enum>
+               </property>
+               <property name="spacing">
+                <number>5</number>
+               </property>
+               <item row="1" column="2">
+                <widget class="QSpinBox" name="nbCasesVal">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
-                </property>
-                <property name="text">
-                 <string>Concentration pour diffuser (en pg/µ²) = </string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="cDiffVal">
-                <property name="styleSheet">
-                 <string notr="true">background-color: white;
+                 </property>
+                 <property name="maximum">
+                  <number>999</number>
+                 </property>
+                 <property name="value">
+                  <number>250</number>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="2">
+                <widget class="QDoubleSpinBox" name="cIniVal">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
-                </property>
-                <property name="maximum">
-                 <double>999.000000000000000</double>
-                </property>
-                <property name="singleStep">
-                 <double>0.010000000000000</double>
-                </property>
-                <property name="value">
-                 <double>0.300000000000000</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="1" column="0">
-             <layout class="QHBoxLayout" name="donnees_2">
-              <item>
-               <widget class="QLabel" name="nbCasesVal_2">
-                <property name="styleSheet">
-                 <string notr="true">background-color: white;
+                 </property>
+                 <property name="maximum">
+                  <double>999.000000000000000</double>
+                 </property>
+                 <property name="singleStep">
+                  <double>0.010000000000000</double>
+                 </property>
+                 <property name="value">
+                  <double>0.400000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="2">
+                <widget class="QDoubleSpinBox" name="rayonVal">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
-                </property>
-                <property name="text">
-                 <string>Nombre de cases = </string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QSpinBox" name="nbCasesVal">
-                <property name="styleSheet">
-                 <string notr="true">background-color: white;
+                 </property>
+                 <property name="maximum">
+                  <double>999.000000000000000</double>
+                 </property>
+                 <property name="singleStep">
+                  <double>0.010000000000000</double>
+                 </property>
+                 <property name="value">
+                  <double>25.000000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="2">
+                <widget class="QDoubleSpinBox" name="vDiffVal">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
-                </property>
-                <property name="maximum">
-                 <number>999</number>
-                </property>
-                <property name="value">
-                 <number>250</number>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="3" column="0">
-             <layout class="QHBoxLayout" name="donnees_4">
-              <item>
-               <widget class="QLabel" name="cIni">
-                <property name="styleSheet">
-                 <string notr="true">background-color: white;
+                 </property>
+                 <property name="maximum">
+                  <double>999.000000000000000</double>
+                 </property>
+                 <property name="singleStep">
+                  <double>0.010000000000000</double>
+                 </property>
+                 <property name="value">
+                  <double>5.000000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="2">
+                <widget class="QDoubleSpinBox" name="cDiffVal">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
-                </property>
-                <property name="text">
-                 <string>Concentration initiale (en pg/µ²) = </string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="cIniVal">
-                <property name="styleSheet">
-                 <string notr="true">background-color: white;
+                 </property>
+                 <property name="maximum">
+                  <double>999.000000000000000</double>
+                 </property>
+                 <property name="singleStep">
+                  <double>0.010000000000000</double>
+                 </property>
+                 <property name="value">
+                  <double>0.300000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="2">
+                <widget class="QDoubleSpinBox" name="tempsVal">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
-                </property>
-                <property name="maximum">
-                 <double>999.000000000000000</double>
-                </property>
-                <property name="singleStep">
-                 <double>0.010000000000000</double>
-                </property>
-                <property name="value">
-                 <double>0.400000000000000</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="6" column="0">
-             <layout class="QHBoxLayout" name="donnees_7">
-              <item>
-               <widget class="QLabel" name="temps">
-                <property name="styleSheet">
-                 <string notr="true">background-color: white;
+                 </property>
+                 <property name="maximum">
+                  <double>999.000000000000000</double>
+                 </property>
+                 <property name="singleStep">
+                  <double>0.010000000000000</double>
+                 </property>
+                 <property name="value">
+                  <double>30.000000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item row="7" column="2">
+                <widget class="QDoubleSpinBox" name="gdDeltaVal">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
-                </property>
-                <property name="text">
-                 <string>Temps de simulation (en h) = </string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="tempsVal">
-                <property name="styleSheet">
-                 <string notr="true">background-color: white;
-font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
-                </property>
-                <property name="maximum">
-                 <double>999.000000000000000</double>
-                </property>
-                <property name="singleStep">
-                 <double>0.010000000000000</double>
-                </property>
-                <property name="value">
-                 <double>30.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="5" column="0">
-             <layout class="QHBoxLayout" name="donnees_6">
-              <item>
-               <widget class="QLabel" name="vDiff">
-                <property name="styleSheet">
-                 <string notr="true">background-color: white;
-font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
-                </property>
-                <property name="text">
-                 <string>Vitesse de diffusion (en µm²/h) =  </string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="vDiffVal">
-                <property name="styleSheet">
-                 <string notr="true">background-color: white;
-font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
-                </property>
-                <property name="maximum">
-                 <double>999.000000000000000</double>
-                </property>
-                <property name="singleStep">
-                 <double>0.010000000000000</double>
-                </property>
-                <property name="value">
-                 <double>5.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="0" column="0">
-             <layout class="QHBoxLayout" name="donnees_1">
-              <item>
-               <widget class="QLabel" name="largeur">
-                <property name="styleSheet">
-                 <string notr="true">background-color: white;
-font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
-                </property>
-                <property name="text">
-                 <string>Longueur (µm) = </string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="longueurVal">
-                <property name="styleSheet">
-                 <string notr="true">background-color: white;
-font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
-                </property>
-                <property name="maximum">
-                 <double>999.000000000000000</double>
-                </property>
-                <property name="singleStep">
-                 <double>0.010000000000000</double>
-                </property>
-                <property name="value">
-                 <double>80.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="2" column="0">
-             <layout class="QHBoxLayout" name="donnees_3">
-              <item>
-               <widget class="QLabel" name="rayon">
-                <property name="styleSheet">
-                 <string notr="true">background-color: white;
-font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
-                </property>
-                <property name="text">
-                 <string>Rayon du cercle (en µm) = </string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="rayonVal">
-                <property name="styleSheet">
-                 <string notr="true">background-color: white;
-font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
-                </property>
-                <property name="maximum">
-                 <double>999.000000000000000</double>
-                </property>
-                <property name="singleStep">
-                 <double>0.010000000000000</double>
-                </property>
-                <property name="value">
-                 <double>25.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="7" column="0">
-             <layout class="QHBoxLayout" name="donnees_8">
-              <item>
-               <widget class="QLabel" name="gdDelta">
-                <property name="styleSheet">
-                 <string notr="true">background-color: white;
-font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
-                </property>
-                <property name="text">
-                 <string>Delta = </string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="gdDeltaVal">
-                <property name="styleSheet">
-                 <string notr="true">background-color: white;
-font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
-                </property>
-                <property name="decimals">
-                 <number>2</number>
-                </property>
-                <property name="maximum">
-                 <double>999.000000000000000</double>
-                </property>
-                <property name="singleStep">
-                 <double>0.010000000000000</double>
-                </property>
-                <property name="value">
-                 <double>0.300000000000000</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="8" column="0">
-             <layout class="QHBoxLayout" name="donnees_9">
-              <item>
-               <widget class="QLabel" name="ptDelta">
-                <property name="styleSheet">
-                 <string notr="true">background-color: white;
-font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
-                </property>
-                <property name="text">
-                 <string>delta = </string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="ptDeltaVal">
-                <property name="whatsThis">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;background-color: white;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: white;
+                 </property>
+                 <property name="decimals">
+                  <number>2</number>
+                 </property>
+                 <property name="maximum">
+                  <double>999.000000000000000</double>
+                 </property>
+                 <property name="singleStep">
+                  <double>0.010000000000000</double>
+                 </property>
+                 <property name="value">
+                  <double>0.300000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item row="8" column="2">
+                <widget class="QDoubleSpinBox" name="ptDeltaVal">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="whatsThis">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;background-color: white;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;
 </string>
-                </property>
-                <property name="decimals">
-                 <number>3</number>
-                </property>
-                <property name="maximum">
-                 <double>999.000000000000000</double>
-                </property>
-                <property name="singleStep">
-                 <double>0.010000000000000</double>
-                </property>
-                <property name="value">
-                 <double>0.005000000000000</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="0" column="2">
-             <widget class="QDoubleSpinBox" name="masse_ini_val">
-              <property name="styleSheet">
-               <string notr="true">background-color: white;
+                 </property>
+                 <property name="decimals">
+                  <number>3</number>
+                 </property>
+                 <property name="maximum">
+                  <double>999.000000000000000</double>
+                 </property>
+                 <property name="singleStep">
+                  <double>0.010000000000000</double>
+                 </property>
+                 <property name="value">
+                  <double>0.005000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="2">
+                <widget class="QDoubleSpinBox" name="longueurVal">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
-              </property>
-              <property name="maximum">
-               <double>999.000000000000000</double>
-              </property>
-              <property name="singleStep">
-               <double>0.100000000000000</double>
-              </property>
-              <property name="value">
-               <double>0.400000000000000</double>
-              </property>
+                 </property>
+                 <property name="maximum">
+                  <double>999.000000000000000</double>
+                 </property>
+                 <property name="singleStep">
+                  <double>0.010000000000000</double>
+                 </property>
+                 <property name="value">
+                  <double>80.000000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item row="8" column="1">
+                <widget class="QLabel" name="ptDelta">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string>delta = </string>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="1">
+                <widget class="QLabel" name="vDiff">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string>Vitesse de diffusion (en µm²/h) =  </string>
+                 </property>
+                </widget>
+               </item>
+               <item row="7" column="1">
+                <widget class="QLabel" name="gdDelta">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string>Delta = </string>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="1">
+                <widget class="QLabel" name="temps">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string>Temps de simulation (en h) = </string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="3">
+                <widget class="QLabel" name="masse_ini">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string>Masse initiale des bactérie (pg) =</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="4">
+                <widget class="QDoubleSpinBox" name="v_deplacement_val">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                 </property>
+                 <property name="maximum">
+                  <double>999.000000000000000</double>
+                 </property>
+                 <property name="singleStep">
+                  <double>0.100000000000000</double>
+                 </property>
+                 <property name="value">
+                  <double>0.100000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="4">
+                <widget class="QDoubleSpinBox" name="vmax_bacterie_val">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                 </property>
+                 <property name="maximum">
+                  <double>999.000000000000000</double>
+                 </property>
+                 <property name="singleStep">
+                  <double>0.100000000000000</double>
+                 </property>
+                 <property name="value">
+                  <double>10.000000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="4">
+                <widget class="QDoubleSpinBox" name="v_absorb_val">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                 </property>
+                 <property name="maximum">
+                  <double>999.000000000000000</double>
+                 </property>
+                 <property name="singleStep">
+                  <double>0.100000000000000</double>
+                 </property>
+                 <property name="value">
+                  <double>0.100000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="3">
+                <widget class="QLabel" name="v_absorb">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string>Vitesse d'absorbtion (µm/h) =</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="4">
+                <widget class="QDoubleSpinBox" name="k_conv_val">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                 </property>
+                 <property name="maximum">
+                  <double>999.000000000000000</double>
+                 </property>
+                 <property name="singleStep">
+                  <double>0.100000000000000</double>
+                 </property>
+                 <property name="value">
+                  <double>0.200000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="3">
+                <widget class="QLabel" name="v_deplacement">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string>Vitesse déplacement (µm^4)/(pg h) =</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="4">
+                <widget class="QDoubleSpinBox" name="masse_ini_val">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                 </property>
+                 <property name="maximum">
+                  <double>999.000000000000000</double>
+                 </property>
+                 <property name="singleStep">
+                  <double>0.100000000000000</double>
+                 </property>
+                 <property name="value">
+                  <double>0.400000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="3">
+                <widget class="QLabel" name="nb_bacterie">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string>Nombre bactérie initiale =</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="3">
+                <widget class="QLabel" name="k_conv">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string>Constante de conversion masse/biomasse =</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="3">
+                <widget class="QLabel" name="vmax_bacterie">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string>Vitesse max des bactérie (µm/h) =</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="4">
+                <widget class="QSpinBox" name="nb_bacterie_val">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                 </property>
+                 <property name="maximum">
+                  <number>999</number>
+                 </property>
+                 <property name="value">
+                  <number>50</number>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLabel" name="largeur">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string>Longueur (µm) = </string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="1">
+                <widget class="QLabel" name="cDiff">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string>Concentration pour diffuser (en pg/µ²) = </string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QLabel" name="cIni">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string>Concentration initiale (en pg/µ²) = </string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLabel" name="nbCasesVal_2">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string>Nombre de cases = </string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLabel" name="rayon">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string>Rayon du cercle (en µm) = </string>
+                 </property>
+                </widget>
+               </item>
+               <item row="10" column="4">
+                <widget class="QPushButton" name="pushButton">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
+
+</string>
+                 </property>
+                 <property name="text">
+                  <string>Charger</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="9" column="4">
+                <widget class="QTextEdit" name="textEdit">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>200</width>
+                   <height>23</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">backgroung-color : rgb(255, 255, 255)</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="9" column="3">
+                <widget class="QLabel" name="label_2">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white;
+font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string>Nom du fichier :</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </widget>
             </item>
-            <item row="1" column="2">
-             <widget class="QDoubleSpinBox" name="v_absorb_val">
-              <property name="styleSheet">
-               <string notr="true">background-color: white;
-font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
-              </property>
-              <property name="maximum">
-               <double>999.000000000000000</double>
-              </property>
-              <property name="singleStep">
-               <double>0.100000000000000</double>
-              </property>
-              <property name="value">
-               <double>0.100000000000000</double>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="2">
-             <widget class="QDoubleSpinBox" name="v_deplacement_val">
-              <property name="styleSheet">
-               <string notr="true">background-color: white;
-font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
-              </property>
-              <property name="maximum">
-               <double>999.000000000000000</double>
-              </property>
-              <property name="singleStep">
-               <double>0.100000000000000</double>
-              </property>
-              <property name="value">
-               <double>0.100000000000000</double>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="2">
-             <widget class="QDoubleSpinBox" name="vmax_bacterie_val">
-              <property name="styleSheet">
-               <string notr="true">background-color: white;
-font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
-              </property>
-              <property name="maximum">
-               <double>999.000000000000000</double>
-              </property>
-              <property name="singleStep">
-               <double>0.100000000000000</double>
-              </property>
-              <property name="value">
-               <double>10.000000000000000</double>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="2">
-             <widget class="QDoubleSpinBox" name="k_conv_val">
-              <property name="styleSheet">
-               <string notr="true">background-color: white;
-font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
-              </property>
-              <property name="maximum">
-               <double>999.000000000000000</double>
-              </property>
-              <property name="singleStep">
-               <double>0.100000000000000</double>
-              </property>
-              <property name="value">
-               <double>0.200000000000000</double>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QLabel" name="v_absorb">
-              <property name="styleSheet">
-               <string notr="true">background-color: white;
-font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
-              </property>
-              <property name="text">
-               <string>Vitesse d'absorbtion (µm/h)</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QLabel" name="v_deplacement">
-              <property name="styleSheet">
-               <string notr="true">background-color: white;
-font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
-              </property>
-              <property name="text">
-               <string>Vitesse déplacement (µm^4)/(pg h)</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1">
-             <widget class="QLabel" name="vmax_bacterie">
-              <property name="styleSheet">
-               <string notr="true">background-color: white;
-font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
-              </property>
-              <property name="text">
-               <string>Vitesse max des bactérie (µm/h)</string>
-              </property>
-             </widget>
-            </item>
-            <item row="5" column="1">
-             <widget class="QLabel" name="nb_bacterie">
-              <property name="styleSheet">
-               <string notr="true">background-color: white;
-font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
-              </property>
-              <property name="text">
-               <string>Nombre bactérie initiale</string>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="1">
-             <widget class="QLabel" name="k_conv">
-              <property name="styleSheet">
-               <string notr="true">background-color: white;
-font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
-              </property>
-              <property name="text">
-               <string>Constante de conversion masse/biomasse </string>
-              </property>
-             </widget>
-            </item>
-            <item row="5" column="2">
-             <widget class="QSpinBox" name="nb_bacterie_val">
-              <property name="styleSheet">
-               <string notr="true">background-color: white;
-font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
-              </property>
-              <property name="maximum">
-               <number>999</number>
-              </property>
-              <property name="value">
-               <number>50</number>
-              </property>
-             </widget>
-            </item>
-            <item row="9" column="0">
+            <item>
              <layout class="QHBoxLayout" name="entreeDonnee">
               <item>
                <spacer name="horizontalSpacer_9">
@@ -700,6 +885,12 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
               </item>
               <item>
                <widget class="QPushButton" name="entree">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -735,6 +926,12 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
               </item>
               <item>
                <widget class="QPushButton" name="start">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="styleSheet">
                  <string notr="true">background-color: white;</string>
                 </property>
@@ -758,6 +955,12 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
               </item>
               <item>
                <widget class="QPushButton" name="stop">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="styleSheet">
                  <string notr="true">background-color: white;</string>
                 </property>
@@ -778,6 +981,22 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  </size>
                 </property>
                </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_2">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: white;</string>
+                </property>
+                <property name="text">
+                 <string>Enregistrer</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>
@@ -1029,8 +1248,8 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1195</width>
-     <height>22</height>
+     <width>1215</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>
