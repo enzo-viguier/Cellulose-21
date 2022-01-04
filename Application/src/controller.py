@@ -18,9 +18,9 @@ class Controller(QMainWindow):
         self.m.stateChangedSignal.connect(self.update_view)
 
         # les boutons enverront des signaux qui feront chacun une action differente
-        self.ui.start.clicked.connect(self.do_start)
-        self.ui.stop.clicked.connect(self.do_stop)
-        self.ui.entree.clicked.connect(self.do_entree)
+        self.ui.start.clicked.connect(self.do_continuer)
+        self.ui.stop.clicked.connect(self.do_pause)
+        self.ui.entree.clicked.connect(self.do_lancer)
         self.ui.loadJSON.clicked.connect(self.do_charger)
         self.ui.saveToJSON.clicked.connect(self.do_save)
 
@@ -29,17 +29,17 @@ class Controller(QMainWindow):
         self.ui.graph_1.init_data_ref(([0, 1, -1, 1]))
         self.ui.graph_2.init_data_ref(([0, 1, -1, 1]))
 
-    def do_start(self):
+    def do_continuer(self):
         print("je me dépause")
         # remet la valeur de isRunning a true pour relancer la boucle
         self.m.isRunning = True
 
-    def do_stop(self):
+    def do_pause(self):
         print("je me stoppe !")
         # met la valeur de isRunning a false pour stoper la boucle
         self.m.isRunning = False
 
-    def do_entree(self):
+    def do_lancer(self):
         print("entree des données")
         # on donne les valeurs des spin box aux parametres
         c_ini = self.ui.cIniVal.value()
