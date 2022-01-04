@@ -40,10 +40,6 @@ class Model(QtCore.QObject, threading.Thread):
     nb_step = 0
     # gestion de la boucle
     isRunning = True
-    # masse totale de substra à chaqe pas Delta
-    masses_substra = []
-    # tableau du nombre de bactéries à chaque uipdate_view
-    nbs_bacteries = []
     # nombre de tour entre chaque affichage
     nb_tour_affich = 0
 
@@ -84,6 +80,12 @@ class Model(QtCore.QObject, threading.Thread):
         self.init_d_tore(delta, longueur, nb_cellules_large, Delta, temps_simu)
         self.init_d_biomasse(masse_ini, v_absorb, v_deplacement, v_max, k_conv, nb_bact_ini)
 
+        # dictionnaire contenant les sauvegardes du programme
+        self.saved = {}
+        # masse totale de substra à chaqe pas Delta
+        self.saved["masses_substra"] = []
+        # tableau du nombre de bactéries à chaque uipdate_view
+        self.saved["bacteries"] = []
 
 
 
@@ -240,8 +242,8 @@ class Model(QtCore.QObject, threading.Thread):
         self.concentrations[self.coord_in_tore_ij((coords[0], coords[1]))] = c
 
 
-    def get_masses_substra(self):
-        return self.masses_substra
+    def get_saved_masses_substra(self):
+        return self.saved["masses_substra"]
 
     # --------------------- Gestion des bacteries ------------------------------
     def get_all_coords(self):
@@ -262,9 +264,9 @@ class Model(QtCore.QObject, threading.Thread):
     def get_nb_bacteries(self):
         return len(self.bacteries)
 
-    def get_nbs_bacteries(self):
+    def get_saved_bacteries(self):
         # Retourne le tableau sauvegardant le nombre de bactéries au cours du temps
-        return self.nbs_bacteries
+        return self.saved["bacteries"]
     # ------------- Boucle du programme ---------------
 
     def __calcul_nb_tours(self):
@@ -395,6 +397,6 @@ class Model(QtCore.QObject, threading.Thread):
 
     # PYQT
     def update_view(self):
-        self.masses_substra.append(self.concentrations.sum()*self.d_tore["largeur_case"]**2) #Ajoute la concentration actuelle aux sauvegardes
-        self.nbs_bacteries.append(self.get_nb_bacteries()) # ajoute le nombre de bactérie actuel
+        self.saved["masses_substra"].append(self.concentrations.sum()*self.d_tore["largeur_case"]**2) #Ajoute la concentration actuelle aux sauvegardes
+        self.saved["bacteries"].append(self.get_nb_bacteries()) # ajoute le nombre de bactérie actuel
         self.stateChangedSignal.emit()

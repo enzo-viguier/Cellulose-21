@@ -72,11 +72,11 @@ class Controller(QMainWindow):
         # graph1 et 2 afficheront des graphiques différents en fonction de la concentration et de la population de
         # bacteries
         #self.ui.graph_1.data_ref.set_data(self.m.concentrations)
-        self.ui.graph_1.update_graph1(self.m.nb_tour_affich, self.m.get_masses_substra(), self.m.get_delta())
+        self.ui.graph_1.update_graph1(self.m.nb_tour_affich, self.m.get_saved_masses_substra(), self.m.get_delta())
         self.ui.graph_1.draw()
 
         
         #self.ui.graph_2.data_ref.set_data(self.m.concentrations)
-        self.ui.graph_2.update_graph2(self.m.nb_tour_affich, self.m.get_nbs_bacteries(), self.m.get_delta())
+        self.ui.graph_2.update_graph2(self.m.nb_tour_affich, self.m.get_saved_bacteries(), self.m.get_delta())
         self.ui.graph_2.draw()
 
