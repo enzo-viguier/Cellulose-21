@@ -60,9 +60,11 @@ class Controller(QMainWindow):
         self.m.init_d_tore(delta, longueur, int(nb_cellules_large), Delta, temps_simu)
         self.m.init_d_biomasse(masse_ini, v_absorb, v_deplacement, v_max, k_conv, nb_bact_ini)
 
-        self.m.isRunning = True
+        #initialise les matrices
         self.m.demarer()
-        self.m.start()
+        # lance le thread si il ne l'est pas déjà
+        if not self.m.thread_lance:
+            self.m.start()
 
     def update_view(self):
         # on attribue a chaque widget ce qu'il doit afficher, animationSubstrat affichera le substrat et les bacteries

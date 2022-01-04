@@ -42,6 +42,9 @@ class Model(QtCore.QObject, threading.Thread):
     isRunning = True
     # nombre de tour entre chaque affichage
     nb_tour_affich = 0
+    # Etat du thread
+    thread_lance = False 
+
 
 
 #---------------- Initialisations et lancement ------------------------------------------
@@ -80,12 +83,7 @@ class Model(QtCore.QObject, threading.Thread):
         self.init_d_tore(delta, longueur, nb_cellules_large, Delta, temps_simu)
         self.init_d_biomasse(masse_ini, v_absorb, v_deplacement, v_max, k_conv, nb_bact_ini)
 
-        # dictionnaire contenant les sauvegardes du programme
-        self.saved = {}
-        # masse totale de substra à chaqe pas Delta
-        self.saved["masse_substra"] = []
-        # tableau du nombre de bactéries à chaque uipdate_view
-        self.saved["bacteries"] = []
+
 
 
 
@@ -173,8 +171,9 @@ class Model(QtCore.QObject, threading.Thread):
 # Lancement
 
     def demarer(self):
-        """apelle les fonction de lancement et lance le thread
+        """apelle les fonction de lancement
         """
+        print("demarage de la simulation")
         # vérifie que les données sont cohérentes
         #if delta > longueur ** 2 / (4 * v_diff):
         #    raise Exception("Erreur dans le pas de temps (delta est trop grand)")  # Lève une erreur
@@ -184,7 +183,17 @@ class Model(QtCore.QObject, threading.Thread):
         # Creation des bacteries
         self.__creer_bacterie()
 
+        self.isRunning = True
+
+        # dictionnaire contenant les sauvegardes du programme
+        self.saved = {}
+        # masse totale de substra à chaqe pas Delta
+        self.saved["masse_substra"] = []
+        # tableau du nombre de bactéries à chaque uipdate_view
+        self.saved["bacteries"] = []
+
     def run(self):
+        self.thread_lance = True
         print("thread actif")
         self.run_simu()
 
@@ -231,8 +240,6 @@ class Model(QtCore.QObject, threading.Thread):
         # Retourne le tableau sauvegardant le nombre de bactéries au cours du temps
         return self.saved["bacteries"]
 
-
-
 # getters de d_tore
 
     def get_delta(self):
@@ -254,13 +261,15 @@ class Model(QtCore.QObject, threading.Thread):
         self.saved["masse_substra"].append(self.concentrations.sum()*self.d_tore["largeur_case"]**2) #Ajoute la concentration actuelle aux sauvegardes
         self.saved["bacteries"].append(self.get_nb_bacteries()) # ajoute le nombre de bactérie actuel
 
-
+    def update_all(self):
+        self.update_view()
+        self.update_saved()
 #----------------------- Boucle principale ----------------------------------------------
 
 
     def run_simu(self):
         self.creer_concentrations()
-        self.update_view()
+        self.update_all()
         sleep(1)  # On laisse le temps à l'interface de se lancer
         while self.nb_step < self.__calcul_nb_tours():
             if self.isRunning:
@@ -268,8 +277,7 @@ class Model(QtCore.QObject, threading.Thread):
                 self.step()
                 self.nb_step += 1
                 if self.nb_step % self.nb_tour_affich == 0:
-                    self.update_saved()
-                    self.update_view()
+                    self.update_all()
             else:
                 sleep(1) 
 
