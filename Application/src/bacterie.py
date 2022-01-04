@@ -2,9 +2,6 @@ import numpy as np
 
 
 class Bacterie:
-    # Mettre ici les variables statiques
-    # Dictionnaire de constantes de la biomasse
-    d_biomasse = {}
 
     def __init__(self, model, x, y, masse_ini):
         self.x = x
@@ -12,10 +9,8 @@ class Bacterie:
         self.masse_act = masse_ini
         self.model = model
 
-
-
     def get_coord_xy(self):
-        return (self.x, self.y)
+        return self.x, self.y
 
     def se_deplacer(self):
         """
@@ -96,7 +91,6 @@ class Bacterie:
                 self.model.set_concentration_by_coord_ij(coords_ij,
                         case - (conso / np.square(self.model.d_tore["largeur_case"])))
                 self.gain_masse(qt_mange)
-
 
     def gain_masse(self, conso):
         """

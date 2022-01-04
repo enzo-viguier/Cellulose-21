@@ -64,7 +64,7 @@ class Controller(QMainWindow):
         
         
         if not self.m.thread_lance: # Premier lancement de la simulation
-            self.m.demarer() #initialise les matrices
+            self.m.demarrer() #initialise les matrices
             self.m.start() # lance le thread
 
 
