@@ -107,6 +107,4 @@ class Bacterie:
         Objectif : Déterminer si la bactérie peut se dupliquer
         :return: boolean
         """
-        if self.masse_act > self.model.d_biomasse["masse_ini"] * 2:
-            return True      
-        return False
+        return self.masse_act > self.model.d_biomasse["masse_ini"] * 2
