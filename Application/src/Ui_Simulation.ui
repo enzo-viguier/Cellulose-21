@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1215</width>
-    <height>872</height>
+    <width>1279</width>
+    <height>919</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -169,7 +169,7 @@
              <enum>QLayout::SetFixedSize</enum>
             </property>
             <item row="0" column="0">
-             <widget class="QGroupBox" name="">
+             <widget class="QGroupBox" name="groupBox">
               <property name="styleSheet">
                <string notr="true">background-color : white</string>
               </property>
@@ -816,7 +816,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                 </widget>
                </item>
                <item row="9" column="4">
-                <widget class="QPlainTextEdit" name="plainTextEdit">
+                <widget class="QPlainTextEdit" name="nameFileBox">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -830,7 +830,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                   </size>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">backgroung-color : rgb(255, 255, 255)</string>
+                  <string notr="true">background-color : rgb(255, 255, 255)</string>
                  </property>
                 </widget>
                </item>
@@ -854,7 +854,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                <item row="10" column="4">
                 <layout class="QHBoxLayout" name="horizontalLayout_2">
                  <item>
-                  <widget class="QPushButton" name="pushButton">
+                  <widget class="QPushButton" name="loadJSON">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -872,7 +872,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="pushButton_2">
+                  <widget class="QPushButton" name="saveToJSON">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -1204,8 +1204,8 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1215</width>
-     <height>26</height>
+     <width>1279</width>
+     <height>22</height>
     </rect>
    </property>
   </widget>
