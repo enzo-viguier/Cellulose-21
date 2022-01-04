@@ -44,6 +44,7 @@ class Model(QtCore.QObject, threading.Thread):
     nb_tour_affich = 0
 
 
+#---------------- Initialisations et lancement ------------------------------------------
 
     def __init__(self, c_ini=0.4, c_min=0.3, v_diff=0.02, rayon_cell=25,
                  longueur=80, nb_cellules_large=250, temps_simu=30, delta=0.005, Delta=0.3,
@@ -73,7 +74,6 @@ class Model(QtCore.QObject, threading.Thread):
 
         super(QtCore.QObject, self).__init__()
 
-
         print("lancement")
         # Met les valeurs par défaut aux constantes
         self.init_d_cellulose(c_ini, c_min, v_diff, rayon_cell)
@@ -83,32 +83,13 @@ class Model(QtCore.QObject, threading.Thread):
         # dictionnaire contenant les sauvegardes du programme
         self.saved = {}
         # masse totale de substra à chaqe pas Delta
-        self.saved["masses_substra"] = []
+        self.saved["masse_substra"] = []
         # tableau du nombre de bactéries à chaque uipdate_view
         self.saved["bacteries"] = []
 
 
 
-
-
-    def demarer(self):
-        """apelle les fonction de lancement et lance le thread
-        """
-        #if delta > longueur ** 2 / (4 * v_diff):
-        #    raise Exception("Erreur dans le pas de temps (delta est trop grand)")  # Lève une erreur
-        # Création des concentrations
-        self.creer_concentrations()
-
-
-
-
-        # Creation des bacteries
-        self.__creer_bacterie()
-
-        # vérifie que les données sont cohérentes
-
-
-    # ---------------- Initialisation des différentes couches : le Tore, les concentrations et les bactéries---------
+ # Initialisation des différentes couches : le Tore, les concentrations et les bactéries
 
     def init_d_cellulose(self, c_ini, c_min, v_diff, rayon_cell):
         """
@@ -143,6 +124,8 @@ class Model(QtCore.QObject, threading.Thread):
         self.d_biomasse["b_diff"] = 1 / np.sqrt(self.d_tore["largeur_case"])
         self.d_biomasse["k_conv"] = k_conv #constante de conversion
         self.d_biomasse["nb_bact_ini"] = nb_bact_ini #nombre de bactéries initiales
+
+# Creation des matrices
 
     def creer_concentrations(self):
         """
@@ -187,46 +170,29 @@ class Model(QtCore.QObject, threading.Thread):
                 y = np.sin(i * intervalle) * self.d_cellulose["rayon_cell"]
                 self.bacteries.append(Bacterie(self, x, y, self.d_biomasse["masse_ini"]))
 
-    # ---------------- Gestion du multicouche et utilitaires ------------------------
-    def convert_coord_xy_to_ij(self, coords):
+# Lancement
+
+    def demarer(self):
+        """apelle les fonction de lancement et lance le thread
         """
-        Objectif : Permettre de convertir des coordonnées x, y en coordonnées i, j.
-        Pré-requis : x et y doivent être entre -largeurTore/2 et largeurTore/2
-        :return: (int, int): Coordonnées sur le tableau de concentration
-        """
-        x, y = coords
+        # vérifie que les données sont cohérentes
+        #if delta > longueur ** 2 / (4 * v_diff):
+        #    raise Exception("Erreur dans le pas de temps (delta est trop grand)")  # Lève une erreur
+        # Création des concentrations
+        self.creer_concentrations()
 
-        j = ((x + self.d_tore['longueur'] / 2) / self.d_tore['largeur_case'])
-        i = ((y + self.d_tore['longueur'] / 2) / self.d_tore['largeur_case'])
+        # Creation des bacteries
+        self.__creer_bacterie()
 
-        return int(np.floor(i)), int(np.floor(j))
-        # floor() fait un arrondi à l'inférieur, on convertit ensuite la valeur en entier.
+    def run(self):
+        print("thread actif")
+        self.run_simu()
 
-    def coord_in_tore_ij(self, coords):
-        """
-        Objectif : Changer les coordonnées façon tore si elles depassent du tableau
-        :return: tuple
-        """
-        coord_i = coords[0]
-        coord_j = coords[1]
-        if coords[0] >= self.d_tore["nb_cellules_large"]:
-            coord_i = self.d_tore["nb_cellules_large"] - coords[0]
+#----------------------------- Getter ---------------------------------------------------
 
-        elif coords[0] < 0:
-            coord_i = self.d_tore["nb_cellules_large"] - (1 - coords[0])
 
-        if coords[1] >= self.d_tore["nb_cellules_large"]:
-            coord_j = self.d_tore["nb_cellules_large"] - coords[1]
 
-        elif coords[1] < 0:
-            coord_j = self.d_tore["nb_cellules_large"] - (1 - coords[1])
-
-        return coord_i, coord_j
-
-    def get_delta(self):
-        return self.d_tore["delta"]
-
-    # --------------- Gestion des concentrations-------------------------------------------
+# Getter de la matrice de concentrations
 
     def get_concentrations(self):
         return self.concentrations
@@ -238,14 +204,11 @@ class Model(QtCore.QObject, threading.Thread):
     def get_concentration_by_coord_ij(self, coords):
         return self.concentrations[self.coord_in_tore_ij((coords[0], coords[1]))]
 
-    def set_concentration_by_coord_ij(self, coords, c):
-        self.concentrations[self.coord_in_tore_ij((coords[0], coords[1]))] = c
+    def get_saved_masse_substra(self):
+        return self.saved["masse_substra"]
 
 
-    def get_saved_masses_substra(self):
-        return self.saved["masses_substra"]
-
-    # --------------------- Gestion des bacteries ------------------------------
+# Getter des bacteries
     def get_all_coords(self):
         """
         Objectif : Retourner les coordonnées de toutes les bactéries dans deux arrays
@@ -267,15 +230,33 @@ class Model(QtCore.QObject, threading.Thread):
     def get_saved_bacteries(self):
         # Retourne le tableau sauvegardant le nombre de bactéries au cours du temps
         return self.saved["bacteries"]
-    # ------------- Boucle du programme ---------------
 
-    def __calcul_nb_tours(self):
-        # Le temps total est de 30h chaque tour de boucle prend delta heures
-        return self.d_tore["temps_simu"] / self.d_tore["delta"]
 
-    def run(self):
-        print("thread actif")
-        self.run_simu()
+
+# getters de d_tore
+
+    def get_delta(self):
+        return self.d_tore["delta"]
+
+#----------------------------- Setter ---------------------------------------------------
+
+# Setter de la matrice de concentration
+
+    def set_concentration_by_coord_ij(self, coords, c):
+        self.concentrations[self.coord_in_tore_ij((coords[0], coords[1]))] = c
+#----------------------------- update ---------------------------------------------------
+
+    # PYQT
+    def update_view(self):
+        self.stateChangedSignal.emit()
+
+    def update_saved(self):
+        self.saved["masse_substra"].append(self.concentrations.sum()*self.d_tore["largeur_case"]**2) #Ajoute la concentration actuelle aux sauvegardes
+        self.saved["bacteries"].append(self.get_nb_bacteries()) # ajoute le nombre de bactérie actuel
+
+
+#----------------------- Boucle principale ----------------------------------------------
+
 
     def run_simu(self):
         self.creer_concentrations()
@@ -287,6 +268,7 @@ class Model(QtCore.QObject, threading.Thread):
                 self.step()
                 self.nb_step += 1
                 if self.nb_step % self.nb_tour_affich == 0:
+                    self.update_saved()
                     self.update_view()
             else:
                 sleep(1) 
@@ -374,29 +356,46 @@ class Model(QtCore.QObject, threading.Thread):
                 self.bacteries.append(nouv_bact)
                 bact.masse_act /= 2
 
-    # -------------------------------- Affichages ----------------------------------
+#----------------------------- Utilitaires ----------------------------------------------
+    def convert_coord_xy_to_ij(self, coords):
+        """
+        Objectif : Permettre de convertir des coordonnées x, y en coordonnées i, j.
+        Pré-requis : x et y doivent être entre -largeurTore/2 et largeurTore/2
+        :return: (int, int): Coordonnées sur le tableau de concentration
+        """
+        x, y = coords
 
-    def to_string(self):
+        j = ((x + self.d_tore['longueur'] / 2) / self.d_tore['largeur_case'])
+        i = ((y + self.d_tore['longueur'] / 2) / self.d_tore['largeur_case'])
+
+        return int(np.floor(i)), int(np.floor(j))
+        # floor() fait un arrondi à l'inférieur, on convertit ensuite la valeur en entier.
+
+    def coord_in_tore_ij(self, coords):
         """
-        Objetif : Retourner un string contenant les différentes valeurs des constantes
+        Objectif : Changer les coordonnées façon tore si elles depassent du tableau
+        :return: tuple
         """
-        return f"d_cellulose = :\n \
-        cIni = {self.d_cellulose['c_ini']}\
-        cMin = {self.d_cellulose['c_min']}\
-        v_diff = {self.d_cellulose['v_diff']}\
-        rayon_cell = {self.d_cellulose['rayon_cell']} \
-        \nd_tore = \n\
-        longueur =  {self.d_tore['longueur']}\
-        nb_cellules_large = {self.d_tore['nb_cellules_large']}\
-        largeur_case = {self.d_tore['largeur_case']}\
-        delta = {self.d_tore['delta']}"
+        coord_i = coords[0]
+        coord_j = coords[1]
+        if coords[0] >= self.d_tore["nb_cellules_large"]:
+            coord_i = self.d_tore["nb_cellules_large"] - coords[0]
+
+        elif coords[0] < 0:
+            coord_i = self.d_tore["nb_cellules_large"] - (1 - coords[0])
+
+        if coords[1] >= self.d_tore["nb_cellules_large"]:
+            coord_j = self.d_tore["nb_cellules_large"] - coords[1]
+
+        elif coords[1] < 0:
+            coord_j = self.d_tore["nb_cellules_large"] - (1 - coords[1])
+
+        return coord_i, coord_j
 
     def afficher_concentrations(self):
         print("afficher concentrations")
         print(self.concentrations)
 
-    # PYQT
-    def update_view(self):
-        self.saved["masses_substra"].append(self.concentrations.sum()*self.d_tore["largeur_case"]**2) #Ajoute la concentration actuelle aux sauvegardes
-        self.saved["bacteries"].append(self.get_nb_bacteries()) # ajoute le nombre de bactérie actuel
-        self.stateChangedSignal.emit()
+    def __calcul_nb_tours(self):
+        # Le temps total est de 30h chaque tour de boucle prend delta heures
+        return self.d_tore["temps_simu"] / self.d_tore["delta"]
