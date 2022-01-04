@@ -17,7 +17,7 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color:  rgb(210, 255, 252)</string>
+   <string notr="true">background-color: rgb(200, 250, 252)</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="minimumSize">
@@ -164,11 +164,14 @@
            </spacer>
           </item>
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_3">
-            <item>
+           <layout class="QGridLayout" name="gridLayout_4">
+            <property name="sizeConstraint">
+             <enum>QLayout::SetFixedSize</enum>
+            </property>
+            <item row="0" column="0">
              <widget class="QGroupBox" name="">
               <property name="styleSheet">
-               <string notr="true">background-color : rgb(255, 255, 255)</string>
+               <string notr="true">background-color : white</string>
               </property>
               <layout class="QGridLayout" name="gridLayout_donnees">
                <property name="sizeConstraint">
@@ -430,7 +433,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                   </sizepolicy>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: white;
+                  <string notr="true">
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  </property>
                  <property name="text">
@@ -447,7 +450,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                   </sizepolicy>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: white;
+                  <string notr="true">
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  </property>
                  <property name="text">
@@ -464,7 +467,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                   </sizepolicy>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: white;
+                  <string notr="true">
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  </property>
                  <property name="text">
@@ -481,7 +484,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                   </sizepolicy>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: white;
+                  <string notr="true">
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  </property>
                  <property name="text">
@@ -498,7 +501,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                   </sizepolicy>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: white;
+                  <string notr="true">
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  </property>
                  <property name="text">
@@ -584,7 +587,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                   </sizepolicy>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: white;
+                  <string notr="true">
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  </property>
                  <property name="text">
@@ -624,7 +627,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                   </sizepolicy>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: white;
+                  <string notr="true">
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  </property>
                  <property name="text">
@@ -664,7 +667,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                   </sizepolicy>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: white;
+                  <string notr="true">
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  </property>
                  <property name="text">
@@ -681,7 +684,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                   </sizepolicy>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: white;
+                  <string notr="true">
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  </property>
                  <property name="text">
@@ -698,7 +701,8 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                   </sizepolicy>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: white;
+                  <string notr="true">
+
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  </property>
                  <property name="text">
@@ -735,7 +739,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                   </sizepolicy>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: white;
+                  <string notr="true">
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  </property>
                  <property name="text">
@@ -752,7 +756,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                   </sizepolicy>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: white;
+                  <string notr="true">
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  </property>
                  <property name="text">
@@ -769,7 +773,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                   </sizepolicy>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: white;
+                  <string notr="true">
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  </property>
                  <property name="text">
@@ -786,7 +790,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                   </sizepolicy>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: white;
+                  <string notr="true">
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  </property>
                  <property name="text">
@@ -803,7 +807,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                   </sizepolicy>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: white;
+                  <string notr="true">
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  </property>
                  <property name="text">
@@ -811,26 +815,8 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  </property>
                 </widget>
                </item>
-               <item row="10" column="4">
-                <widget class="QPushButton" name="pushButton">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">background-color: white;
-
-</string>
-                 </property>
-                 <property name="text">
-                  <string>Charger</string>
-                 </property>
-                </widget>
-               </item>
                <item row="9" column="4">
-                <widget class="QTextEdit" name="textEdit">
+                <widget class="QPlainTextEdit" name="plainTextEdit">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -840,7 +826,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  <property name="maximumSize">
                   <size>
                    <width>200</width>
-                   <height>23</height>
+                   <height>30</height>
                   </size>
                  </property>
                  <property name="styleSheet">
@@ -857,7 +843,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                   </sizepolicy>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: white;
+                  <string notr="true">
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  </property>
                  <property name="text">
@@ -865,24 +851,49 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  </property>
                 </widget>
                </item>
+               <item row="10" column="4">
+                <layout class="QHBoxLayout" name="horizontalLayout_2">
+                 <item>
+                  <widget class="QPushButton" name="pushButton">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">background-color: white;
+
+</string>
+                   </property>
+                   <property name="text">
+                    <string>Charger</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="pushButton_2">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">background-color : rgb(255, 255, 255)</string>
+                   </property>
+                   <property name="text">
+                    <string>Enregistrer</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
               </layout>
              </widget>
             </item>
-            <item>
+            <item row="1" column="0">
              <layout class="QHBoxLayout" name="entreeDonnee">
-              <item>
-               <spacer name="horizontalSpacer_9">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
               <item>
                <widget class="QPushButton" name="entree">
                 <property name="sizePolicy">
@@ -912,19 +923,6 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                </widget>
               </item>
               <item>
-               <spacer name="horizontalSpacer_10">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
                <widget class="QPushButton" name="start">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -941,19 +939,6 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                </widget>
               </item>
               <item>
-               <spacer name="horizontalSpacer_11">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
                <widget class="QPushButton" name="stop">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -966,35 +951,6 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                 </property>
                 <property name="text">
                  <string>Pause</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_12">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QPushButton" name="pushButton_2">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: white;</string>
-                </property>
-                <property name="text">
-                 <string>Enregistrer</string>
                 </property>
                </widget>
               </item>
