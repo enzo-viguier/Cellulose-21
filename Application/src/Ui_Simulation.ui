@@ -17,7 +17,7 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(200, 250, 252)</string>
+   <string notr="true">background-color: rgb(183, 207, 208)</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="minimumSize">
@@ -129,8 +129,8 @@
               </property>
               <property name="minimumSize">
                <size>
-                <width>300</width>
-                <height>300</height>
+                <width>400</width>
+                <height>400</height>
                </size>
               </property>
               <property name="maximumSize">

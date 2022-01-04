@@ -9,13 +9,12 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from mplwidget import Mplwidget
 
-
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.setWindowModality(QtCore.Qt.NonModal)
         MainWindow.resize(1279, 919)
-        MainWindow.setStyleSheet("background-color: rgb(200, 250, 252)")
+        MainWindow.setStyleSheet("background-color: rgb(183, 207, 208)")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setMinimumSize(QtCore.QSize(0, 0))
         self.centralwidget.setStyleSheet("")
@@ -68,7 +67,7 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.animationSubstrat.sizePolicy().hasHeightForWidth())
         self.animationSubstrat.setSizePolicy(sizePolicy)
-        self.animationSubstrat.setMinimumSize(QtCore.QSize(300, 300))
+        self.animationSubstrat.setMinimumSize(QtCore.QSize(400, 400))
         self.animationSubstrat.setMaximumSize(QtCore.QSize(400, 400))
         self.animationSubstrat.setStyleSheet("background-color: blue\n"
 "")
