@@ -272,7 +272,6 @@ class Model(QtCore.QObject, threading.Thread):
     # ----------------------- Boucle principale ----------------------------------------------
 
     def run_simu(self):
-        self.creer_concentrations()
         self.update_all()
         sleep(1)  # On laisse le temps à l'interface de se lancer
         while self.nb_step < self.__calcul_nb_tours():
@@ -435,6 +434,6 @@ class Model(QtCore.QObject, threading.Thread):
             self.bacteries = list()
             for i in range(data["nb_bacteries"]):
                 self.bacteries.append(Bacterie(self, data["coord_x_bacteries"][i], data["coord_y_bacteries"][i], data["masses_bacteries"][i]))
-            self.concentrations = data["concentrations"]
+            self.concentrations = np.array(data["concentrations"])
             self.saved = data["saved"]
             
