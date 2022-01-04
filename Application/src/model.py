@@ -388,6 +388,6 @@ class Model(QtCore.QObject, threading.Thread):
 
     # PYQT
     def update_view(self):
-        self.masses_substra.append(self.concentrations.sum()) #Ajoute la concentration actuelle aux sauvegardes
+        self.masses_substra.append(self.concentrations.sum()*self.d_tore["largeur_case"]**2) #Ajoute la concentration actuelle aux sauvegardes
         
         self.stateChangedSignal.emit()
