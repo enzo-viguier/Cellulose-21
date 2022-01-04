@@ -12,6 +12,9 @@ class Bacterie:
     def get_coord_xy(self):
         return self.x, self.y
 
+    def get_masse(self):
+        return self.masse_act
+
     def se_deplacer(self):
         """
         Objectif :  Déplacer la bactérie en fonction de la vitesse de déplacement

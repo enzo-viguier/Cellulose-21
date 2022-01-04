@@ -184,6 +184,7 @@ class Model(QtCore.QObject, threading.Thread):
         self.saved["masse_substrat"] = []
         # tableau du nombre de bactéries à chaque uipdate_view
         self.saved["bacteries"] = []
+        #self.load_simu("test3")
 
     def run(self):
         self.thread_lance = True
@@ -218,8 +219,8 @@ class Model(QtCore.QObject, threading.Thread):
         Y = []
         for bact in self.bacteries:
             x, y = bact.get_coord_xy()
-            X.append(x / 100)
-            Y.append(y / 100)
+            X.append(x)
+            Y.append(y)
 
         return np.array(X), np.array(Y)
 
@@ -229,6 +230,13 @@ class Model(QtCore.QObject, threading.Thread):
     def get_saved_bacteries(self):
         # Retourne le tableau sauvegardant le nombre de bactéries au cours du temps
         return self.saved["bacteries"]
+
+    def get_all_masses(self):
+        masses = []
+        for bact in self.bacteries:
+            masses.append(bact.get_masse())
+        return masses
+
 
     # getters de d_tore
 
@@ -414,7 +422,25 @@ class Model(QtCore.QObject, threading.Thread):
                 "nb_bacteries" : self.get_nb_bacteries(),
                 "coord_x_bacteries": self.get_all_coords()[0].tolist(),
                 "coord_y_bacteries": self.get_all_coords()[1].tolist(),
+                "masses_bacteries" : self.get_all_masses(),
                 "concentrations" : self.concentrations.tolist(),
                 "saved" : self.saved
             }
             json.dump(data, fichier, indent=4)
+
+    def load_simu(self, nom):
+        with open("../save/"+nom+".json", "r") as fichier:
+            data = json.load(fichier)
+            # On charge toutes les variables
+            self.nb_step = data["nb_step"]
+            self.d_tore = data["d_tore"]
+            self.d_cellulose = data["d_cellulose"]
+            self.d_biomasse = data["d_biomasse"]
+            #creation des bactéries
+            self.bacteries = list()
+            for i in range(data["nb_bacteries"]):
+                self.bacteries.append(Bacterie(self, data["coord_x_bacteries"][i], data["coord_y_bacteries"][i], data["masses_bacteries"][i]))
+            self.concentrations = data["concentrations"]
+            self.saved = data["saved"]
+            
+            

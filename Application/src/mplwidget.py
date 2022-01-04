@@ -37,7 +37,7 @@ class Mplwidget(FigureCanvasQTAgg):
             self.ax_scatter.remove()
 
         #Le *5/2 sert à positionner bien les bactéries en prenant en compte la taille du canvas
-        self.ax_scatter = self.ax.scatter(data[0]*5/2, data[1]*5/2, 20, "green", marker="*")
+        self.ax_scatter = self.ax.scatter(data[0]*5/200, data[1]*5/200, 20, "green", marker="*")
         #print(self.ax.__class__)
         #print("scat = ", self.ax_scatter)
 
