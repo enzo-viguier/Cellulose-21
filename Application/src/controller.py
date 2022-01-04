@@ -5,6 +5,8 @@ from model import Model
 import Ui_Simulation
 from PyQt5.QtWidgets import QMainWindow
 
+from time import sleep
+
 
 class Controller(QMainWindow):
     def __init__(self, parent=None):
@@ -72,10 +74,18 @@ class Controller(QMainWindow):
             self.m.start()  # lance le thread
 
     def do_charger(self):
-        pass
+        self.do_pause()
+        sleep(0.5)
+        name = self.ui.nameFileBox.toPlainText()
+        self.m.load_simu(name)
+        self.m.update_all()
+        
 
     def do_save(self):
-        pass
+        self.do_pause()
+        sleep(0.5)
+        name = self.ui.nameFileBox.toPlainText()
+        self.m.save_simulation(name)
 
     def update_view(self):
         # on attribue a chaque widget ce qu'il doit afficher
