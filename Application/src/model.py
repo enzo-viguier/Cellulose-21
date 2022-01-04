@@ -3,6 +3,7 @@ from PyQt5 import QtCore
 from bacterie import *
 import threading
 from time import sleep
+import json
 
 # Consignes générales :
 # Toutes les durées sont en heure, les longueurs en µm
@@ -402,3 +403,18 @@ class Model(QtCore.QObject, threading.Thread):
     def __calcul_nb_tours(self):
         # Le temps total est de 30h chaque tour de boucle prend delta heures
         return self.d_tore["temps_simu"] / self.d_tore["delta"]
+
+    def save_simulation(self, nom):
+        with open("../save/" + nom + ".json", "w") as fichier:
+            data = {
+                "nb_step" : self.nb_step,
+                "d_tore" : self.d_tore,
+                "d_biomasse" : self.d_biomasse,
+                "d_cellulose" : self.d_cellulose,
+                "nb_bacteries" : self.get_nb_bacteries(),
+                "coord_x_bacteries": self.get_all_coords()[0].tolist(),
+                "coord_y_bacteries": self.get_all_coords()[1].tolist(),
+                "concentrations" : self.concentrations.tolist(),
+                "saved" : self.saved
+            }
+            json.dump(data, fichier, indent=4)
