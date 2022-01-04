@@ -16,6 +16,15 @@ class Mplwidget(FigureCanvasQTAgg):
         self.fig = Figure()
         # on lui donne un axe
         self.ax = self.fig.add_subplot(111)
+
+
+        # on lui set des parents (je pense que c'est a bouger au debut ça)
+        super().__init__(self.fig)
+        self.setParent(parent)
+        self.ax_scatter = None  # nuage de point des bacteries
+        self.ax_plot_substra = None  # Graph de la masse de substra
+
+    def init_data_ref(self, extent):
         # on fait une jolie matrice qui se reshape en fonction du modele
         data = np.zeros(2500).reshape((50, 50))
         # on installe le imshow avec tous ses parametres
@@ -23,16 +32,11 @@ class Mplwidget(FigureCanvasQTAgg):
                                        norm=Normalize(0, 0.4),
                                        cmap=cm.coolwarm,
                                        interpolation='bicubic',
-                                       extent=([0, 1, -1, 1]),
+                                       extent=extent,
                                        aspect='auto')
-        # on lui set des parents (je pense que c'est a bouger au debut ça)
-        super().__init__(self.fig)
-        self.setParent(parent)
-        self.ax_scatter = None  # nuage de point des bacteries
-        self.ax_plot_substra = None  # Graph de la masse de substra
+
 
     def update_plot(self, data):
-        self.data_ref._extent = ([-1, 1, -1, 1])
         if self.ax_scatter is not None:
             self.ax_scatter.remove()
 
