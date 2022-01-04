@@ -322,7 +322,6 @@ class Model(QtCore.QObject, threading.Thread):
 
         new_concentrations = np.zeros((self.d_tore["nb_cellules_large"], self.d_tore["nb_cellules_large"]),
                                       dtype=np.float64)
-        # np.copy(self.concentrations)
 
         new_concentrations[self.concentrations <= c_min] = \
             c_haut[c_haut <= c_min] - self.concentrations[self.concentrations <= c_min]
@@ -404,10 +403,6 @@ class Model(QtCore.QObject, threading.Thread):
 
         return coord_i, coord_j
 
-    def afficher_concentrations(self):
-        print("afficher concentrations")
-        print(self.concentrations)
-
     def __calcul_nb_tours(self):
         # Le temps total est de 30h chaque tour de boucle prend delta heures
         return self.d_tore["temps_simu"] / self.d_tore["delta"]
@@ -442,5 +437,4 @@ class Model(QtCore.QObject, threading.Thread):
                 self.bacteries.append(Bacterie(self, data["coord_x_bacteries"][i], data["coord_y_bacteries"][i], data["masses_bacteries"][i]))
             self.concentrations = data["concentrations"]
             self.saved = data["saved"]
-            
             
