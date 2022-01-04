@@ -20,7 +20,9 @@ class Controller(QMainWindow):
         self.ui.start.clicked.connect(self.do_start)
         self.ui.stop.clicked.connect(self.do_stop)
         self.ui.entree.clicked.connect(self.do_entree)
-
+        self.ui.animationSubstrat.init_data_ref(([-1, 1, -1, 1]))
+        self.ui.graph_1.init_data_ref(([0, 1, -1, 1]))
+        self.ui.graph_2.init_data_ref(([0, 1, -1, 1]))
     def do_start(self):
         print("je me dépause")
         # remet la valeur de isRunning a true pour relancer la boucle
