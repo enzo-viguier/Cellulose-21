@@ -44,7 +44,7 @@ class Mplwidget(FigureCanvasQTAgg):
 
     # CI-DESSOUS LES FONCTIONS DES GRAPHIQUES A MODIFIER POUR LES AFFICHER SUR L'INTERFACE
 
-    def update_graph1(self, n, nb_tour_affich, masse_substra):
+    def update_graph1(self, nb_tour_affich, masse_substra, delta):
         """Met à jour le graphique sur la masse totale de substrat
 
         Args:
@@ -53,32 +53,16 @@ class Mplwidget(FigureCanvasQTAgg):
             masse_substra (float[]): masse totale de substrat 
         """
         # Données
-        x = np.linspace(0, len(masse_substra)-1, len(masse_substra))*nb_tour_affich# Donnée en abscisse
+        x = np.linspace(0, len(masse_substra)-1, len(masse_substra))*nb_tour_affich*delta# Donnée en abscisse
         y = masse_substra # Donnée en ordonnée
         self.ax_plot_substra = self.ax.plot(x, y) # Tracé de la courbe
+        plt.xlabel("Temps (en heure)")
+        plt.ylabel("Masse totale de substrat (en pg)")
 
-        plt.xlabel("Nom abscisse")
-        # plt.xlim() Si on veut ajouter une limite à l'axe des abscisses
 
-        plt.ylabel("Nom ordonnée")
-        # plt.ylim() Si on veut ajouter une limite à l'axe des ordonnées
-
-        #plt.grid() # Rajoute une grille -> optionnel
-        #plt.show() # Affichage
-
-    def update_graph2(self):
-        # Données
-        x = np.array([0, 1])  # Donnée en abscisse
-        y = np.array([0, 1])  # Donnée en ordonnée
-
-        plt.plot(x, y)  # Tracé de la courbe
-        plt.title("Titre graphe 2")  # Titre du graphique
-
-        plt.xlabel("Nom abscisse")
-        # plt.xlim() Si on veut ajouter une limite à l'axe des abscisses
-
-        plt.ylabel("Nom ordonnée")
-        # plt.ylim() Si on veut ajouter une limite à l'axe des ordonnées
-
-        plt.grid()  # Rajoute une grille -> optionnel
-        plt.show()  # Affichage
+    def update_graph2(self, nb_tour_affich, nbs_bact, delta):
+        x = np.linspace(0, len(nbs_bact)-1, len(nbs_bact))*nb_tour_affich*delta# Donnée en abscisse
+        y = nbs_bact # Donnée en ordonnée
+        self.ax_plot_substra = self.ax.plot(x, y) # Tracé de la courbe
+        plt.xlabel("Temps (en heure)")
+        plt.ylabel("Nombre de bactéries")

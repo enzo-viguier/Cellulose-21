@@ -42,6 +42,8 @@ class Model(QtCore.QObject, threading.Thread):
     isRunning = True
     # masse totale de substra à chaqe pas Delta
     masses_substra = []
+    # tableau du nombre de bactéries à chaque uipdate_view
+    nbs_bacteries = []
     # nombre de tour entre chaque affichage
     nb_tour_affich = 0
 
@@ -163,9 +165,7 @@ class Model(QtCore.QObject, threading.Thread):
                            indexing='xy')
 
         cellulose = ((X * X + Y * Y) <= (rayon_cases_subst * rayon_cases_subst))
-        # ----------------ceci est un test-------------------------
-        # cellulose = (X<20)
-        # ---------------------------
+
         self.concentrations[cellulose] = self.d_cellulose["c_ini"]
 
     def __creer_bacterie(self):
@@ -175,7 +175,7 @@ class Model(QtCore.QObject, threading.Thread):
         pour être en contact)
         :return: void
         """
-        # for x in range(30):
+        
         n = self.d_biomasse["nb_bact_ini"]
         if n != 0:
             intervalle = 2 * np.pi / n
@@ -221,6 +221,9 @@ class Model(QtCore.QObject, threading.Thread):
 
         return coord_i, coord_j
 
+    def get_delta(self):
+        return self.d_tore["delta"]
+
     # --------------- Gestion des concentrations-------------------------------------------
 
     def get_concentrations(self):
@@ -258,6 +261,10 @@ class Model(QtCore.QObject, threading.Thread):
 
     def get_nb_bacteries(self):
         return len(self.bacteries)
+
+    def get_nbs_bacteries(self):
+        # Retourne le tableau sauvegardant le nombre de bactéries au cours du temps
+        return self.nbs_bacteries
     # ------------- Boucle du programme ---------------
 
     def __calcul_nb_tours(self):
@@ -389,5 +396,5 @@ class Model(QtCore.QObject, threading.Thread):
     # PYQT
     def update_view(self):
         self.masses_substra.append(self.concentrations.sum()*self.d_tore["largeur_case"]**2) #Ajoute la concentration actuelle aux sauvegardes
-        
+        self.nbs_bacteries.append(self.get_nb_bacteries()) # ajoute le nombre de bactérie actuel
         self.stateChangedSignal.emit()
