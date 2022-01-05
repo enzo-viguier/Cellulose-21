@@ -982,121 +982,10 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
            <number>0</number>
           </property>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_forLabel">
-            <item>
-             <spacer name="horizontalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Expanding</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>100</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QLabel" name="titreGraph_1">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="font">
-               <font>
-                <family>Century Schoolbook L</family>
-                <pointsize>10</pointsize>
-                <weight>9</weight>
-                <italic>false</italic>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="layoutDirection">
-               <enum>Qt::LeftToRight</enum>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
-              </property>
-              <property name="text">
-               <string>Concentration du substrat (x -&gt; temps en heure | y -&gt; masse totale de substrat  en pg)</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Preferred</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>200</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QLabel" name="titreGraph_2">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="font">
-               <font>
-                <family>Century Schoolbook L</family>
-                <pointsize>10</pointsize>
-                <weight>9</weight>
-                <italic>false</italic>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="layoutDirection">
-               <enum>Qt::LeftToRight</enum>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
-              </property>
-              <property name="text">
-               <string>Population de bactéries (x -&gt; temps en heure | y -&gt;  nombre de bactérie)</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_8">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Expanding</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>100</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item>
            <layout class="QHBoxLayout" name="horizontalLayout_forGraphs">
+            <property name="sizeConstraint">
+             <enum>QLayout::SetFixedSize</enum>
+            </property>
             <item>
              <spacer name="horizontalSpacer_6">
               <property name="orientation">
@@ -1121,13 +1010,13 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
               <property name="minimumSize">
                <size>
                 <width>500</width>
-                <height>300</height>
+                <height>400</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
                 <width>600</width>
-                <height>300</height>
+                <height>400</height>
                </size>
               </property>
               <property name="styleSheet">
@@ -1162,13 +1051,13 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
               <property name="minimumSize">
                <size>
                 <width>500</width>
-                <height>300</height>
+                <height>400</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
                 <width>600</width>
-                <height>300</height>
+                <height>400</height>
                </size>
               </property>
               <property name="styleSheet">
