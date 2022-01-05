@@ -61,12 +61,14 @@ class Mplwidget(FigureCanvasQTAgg):
         self.ax_plot_substra = self.ax.plot(x, y, color='b')  # Tracé de la courbe
         plt.xlim(0, 200)
         plt.ylim(0, 200)
-        plt.xlabel("Temps (en heure)")
-        plt.ylabel("Masse totale de substrat (en pg)")
+        self.fig.supxlabel("Temps (en heure)")
+        self.fig.supylabel("Masse totale de substrat (en pg)")
+        self.fig.suptitle("Concentration du substrat")
 
     def update_graph2(self, nb_tour_affich, nbs_bact, delta):
         x = np.linspace(0, len(nbs_bact) - 1, len(nbs_bact)) * nb_tour_affich * delta  # Donnée en abscisse
         y = nbs_bact  # Donnée en ordonnée
-        self.ax_plot_substra = self.ax.plot(x, y, color='b')  # Tracé de la courbe
-        plt.xlabel("Temps (en heure)")
-        plt.ylabel("Nombre de bactéries")
+        self.ax_plot_substra = self.ax.plot(x, y, color='b' )  # Tracé de la courbe
+        self.fig.supxlabel("Temps (en heure)")
+        self.fig.supylabel("Nombre de bactérie")
+        self.fig.suptitle("Population de bactérie")
