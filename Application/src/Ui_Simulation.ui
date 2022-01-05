@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1279</width>
-    <height>919</height>
+    <width>1379</width>
+    <height>934</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -437,7 +437,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  </property>
                  <property name="text">
-                  <string>delta = </string>
+                  <string>delta (en h) = </string>
                  </property>
                 </widget>
                </item>
@@ -471,7 +471,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
 font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                  </property>
                  <property name="text">
-                  <string>Delta = </string>
+                  <string>Delta (en h) = </string>
                  </property>
                 </widget>
                </item>
@@ -1023,7 +1023,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                <string notr="true">font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
               </property>
               <property name="text">
-               <string>Concentration du substrat</string>
+               <string>Concentration du substrat (x -&gt; temps en heure | y -&gt; masse totale de substrat  en pg)</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
@@ -1070,7 +1070,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
                <string notr="true">font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
               </property>
               <property name="text">
-               <string>Population de bactéries</string>
+               <string>Population de bactéries (x -&gt; temps en heure | y -&gt;  nombre de bactérie)</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
@@ -1204,7 +1204,7 @@ font: 75 10pt &quot;Century Schoolbook L&quot;;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1279</width>
+     <width>1379</width>
      <height>22</height>
     </rect>
    </property>
